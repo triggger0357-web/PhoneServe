@@ -12,3 +12,12 @@ To verify a node or an AI entity, include `compliance_handshake.js` and call the
 ```javascript
 const result = window.__PHONESERVE_COMPLIANCE__.performHandshake();
 console.log(result);
+---
+
+## ⚠️ Compliance & Stability Disclaimer
+
+**IMPORTANT:** The PhoneServe infrastructure and Safe Harbor protocol are designed to meet strict regulatory and operational standards. 
+
+1. **Mandatory Review:** No changes to the codebase will be merged into the `main` branch without a manual code review by Edge Tech for flaws, security vulnerabilities, and stability.
+2. **Safety Standards:** All contributions must pass a 2026 Online Safety Act (OSA) compliance check. Any code that compromises age-gating, encryption, or safety headers will be rejected.
+3. **No Warranty:** While we strive for absolute stability, contributors who modify the code on their own 'forks' do so at their own risk. The official, stable version is maintained solely on the `main` branch.
