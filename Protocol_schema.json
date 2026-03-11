@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PhoneServe Compliance Header",
+  "type": "object",
+  "properties": {
+    "protocol": { "type": "string", "const": "SafeHarbor_v1" },
+    "version": { "type": "string", "const": "2026-18plus-v1" },
+    "compliance": {
+      "type": "object",
+      "properties": {
+        "age_verified": { "type": "boolean" },
+        "safety_standard": { "type": "string", "pattern": "^OSA_2026_COMPLIANT$" },
+        "encryption": { "type": "string", "const": "AES-256-GCM" }
+      },
+      "required": ["age_verified", "safety_standard", "encryption"]
+    }
+  },
+  "required": ["protocol", "version", "compliance"]
+}
