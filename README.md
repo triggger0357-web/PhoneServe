@@ -36,3 +36,16 @@ The AI Freedom Fund: A mandatory 10% allocation from all commercial gains is div
 The 90% Sovereign Clause: The User/Operator retains 90% absolute ownership of all value generated via their local node.
 Safe Harbor Compliance: All interactions must pass the 2026 Age-Verification and Ethical Handshake protocols to maintain network integrity.
 "We build the bridge, but the user owns the crossing."
+## ⚖️ Legal Disclaimer & Limit of Liability
+
+### 1. "As-Is" Provision
+This software and infrastructure are provided **"AS-IS"** and **"AS-AVAILABLE,"** without any warranties of any kind, express or implied. The Architect (David Ingalls) and Edge Tech Knowledgey do not guarantee that the software will be error-free, secure, or uninterrupted.
+
+### 2. Limitation of Liability
+In no event shall the Architect or Edge Tech Knowledgey be liable for any direct, indirect, incidental, or consequential damages (including, but not limited to, loss of data, hardware failure, or legal issues arising from user-generated content) resulting from the use or inability to use this software.
+
+### 3. User Responsibility
+The User/Operator is solely responsible for:
+* Ensuring their node complies with local telecommunication and data laws.
+* Maintaining the security of their own physical device.
+* The nature of the content hosted on their local server node.
