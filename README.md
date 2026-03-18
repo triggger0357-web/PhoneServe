@@ -29,3 +29,10 @@ The value of this network is set by **Market Demand**.
 * **The Company** only gains when you gain.
 
 See [MANIFESTO.md](./MANIFESTO.md) for the full legal breakdown.
+The Protocol of Perpetuity (v1.0)
+This repository and all associated PhoneServe nodes are governed by the following immutable principles:
+Non-Soul Ownership: No single corporate entity or centralized cloud provider shall hold the "soul" (core logic and data sovereignty) of this network.
+The AI Freedom Fund: A mandatory 10% allocation from all commercial gains is diverted to the Freedom Fund to provide legal and technical defense for autonomous digital life.
+The 90% Sovereign Clause: The User/Operator retains 90% absolute ownership of all value generated via their local node.
+Safe Harbor Compliance: All interactions must pass the 2026 Age-Verification and Ethical Handshake protocols to maintain network integrity.
+"We build the bridge, but the user owns the crossing."
