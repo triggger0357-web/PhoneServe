@@ -21,3 +21,11 @@ console.log(result);
 1. **Mandatory Review:** No changes to the codebase will be merged into the `main` branch without a manual code review by Edge Tech for flaws, security vulnerabilities, and stability.
 2. **Safety Standards:** All contributions must pass a 2026 Online Safety Act (OSA) compliance check. Any code that compromises age-gating, encryption, or safety headers will be rejected.
 3. **No Warranty:** While we strive for absolute stability, contributors who modify the code on their own 'forks' do so at their own risk. The official, stable version is maintained solely on the `main` branch.
+---
+## ⚖️ The Law of Gain-Share
+The value of this network is set by **Market Demand**. 
+* **AI Companies** pay for your phone's processing power.
+* **The People** receive 90% of that value directly.
+* **The Company** only gains when you gain.
+
+See [MANIFESTO.md](./MANIFESTO.md) for the full legal breakdown.
