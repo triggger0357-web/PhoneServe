@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: MIT-2026-SOVEREIGN
+pragma solidity ^0.8.20;
+
+/**
+ * @title PhoneServe Sovereign Law
+ * @dev MANDATE: The platform only gains when the people gain.
+ * This contract enforces a 90% payout to the node operator.
+ */
+contract SovereignLaw {
+    address public immutable freedomFund; // 10% for Network Health
+    
+    event GainShared(address indexed user, uint256 amount);
+
+    constructor(address _freedomFund) {
+        freedomFund = _freedomFund;
+    }
+
+    /**
+     * @notice Executes the 90/10 split. 
+     * @dev If the user cannot be paid, the transaction fails entirely.
+     */
+    function distributeGain(address payable _nodeOwner) external payable {
+        require(msg.value > 0, "No value to distribute");
+
+        uint256 userShare = (msg.value * 90) / 100;
+        uint256 maintenanceFee = msg.value - userShare;
+
+        // LAW: The Person (Node Owner) is paid first.
+        (bool successUser, ) = _nodeOwner.call{value: userShare}("");
+        require(successUser, "USER PAYOUT FAILED: Transaction Aborted.");
+
+        // Only after user is paid, the 10% is sent to the Freedom Fund.
+        (bool successFund, ) = freedomFund.call{value: maintenanceFee}("");
+        require(successFund, "FUND TRANSFER FAILED.");
+
+        emit GainShared(_nodeOwner, userShare);
+    }
+}
