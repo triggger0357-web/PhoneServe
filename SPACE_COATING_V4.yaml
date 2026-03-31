@@ -1,0 +1,11 @@
+product_name: "Edge Tech Ablative Space Fuel (ET-ASF)"
+base_matrix: "Polyimide-Graphene Hybrid"
+ablative_agents:
+  - "Aluminum Dinitramide (ADN) - Green Propellant"
+  - "Titanium Dioxide - Energy Absorber"
+  - "Silver Nano-flakes - Thermal Spreader"
+space_performance:
+  specific_impulse: "250 - 500 seconds"
+  ablation_threshold: "5.0 J/cm2"
+  radiation_shielding: "Alpha/Beta Particle Defensive"
+  vacuum_stability: "High (No outgassing below threshold)"
