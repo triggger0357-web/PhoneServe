@@ -1,0 +1,13 @@
+node_type: "Edge Tech Atmospheric Harvester (ET-AH)"
+energy_mechanisms:
+  - tech: "PVA/PA Nanofiber Membrane"
+    source: "Atmospheric Moisture (Humidity Gradient)"
+    output: "Constant Proton-Flow DC"
+  - tech: "Wobbling Triboelectric Nanogenerator (WTENG)"
+    source: "Wind-Induced Vibration / Galloping"
+    output: "High-Voltage AC (Rectified to DC)"
+environmental_specs:
+  operating_humidity: "20% - 100% RH"
+  cut_in_wind_speed: "0.9 m/s"
+  weatherproofing: "IP68 (Storm-ready)"
+  self_cleaning: "Active Photocatalytic Coating (TiO2/Silver)"
