@@ -9,3 +9,15 @@ material_properties:
   safety:
     emi_shielding: "Active"
     static_dissipation: "ESD_Safe"
+
+active_catalysts:
+  - name: "Titanium Dioxide (Anatase Nano-powder)"
+    function: "Photocatalytic Air Purification"
+  - name: "Graphene-Silver Matrix"
+    function: "Enhanced Electron Mobility & Ozone Sensing"
+  - name: "Hydrophilic Self-Cleaning Layer"
+    function: "Organic Matter Decomposition"
+atmospheric_impact:
+  target_pollutants: ["NOx", "SOx", "Formaldehyde", "Ozone_Precursors"]
+  uv_activation_threshold: "300-400nm"
+
