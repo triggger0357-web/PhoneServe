@@ -1,0 +1,10 @@
+{
+  "network_name": "PhoneServe_Mesh_Alpha",
+  "governance_layer": "Decentralized_Sovereign",
+  "routing_rules": {
+    "priority": "Latency_Optimized",
+    "security": "End_to_End_Encrypted",
+    "bypass_gateways": "Active",
+    "regulatory_sync": "Online_Safety_Act_2026"
+  }
+}
