@@ -1,0 +1,11 @@
+material_properties:
+  primary_coating: "Thermally Conductive Acrylic Lacquer"
+  additives: ["Silver Flake", "Boron Nitride Nano-particles"]
+  application_method: "Pneumatic Aerosol Spray"
+  performance_targets:
+    thermal_conductivity: "1.5 - 5.0 W/m·K"
+    adhesion_substrate: "Polycarbonate/ABS (Mobile Enclosures)"
+    curing_time: "24h @ 25°C"
+  safety:
+    emi_shielding: "Active"
+    static_dissipation: "ESD_Safe"
