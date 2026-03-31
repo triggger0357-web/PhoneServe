@@ -1,0 +1,23 @@
+{
+  "network_health": "99.8%",
+  "active_repairs": [
+    {
+      "node": "VAN-BUILDING-04",
+      "issue": "Surface Micro-crack (External)",
+      "action": "Nanite Cross-linking",
+      "status": "IN_PROGRESS",
+      "completion": "85%"
+    },
+    {
+      "node": "CAR-NODE-82",
+      "issue": "Thermal Resistance Variance",
+      "action": "Polymer Mesh Realignment",
+      "status": "COMPLETED",
+      "efficiency_gain": "+12%"
+    }
+  ],
+  "global_scrubbing_stats": {
+    "NOx_removed_total": "452.4 kg",
+    "carbon_offset_credits": "12.5 T"
+  }
+}
