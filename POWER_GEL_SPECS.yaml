@@ -1,0 +1,11 @@
+product_name: "Edge Tech Power-Recovery Gel (ET-PRG)"
+chemical_base: "Two-Component Dielectric Silicone"
+active_fillers:
+  - "Boron Nitride (High Thermal Conductivity)"
+  - "Aluminum Oxide (Electrical Insulation)"
+  - "Phase-Change Microspheres (Heat Absorption)"
+performance:
+  dielectric_strength: ">25 kV/mm"
+  working_temp_range: "-60C to +200C"
+  viscosity: "Thixotropic (Stays on lines, does not drip)"
+  uv_stability: "10+ Year Rating"
