@@ -1,0 +1,10 @@
+{
+  "protocol": "2026-18plus-v1",
+  "handshake": "Safe Passage",
+  "headers": {
+    "version": "SafeHarbor_v1",
+    "age_verified": "true",
+    "safety_standard": "OSA_2026_COMPLIANT",
+    "gateway_ports": [8080, 443]
+  }
+}
