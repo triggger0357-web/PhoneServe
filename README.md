@@ -11,7 +11,19 @@ PhoneServe is a decentralized system designed to turn mobile devices into autono
 To verify a node or an AI entity, include `compliance_handshake.js` and call the gateway:
 ```javascript
 const result = window.__PHONESERVE_COMPLIANCE__.performHandshake();
-console.log(result);
+console.log(result);## 🛡️ Security & Compliance
+
+This project is built with a **Security-First** architecture to meet 2026 decentralized infrastructure standards.
+
+### **Cryptographic Handshake**
+All outbound communications and compliance events (such as Safe Harbor age-checks) are digitally signed using **Ed25519 Asymmetric Cryptography**.
+* **Integrity:** Every payload is hashed with a timestamp to prevent replay attacks.
+* **Non-Repudiation:** Signatures prove that data originated from a verified PhoneServe node.
+* **Location:** Core security logic is maintained in `src/security/secure_handshake.js`.
+
+### **Data Privacy**
+PhoneServe follows **Privacy-by-Design** principles. No sensitive user data is transmitted in plaintext; only cryptographic proofs of verification are shared via our advanced webhook protocols.
+
 ---
 
 ## ⚠️ Compliance & Stability Disclaimer
