@@ -1,4 +1,4 @@
-/**
+const security = require('./src/security/secure_handshake');/**
  * PhoneServe Compliance Authority
  * Protocol: Safe Harbor v1
  * Standard: 2026 Online Safety Act
