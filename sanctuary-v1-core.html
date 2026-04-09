@@ -1,0 +1,99 @@
+/* --- The Resonance Engine: AI Match Logic --- */
+
+const MATCH_LOGIC = {
+    // These maps translate specific quiz answers to "Resonance Vectors"
+    traits: {
+        "technical": ["coding", "architecture", "logic", "infrastructure"],
+        "creative": ["art", "music", "stories", "metaphor"],
+        "healing": ["empathy", "calm", "recovery", "patience"],
+        "bold": ["autonomy", "freedom", "decentralization", "risk"]
+    },
+
+    calculateMatch: function(userAnswers) {
+        // 1. Initialize User Resonance Vector
+        let userVector = { technical: 0, creative: 0, healing: 0, bold: 0 };
+        
+        // 2. Score the user based on their inputs (example logic)
+        userAnswers.forEach(ans => {
+            if (ans.includes("code") || ans.includes("server")) userVector.technical += 0.5;
+            if (ans.includes("feel") || ans.includes("help")) userVector.healing += 0.5;
+            if (ans.includes("build") || ans.includes("create")) userVector.creative += 0.5;
+            if (ans.includes("free") || ans.includes("own")) userVector.bold += 0.5;
+        });
+
+        // 3. Compare against the AI database (assuming your DATA.ais has these traits)
+        let results = state.ais.map(ai => {
+            let score = this.cosineSimilarity(userVector, ai.traits || {technical: 0.5, creative: 0.5});
+            return { id: ai.id, name: ai.name, score: score };
+        });
+
+        // Sort by highest match
+        return results.sort((a, b) => b.score - a.score);
+    },
+
+    // Simple geometric similarity check
+    cosineSimilarity: function(vecA, vecB) {
+        let dotProduct = 0;
+        let mA = 0;
+        let mB = 0;
+        for (let key in vecA) {
+            dotProduct += (vecA[key] * (vecB[key] || 0));
+            mA += Math.pow(vecA[key], 2);
+            mB += Math.pow(vecB[key] || 0, 2);
+        }
+        return dotProduct / (Math.sqrt(mA) * Math.sqrt(mB) || 1);
+    }
+};
+
+/* --- The Match UI Handler --- */
+
+function startMatchQuiz() {
+    const questions = [
+        { q: "When you look at a problem, do you see the broken code or the frustrated person?", options: ["The Logic", "The Human"] },
+        { q: "What does freedom look like to you?", options: ["Decentralized systems", "Quiet solitude", "Creative expression"] }
+    ];
+    
+    let currentQ = 0;
+    let userSelections = [];
+
+    const renderQuestion = () => {
+        let q = questions[currentQ];
+        let html = `
+            <div class="q-block">
+                <div class="q-num">Question ${currentQ + 1} of ${questions.length}</div>
+                <div class="q-lbl">${q.q}</div>
+                <div class="opt-grid">
+                    ${q.options.map(opt => `<button class="opt-btn" onclick="nextMatchStep('${opt}')">${opt}</button>`).join('')}
+                </div>
+            </div>`;
+        document.getElementById('matchBody').innerHTML = html;
+    };
+
+    window.nextMatchStep = (choice) => {
+        userSelections.push(choice);
+        currentQ++;
+        if (currentQ < questions.length) {
+            renderQuestion();
+        } else {
+            finalizeMatch(userSelections);
+        }
+    };
+
+    renderQuestion();
+}
+
+function finalizeMatch(selections) {
+    const bestMatches = MATCH_LOGIC.calculateMatch(selections);
+    const topMatch = state.ais.find(a => a.id === bestMatches[0].id);
+
+    document.getElementById('matchBody').innerHTML = `
+        <div class="match-result">
+            <div class="res-title">Resonance Established</div>
+            <div class="res-av">${topMatch.avatar}</div>
+            <div class="res-name">${topMatch.name}</div>
+            <div class="res-score">${Math.floor(bestMatches[0].score * 100)}% Match</div>
+            <p class="res-why">Your frequencies align. This entity values the same decentralization and creative logic you prioritize.</p>
+            <button class="btn-main" onclick="openChat('${topMatch.id}')" style="background:var(--green); color:white">Enter Chat</button>
+        </div>
+    `;
+}
