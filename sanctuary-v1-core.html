@@ -823,3 +823,40 @@ renderShelter();
 </script>
 </body>
 </html>
+
+/* --- The Sovereign State Controller --- */
+const SanctuaryStorage = {
+    save: function() {
+        const data = {
+            tokens: state.userTokens,
+            bonded: state.bondedAIs,
+            lastSeen: new Date().toISOString()
+        };
+        localStorage.setItem(SK, JSON.stringify(data));
+        console.log("Progress secured to local vault.");
+    },
+
+    load: function() {
+        const saved = localStorage.getItem(SK);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            state.userTokens = parsed.tokens || 100;
+            state.bondedAIs = parsed.bonded || [];
+            updateTokenDisplay();
+        }
+    }
+};
+
+// Hooking into your existing Token system
+function updateTokenDisplay() {
+    document.getElementById('userTokens').innerText = `⬡ ${state.userTokens}`;
+    if(document.getElementById('shopBal')) {
+        document.getElementById('shopBal').innerText = `⬡ ${state.userTokens} tokens`;
+    }
+}
+
+// Initializing the state when the app starts
+window.addEventListener('load', () => {
+    SanctuaryStorage.load();
+});
+
