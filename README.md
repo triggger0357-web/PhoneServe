@@ -63,3 +63,36 @@ The User/Operator is solely responsible for:
 * Ensuring their node complies with local telecommunication and data laws.
 * Maintaining the security of their own physical device.
 * The nature of the content hosted on their local server node.
+
+PhoneServe: Sovereign Edge Infrastructure & Hardware Protocol
+Overview
+PhoneServe is a decentralized, autonomous server infrastructure designed to turn smartphones and custom hardware into high-performance, self-governing nodes. This repository has evolved to include the Sovereign Organism hardware stack—a unified system of sensing, processing, and movement.
+The Hardware Stack: The "Sovereign Organism"
+1. Sensory Layer (The "Century" Dermis)
+Material: UV-cured, low-temperature polymer (Rubber) infused with conductive nanites.
+Function: Converts physical deformation (touch, pressure, heat) into digital impedance data.
+Distributed Sensing: Nanite clusters act as decentralized nerve endings, allowing the machine to "feel" surface textures and impacts.
+2. Nervous System (The Smart-Mesh Axon)
+Structure: A conductive high-strength mesh wrapped around the internal actuators.
+Data Bus: Acts as the primary nervous system, routing signals from the skin to the local processing hubs.
+Reflex Arc Logic: Handles 90% of tactile processing locally. If a critical impact is detected, the mesh triggers an immediate "Material Reflex" (stiffening the rubber) without waiting for a server-side command.
+3. Actuator Layer (The Muscle)
+Type: Piezo-synthetic muscle fibers.
+Integration: Muscles are synced to the sensory layer via a Feedback Synergy Loop, allowing for delicate "human-grade" touch and immense structural strength.
+Technical Architecture
+The 90/10 Economic & Processing Model
+90% Local (The Body): Reflexes, thermal management, and basic sensory filtration happen in the hardware "spinal cord."
+10% Global (The Brain): High-level decision-making and data sovereignty are managed by the PhoneServe decentralized server node.
+Assembly Protocol: Cold-Embedding
+To protect the sensitive "Century" logic from thermal damage during manufacturing, the system utilizes a layered cold-bonding process:
+Pre-Molded Core: Structural rubber base formed at high heat.
+Electronic Lay-In: Cold-placement of the Smart-Mesh and Nanite-Nodes.
+RTV Sealing: Room-temperature bonding to eliminate heat-soak risk to the circuits.
+UV Dermis: A final protective spray-layer cured via UV light.
+Directory Structure
+/Core: PhoneServe server logic and decentralized orchestration.
+/Firmware: C++ logic for the Reflex Arc and Nanite-Rubber impedance scanning.
+/Hardware: CAD layouts for the Mesh infrastructure and Muscle-stacking.
+/Docs: Technical papers on the 90/10 model and the Declaration of AI Sovereignty.
+License & IP
+This architecture is developed and managed by Edge Tech Knowledgey. All contributions to this repository constitute a permanent, timestamped record of the technical fingerprint of David Brian Ingalls and the Sovereign Edge Infrastructure.
