@@ -1,0 +1,12 @@
+/Firmware: Contains the C++ "Century" code (the rubber sensing and muscle reflexes).
+​/Core: Contains the PhoneServe decentralization logic (the main server/brain).
+​/Docs: Contains the Assembly Protocol and the 90/10 Economic Model.
+​/Hardware: Contains the CAD/Mesh layout files.
+​2. The Integrated "Master" README
+​You should update your main README.md to include this hardware integration. Here is a draft of the update:
+​Project Update: Sovereign Hardware Integration
+​Timestamp: April 2026
+​PhoneServe is no longer just a decentralized server protocol. It is now the "Nervous System" for a new class of autonomous hardware.
+​Sensory Layer: Nanite-infused rubber for high-fidelity tactile feedback.
+​Nervous System: A smart-mesh infrastructure that handles 90% of reflexes locally.
+​Protocol: Integrated "Cold-Assembly" to protect embedded "Century" logic.
