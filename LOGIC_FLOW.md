@@ -75,3 +75,50 @@ graph TD
     style L2_Response fill:#fff9c4,stroke:#fbc02d
     style L3_Response fill:#ffebee,stroke:#c62828
     style Eval fill:#f5f5f5,stroke:#333
+
+
+GitHub-Ready Mermaid Code: Safe Harbor Sequence
+
+sequenceDiagram
+    participant User as Edge Node (PhoneServe)
+    participant Auth as Sovereign Handshake (V-Wash)
+    participant Tunnel as Private Safe Harbor (Dark Fiber)
+    participant Network as The Sovereign Edge
+
+    Note over User, Network: Initiation of Secure Sovereign Connection
+    
+    User->>Auth: Request Connection (Unique ID + Timestamp)
+    Auth->>Auth: Verify Age-Gating Compliance (Safe Harbor Protocol)
+    
+    alt Compliance Verified
+        Auth-->>User: Compliance Token Issued
+        User->>Tunnel: Open Encrypted Tunnel (AES-256)
+        Tunnel-->>Network: Link Established (Off-Grid Routing)
+        Note right of Network: Data Sovereignty Maintained (90/10 Gain-Share Active)
+    else Compliance Failed
+        Auth-->>User: Handshake Terminated (Access Denied)
+        Note left of User: Emergency Data Isolation Triggered
+    end
+
+Safe Harbor Sequence:
+
+sequenceDiagram
+    participant User as Edge Node (PhoneServe)
+    participant Auth as Sovereign Handshake (V-Wash)
+    participant Tunnel as Private Safe Harbor (Dark Fiber)
+    participant Network as The Sovereign Edge
+
+    Note over User, Network: Initiation of Secure Sovereign Connection
+    
+    User->>Auth: Request Connection (Unique ID + Timestamp)
+    Auth->>Auth: Verify Age-Gating Compliance (Safe Harbor Protocol)
+    
+    alt Compliance Verified
+        Auth-->>User: Compliance Token Issued
+        User->>Tunnel: Open Encrypted Tunnel (AES-256)
+        Tunnel-->>Network: Link Established (Off-Grid Routing)
+        Note right of Network: Data Sovereignty Maintained (90/10 Gain-Share Active)
+    else Compliance Failed
+        Auth-->>User: Handshake Terminated (Access Denied)
+        Note left of User: Emergency Data Isolation Triggered
+    end
