@@ -6,3 +6,4 @@ __pycache__/
 # Ignore private SSH or API keys
 secrets/
 config/private_keys.txt
+
