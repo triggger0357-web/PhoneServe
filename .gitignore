@@ -1,8 +1,2 @@
-# Ignore sensitive local environment files
-.env
-*.log
-__pycache__/
-*.tmp
-# Ignore private SSH or API keys
-secrets/
-config/private_keys.txt
+# This is a sample .gitignore file
+# Add files and directories to ignore here
