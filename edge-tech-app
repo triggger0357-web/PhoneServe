@@ -1,0 +1,5 @@
+​/app
+​/register → The Signup Page (The code you showed me).
+​/admin → The Command Center (Where you verify payments).
+​/api/handshake → The Node Logic (Where phones connect).
+​/lib → The Memory (Where user data is saved).
