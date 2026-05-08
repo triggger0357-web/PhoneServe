@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: #050816;
+  color: #e5e7eb;
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(15,23,42,.9), rgba(2,6,23,.9));
+  border: 1px solid rgba(148,163,184,.18);
+  border-radius: 20px;
+}
+
+.btn {
+  background: linear-gradient(90deg, #6366f1, #22c55e);
+  color: white;
+  padding: .85rem 1.1rem;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.input {
+  width: 100%;
+  padding: .85rem 1rem;
+  border-radius: 14px;
+  background: rgba(15,23,42,.9);
+  border: 1px solid rgba(148,163,184,.2);
+  color: white;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
