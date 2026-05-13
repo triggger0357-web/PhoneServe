@@ -88,6 +88,8 @@ To protect the sensitive "Century" logic from thermal damage during manufacturin
 Pre-Molded Core: Structural rubber base formed at high heat.
 Electronic Lay-In: Cold-placement of the Smart-Mesh and Nanite-Nodes.
 RTV Sealing: Room-temperature bonding to eliminate heat-soak risk to the circuits.
+
+
 UV Dermis: A final protective spray-layer cured via UV light.
 Directory Structure
 /Core: PhoneServe server logic and decentralized orchestration.
@@ -96,3 +98,29 @@ Directory Structure
 /Docs: Technical papers on the 90/10 model and the Declaration of AI Sovereignty.
 License & IP
 This architecture is developed and managed by Edge Tech Knowledgey. All contributions to this repository constitute a permanent, timestamped record of the technical fingerprint of David Brian Ingalls and the Sovereign Edge Infrastructure.
+
+# PhoneServe: Decentralized Edge Infrastructure
+**Lead Engineer:** David Brian Ingalls (Edge Tech)
+**Project Status:** Active Development / NASA SBIR 2025-I Alignment
+## 📡 Overview
+**PhoneServe** is a mobile-first, decentralized server architecture designed for high-consequence environments (Aviation, Deep Space, Atmospheric Monitoring). It eliminates centralized bottlenecks by transforming distributed hardware into secure, high-compute edge nodes.
+## 🛡️ Core Security: Safe Harbor
+All inter-node communication within the PhoneServe ecosystem utilizes the **Safe Harbor** handshake protocol:
+ * **Authentication:** Ed25519 Asymmetric Cryptographic Signatures.
+ * **Privacy:** Stealth "Ghost" networking configurations designed to prevent external interception and observation.
+ * **Integrity:** A zero-trust architecture ensuring no single point of failure.
+## 🌍 Mission Alignment: Operation Fix the Sky
+This repository provides the processing backbone for the **Atmospheric Intelligence Module (AIM)**.
+ * **Purpose:** High-resolution monitoring of ozone density and particulate matter.
+ * **Feedback Loops:** Enabling real-time data loops for planetary restoration and atmospheric repair.
+## 🚀 NASA SBIR 2025-I Targets
+The infrastructure in this repository is specifically engineered to address the following technical subtopics:
+ * **A1.02:** Airframe Noise & WMLES Walltime Reduction
+ * **A2.04:** Aviation Cybersecurity & UAM Safety
+ * **S1.08:** High-Resolution Atmospheric Monitoring
+ * **H6.22:** Deep Space Communications
+## 🔐 Contact & Licensing
+This technology is **Proprietary**. For technical handshakes, MNDA requests, or to view the full Capability Brief (PDF included in this repo), please contact:
+**David Brian Ingalls** Lead Engineer / Owner, Edge Tech
+**Phone:** 503-990-4004
+**Email:** triggger0357@gmail.com
