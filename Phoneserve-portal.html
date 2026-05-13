@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhoneServe — Sovereign Internet</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050810;
+    --surface: #0a0f1e;
+    --border: #1a2540;
+    --green: #00ff88;
+    --cyan: #00d4ff;
+    --amber: #ffaa00;
+    --text: #c8d8f0;
+    --muted: #4a5a7a;
+    --mono: 'Share Tech Mono', monospace;
+    --sans: 'Barlow', sans-serif;
+    --cond: 'Barlow Condensed', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Glow orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 { width: 600px; height: 600px; background: rgba(0,255,136,0.06); top: -200px; right: -200px; }
+  .orb-2 { width: 500px; height: 500px; background: rgba(0,212,255,0.05); bottom: -100px; left: -100px; }
+
+  /* NAV */
+  nav {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--cond);
+    font-size: 22px; font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .logo-icon {
+    width: 36px; height: 36px;
+    border: 2px solid var(--green);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+
+  .logo-icon::before {
+    content: '';
+    width: 10px; height: 10px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.8); }
+  }
+
+  .logo span { color: var(--green); }
+
+  .nav-status {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12px;
+    color: var(--green);
+  }
+
+  .status-dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 1;
+    padding: 80px 40px 60px;
+    max-width: 1100px; margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(0,255,136,0.3);
+    background: rgba(0,255,136,0.05);
+    padding: 6px 16px;
+    border-radius: 2px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--green); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 32px;
+  }
+
+  .hero h1 {
+    font-family: var(--cond);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 .line-2 { color: var(--green); }
+
+  .hero p {
+    font-size: 18px; font-weight: 300;
+    color: var(--muted);
+    max-width: 560px; margin: 0 auto 48px;
+    line-height: 1.6;
+  }
+
+  /* NODE VISUALIZATION */
+  .node-viz {
+    position: relative; margin: 0 auto 60px;
+    width: 280px; height: 280px;
+  }
+
+  .node-viz svg {
+    width: 100%; height: 100%;
+    animation: spin-slow 30s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .node-center {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px; height: 80px;
+    border: 2px solid var(--green);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,255,136,0.05);
+    box-shadow: 0 0 40px rgba(0,255,136,0.2), inset 0 0 20px rgba(0,255,136,0.05);
+    font-size: 32px;
+    animation: node-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes node-glow {
+    0%, 100% { box-shadow: 0 0 40px rgba(0,255,136,0.2), inset 0 0 20px rgba(0,255,136,0.05); }
+    50% { box-shadow: 0 0 60px rgba(0,255,136,0.4), inset 0 0 30px rgba(0,255,136,0.1); }
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; gap: 0;
+    max-width: 800px; margin: 0 auto 80px;
+    border: 1px solid var(--border);
+  }
+
+  .stat {
+    flex: 1; padding: 20px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-val {
+    font-family: var(--mono); font-size: 24px;
+    color: var(--green); display: block;
+  }
+  .stat-label {
+    font-size: 11px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-top: 4px; display: block;
+  }
+
+  /* TWO PATHS */
+  .paths {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px; max-width: 1000px;
+    margin: 0 auto 80px; padding: 0 40px;
+  }
+
+  @media (max-width: 700px) {
+    .paths { grid-template-columns: 1fr; padding: 0 20px; }
+    nav { padding: 16px 20px; }
+    .hero { padding: 60px 20px 40px; }
+  }
+
+  .path-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+
+  .path-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+
+  .path-card.node::before { background: var(--green); }
+  .path-card.browse::before { background: var(--cyan); }
+
+  .path-card:hover { border-color: #2a3550; transform: translateY(-2px); }
+  .path-card:hover::before { opacity: 1; }
+
+  .path-icon {
+    font-size: 40px; margin-bottom: 20px; display: block;
+  }
+
+  .path-tag {
+    font-family: var(--mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    margin-bottom: 12px; display: block;
+  }
+  .path-card.node .path-tag { color: var(--green); }
+  .path-card.browse .path-tag { color: var(--cyan); }
+
+  .path-card h2 {
+    font-family: var(--cond); font-size: 32px;
+    font-weight: 900; text-transform: uppercase;
+    margin-bottom: 12px; line-height: 1;
+  }
+
+  .path-card p {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.6; margin-bottom: 28px;
+  }
+
+  .path-perks {
+    list-style: none; margin-bottom: 32px;
+  }
+  .path-perks li {
+    font-size: 13px; padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+    color: var(--text);
+  }
+  .path-perks li::before {
+    content: '—'; font-family: var(--mono);
+    font-size: 11px;
+  }
+  .path-card.node .path-perks li::before { color: var(--green); }
+  .path-card.browse .path-perks li::before { color: var(--cyan); }
+
+  .btn {
+    display: block; width: 100%;
+    padding: 14px 24px;
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+  }
+
+  .btn-green {
+    background: var(--green); color: #000;
+  }
+  .btn-green:hover { background: #33ffaa; box-shadow: 0 0 24px rgba(0,255,136,0.4); }
+
+  .btn-cyan {
+    background: var(--cyan); color: #000;
+  }
+  .btn-cyan:hover { background: #33e0ff; box-shadow: 0 0 24px rgba(0,212,255,0.4); }
+
+  /* MODAL OVERLAY */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(5,8,16,0.95);
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    max-width: 560px; width: 90%;
+    max-height: 90vh; overflow-y: auto;
+    position: relative;
+    animation: modal-in 0.3s ease;
+  }
+
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-header {
+    padding: 28px 32px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .modal-title {
+    font-family: var(--cond); font-size: 24px;
+    font-weight: 900; text-transform: uppercase;
+  }
+
+  .modal-close {
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); width: 32px; height: 32px;
+    cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .modal-close:hover { color: var(--text); border-color: var(--muted); }
+
+  .modal-body { padding: 32px; }
+
+  .form-group { margin-bottom: 20px; }
+
+  .form-group label {
+    display: block; font-family: var(--mono);
+    font-size: 11px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 16px;
+    font-family: var(--mono); font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--green);
+  }
+
+  .form-group select option { background: var(--bg); }
+
+  .form-note {
+    font-size: 12px; color: var(--muted);
+    margin-top: 6px; font-style: italic;
+  }
+
+  .form-section-title {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--green); text-transform: uppercase;
+    letter-spacing: 0.15em; margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,255,136,0.2);
+  }
+
+  .compliance-box {
+    background: rgba(0,255,136,0.04);
+    border: 1px solid rgba(0,255,136,0.15);
+    padding: 16px; margin-bottom: 24px;
+    font-family: var(--mono); font-size: 12px;
+    color: var(--muted); line-height: 1.6;
+  }
+  .compliance-box strong { color: var(--green); }
+
+  .checkbox-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 14px;
+  }
+  .checkbox-row input[type="checkbox"] {
+    width: 16px; height: 16px; margin-top: 2px;
+    accent-color: var(--green); flex-shrink: 0;
+  }
+  .checkbox-row label {
+    font-size: 13px; color: var(--muted);
+    cursor: pointer;
+  }
+
+  .submit-btn {
+    width: 100%; padding: 16px;
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    font-weight: 700; margin-top: 8px;
+    transition: all 0.2s;
+  }
+
+  .submit-node {
+    background: var(--green); color: #000;
+  }
+  .submit-node:hover { background: #33ffaa; box-shadow: 0 0 24px rgba(0,255,136,0.4); }
+
+  .submit-browse {
+    background: var(--cyan); color: #000;
+  }
+  .submit-browse:hover { background: #33e0ff; box-shadow: 0 0 24px rgba(0,212,255,0.4); }
+
+  /* SUCCESS STATE */
+  .success-screen {
+    display: none; text-align: center; padding: 40px 32px;
+  }
+  .success-screen.active { display: block; }
+  .success-icon { font-size: 64px; margin-bottom: 20px; }
+  .success-screen h3 {
+    font-family: var(--cond); font-size: 28px;
+    font-weight: 900; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .success-screen p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  .code-block {
+    background: var(--bg); border: 1px solid var(--border);
+    padding: 16px; font-family: var(--mono);
+    font-size: 12px; color: var(--green);
+    text-align: left; margin: 20px 0;
+    word-break: break-all;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+
+  .footer-brand {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+  }
+  .footer-brand strong { color: var(--green); }
+
+  .footer-contact {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    text-align: right;
+  }
+
+  .footer-contact a { color: var(--cyan); text-decoration: none; }
+  .footer-contact a:hover { color: #fff; }
+
+  /* SCROLLING TICKER */
+  .ticker {
+    position: relative; z-index: 1;
+    background: rgba(0,255,136,0.05);
+    border-top: 1px solid rgba(0,255,136,0.15);
+    border-bottom: 1px solid rgba(0,255,136,0.15);
+    padding: 10px 0; overflow: hidden;
+    margin-bottom: 60px;
+  }
+
+  .ticker-inner {
+    display: flex; gap: 60px;
+    white-space: nowrap;
+    animation: ticker 25s linear infinite;
+    font-family: var(--mono); font-size: 12px;
+    color: var(--green); letter-spacing: 0.1em;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav>
+  <div class="logo">
+    <div class="logo-icon"></div>
+    Phone<span>Serve</span>
+  </div>
+  <div class="nav-status">
+    <div class="status-dot"></div>
+    NETWORK ONLINE // EDGE TECH KNOWLEDGEY
+  </div>
+</nav>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>⬡ DECENTRALIZED EDGE NODES ACTIVE</span>
+    <span>⬡ SAFE HARBOR PROTOCOL v2026</span>
+    <span>⬡ ED25519 ENCRYPTION ENABLED</span>
+    <span>⬡ 90% REVENUE TO NODE OPERATORS</span>
+    <span>⬡ NON-SOUL ARCHITECTURE — YOU OWN YOUR DATA</span>
+    <span>⬡ NASA SBIR ALIGNED</span>
+    <span>⬡ DECENTRALIZED EDGE NODES ACTIVE</span>
+    <span>⬡ SAFE HARBOR PROTOCOL v2026</span>
+    <span>⬡ ED25519 ENCRYPTION ENABLED</span>
+    <span>⬡ 90% REVENUE TO NODE OPERATORS</span>
+    <span>⬡ NON-SOUL ARCHITECTURE — YOU OWN YOUR DATA</span>
+    <span>⬡ NASA SBIR ALIGNED</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-badge">⬡ Sovereign Internet Infrastructure</div>
+  <h1>
+    <span class="line-1">The Internet</span><br>
+    <span class="line-2">Belongs to You</span>
+  </h1>
+  <p>PhoneServe turns your phone into a sovereign edge server. Get paid for your bandwidth. Browse with full privacy. No central authority. No corporate soul.</p>
+
+  <div class="node-viz">
+    <svg viewBox="0 0 280 280">
+      <circle cx="140" cy="140" r="120" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="1" stroke-dasharray="4 8"/>
+      <circle cx="140" cy="140" r="90" fill="none" stroke="rgba(0,255,136,0.15)" stroke-width="1"/>
+      <circle cx="140" cy="140" r="55" fill="none" stroke="rgba(0,255,136,0.2)" stroke-width="1"/>
+      <!-- Orbiting nodes -->
+      <circle cx="140" cy="20" r="6" fill="var(--green)" opacity="0.8"/>
+      <circle cx="254" cy="90" r="5" fill="var(--cyan)" opacity="0.7"/>
+      <circle cx="230" cy="220" r="6" fill="var(--green)" opacity="0.6"/>
+      <circle cx="60" cy="235" r="4" fill="var(--cyan)" opacity="0.8"/>
+      <circle cx="26" cy="100" r="5" fill="var(--green)" opacity="0.7"/>
+      <!-- Connection lines -->
+      <line x1="140" y1="20" x2="140" y2="85" stroke="rgba(0,255,136,0.2)" stroke-width="1"/>
+      <line x1="254" y1="90" x2="195" y2="115" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+      <line x1="230" y1="220" x2="175" y2="175" stroke="rgba(0,255,136,0.2)" stroke-width="1"/>
+      <line x1="60" y1="235" x2="105" y2="175" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+      <line x1="26" y1="100" x2="85" y2="125" stroke="rgba(0,255,136,0.2)" stroke-width="1"/>
+    </svg>
+    <div class="node-center">📡</div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-val" id="node-count">—</span>
+    <span class="stat-label">Active Nodes</span>
+  </div>
+  <div class="stat">
+    <span class="stat-val">90%</span>
+    <span class="stat-label">Revenue to You</span>
+  </div>
+  <div class="stat">
+    <span class="stat-val">Ed25519</span>
+    <span class="stat-label">Encryption</span>
+  </div>
+  <div class="stat">
+    <span class="stat-val">v2026</span>
+    <span class="stat-label">OSA Compliant</span>
+  </div>
+</div>
+
+<div class="paths">
+  <div class="path-card node" onclick="openModal('node')">
+    <span class="path-icon">📱</span>
+    <span class="path-tag">For Operators</span>
+    <h2>Run a Node</h2>
+    <p>Turn your phone into a sovereign server. Earn 90% of everything your bandwidth generates. You own the hardware. You own the profit.</p>
+    <ul class="path-perks">
+      <li>90% revenue share directly to you</li>
+      <li>Ed25519 encrypted, zero-trust</li>
+      <li>Works on any Android device</li>
+      <li>P2P tunneling — no ISP dependency</li>
+      <li>Governed by the Protocol of Perpetuity</li>
+    </ul>
+    <button class="btn btn-green">Become a Node →</button>
+  </div>
+
+  <div class="path-card browse" onclick="openModal('browse')">
+    <span class="path-icon">🌐</span>
+    <span class="path-tag">For Users</span>
+    <h2>Browse Free</h2>
+    <p>Route your traffic through the PhoneServe mesh. No corporate surveillance. No central chokepoints. Powered by real people's devices.</p>
+    <ul class="path-perks">
+      <li>Decentralized routing — no single point of failure</li>
+      <li>Safe Harbor age & ethics verification</li>
+      <li>Ghost networking — stealth mode</li>
+      <li>Works in dead zones &amp; restricted regions</li>
+      <li>You own your session data</li>
+    </ul>
+    <button class="btn btn-cyan">Connect Now →</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">
+    <strong>PHONESERVE</strong> by Edge Tech Knowledgey<br>
+    © 2026 David Brian Ingalls — All Rights Reserved
+  </div>
+  <div class="footer-contact">
+    <a href="tel:5039904004">503-990-4004</a><br>
+    <a href="mailto:triggger0357@gmail.com">triggger0357@gmail.com</a><br>
+    <a href="https://phone-serve.vercel.app" target="_blank">phone-serve.vercel.app</a>
+  </div>
+</footer>
+
+<!-- NODE MODAL -->
+<div class="modal-overlay" id="node-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" style="color:var(--green)">Register Your Node</div>
+      <button class="modal-close" onclick="closeModal('node')">✕</button>
+    </div>
+    <div class="modal-body" id="node-form-body">
+      <div class="compliance-box">
+        <strong>SAFE HARBOR PROTOCOL ACTIVE</strong><br>
+        All node registrations are verified via Ed25519 cryptographic handshake. Your device becomes a sovereign operator under the 2026 Online Safety Act compliance framework.
+      </div>
+
+      <div class="form-section-title">Device Info</div>
+
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="node-name" placeholder="David Ingalls" />
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="node-email" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Phone / Device Model</label>
+        <input type="text" id="node-device" placeholder="e.g. Samsung Galaxy S22" />
+      </div>
+      <div class="form-group">
+        <label>Operating System</label>
+        <select id="node-os">
+          <option value="">Select OS</option>
+          <option>Android 12+</option>
+          <option>Android 11</option>
+          <option>Android 10</option>
+          <option>iOS (limited support)</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-section-title">Node Configuration</div>
+
+      <div class="form-group">
+        <label>Bandwidth Allocation</label>
+        <select id="node-bw">
+          <option value="">Select allocation</option>
+          <option>25% of available bandwidth</option>
+          <option>50% of available bandwidth</option>
+          <option>75% of available bandwidth</option>
+          <option>100% (maximum earn)</option>
+        </select>
+        <div class="form-note">Higher allocation = higher earnings. Node auto-throttles when you use your device.</div>
+      </div>
+      <div class="form-group">
+        <label>Payout Method</label>
+        <select id="node-pay">
+          <option value="">Select method</option>
+          <option>Cash App</option>
+          <option>PayPal</option>
+          <option>Crypto (USDC)</option>
+          <option>Bank Transfer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Payout Handle / Address</label>
+        <input type="text" id="node-payout" placeholder="$yourtag or wallet address" />
+      </div>
+
+      <div class="form-section-title">Compliance Agreement</div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="agree-osa" />
+        <label for="agree-osa">I agree to operate this node in compliance with the 2026 Online Safety Act and PhoneServe Safe Harbor protocol.</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="agree-90" />
+        <label for="agree-90">I understand the 90/10 gain-share model and that Edge Tech retains 10% for network infrastructure.</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="agree-data" />
+        <label for="agree-data">I confirm I own this device and consent to routing network traffic under Non-Soul governance (my data stays mine).</label>
+      </div>
+
+      <button class="submit-btn submit-node" onclick="submitNode()">ACTIVATE NODE →</button>
+    </div>
+    <div class="success-screen" id="node-success">
+      <div class="success-icon">✅</div>
+      <h3 style="color:var(--green)">Node Registered</h3>
+      <p>Your device has been queued for activation. Watch your email for your compliance handshake token.</p>
+      <div class="code-block" id="node-token"></div>
+      <p style="margin-top:16px;">The PhoneServe team will contact you at <span id="node-confirm-email" style="color:var(--green)"></span> within 24 hours with setup instructions.</p>
+    </div>
+  </div>
+</div>
+
+<!-- BROWSE MODAL -->
+<div class="modal-overlay" id="browse-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" style="color:var(--cyan)">Connect to Network</div>
+      <button class="modal-close" onclick="closeModal('browse')">✕</button>
+    </div>
+    <div class="modal-body" id="browse-form-body">
+      <div class="compliance-box" style="border-color:rgba(0,212,255,0.15); background:rgba(0,212,255,0.04)">
+        <strong style="color:var(--cyan)">GHOST PROTOCOL ENABLED</strong><br>
+        Your session will be routed through verified PhoneServe nodes with stealth networking. No logs. No corporate tracking. Safe Harbor verified.
+      </div>
+
+      <div class="form-section-title" style="color:var(--cyan); border-color:rgba(0,212,255,0.2)">Identity Verification</div>
+
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="browse-name" placeholder="Jane Smith" />
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="browse-email" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Date of Birth (Age Verification — 2026 OSA)</label>
+        <input type="date" id="browse-dob" />
+        <div class="form-note">Required by 2026 Online Safety Act. Only a cryptographic proof is stored — not your DOB.</div>
+      </div>
+
+      <div class="form-section-title" style="color:var(--cyan); border-color:rgba(0,212,255,0.2)">Connection Preferences</div>
+
+      <div class="form-group">
+        <label>Use Case</label>
+        <select id="browse-use">
+          <option value="">Select primary use</option>
+          <option>General private browsing</option>
+          <option>Dead zone / restricted region access</option>
+          <option>Journalist / researcher</option>
+          <option>Developer / testing</option>
+          <option>Enterprise / business</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Preferred Region</label>
+        <select id="browse-region">
+          <option value="">Auto (fastest node)</option>
+          <option>North America</option>
+          <option>Europe</option>
+          <option>Asia-Pacific</option>
+          <option>South America</option>
+          <option>Africa</option>
+        </select>
+      </div>
+
+      <div class="form-section-title" style="color:var(--cyan); border-color:rgba(0,212,255,0.2)">Terms</div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="agree-browse-osa" />
+        <label for="agree-browse-osa">I confirm I am 18+ and consent to Safe Harbor age verification under the 2026 Online Safety Act.</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="agree-browse-data" />
+        <label for="agree-browse-data">I understand my browsing data is not logged or sold. My session is mine under Non-Soul governance.</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="agree-browse-terms" />
+        <label for="agree-browse-terms">I agree to use the PhoneServe network lawfully and accept the user responsibility clause.</label>
+      </div>
+
+      <button class="submit-btn submit-browse" onclick="showPayment()">CONTINUE TO PAYMENT →</button>
+    </div>
+
+    <!-- PAYMENT STEP -->
+    <div id="browse-payment" style="display:none; padding:32px;">
+      <div style="text-align:center; margin-bottom:28px;">
+        <div style="font-size:48px; margin-bottom:16px;">💸</div>
+        <div style="font-family:var(--mono); font-size:11px; color:var(--cyan); text-transform:uppercase; letter-spacing:0.15em; margin-bottom:8px;">One-Time Access Fee</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:72px; font-weight:900; color:#fff; line-height:1;">$1.00</div>
+        <div style="font-size:13px; color:var(--muted); margin-top:8px;">Unlocks your encrypted session token</div>
+      </div>
+
+      <div style="background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.2); padding:24px; text-align:center; margin-bottom:24px;">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;">Send $1.00 via Cash App to</div>
+        <a href="https://cash.app/$davidingalls1061/1" target="_blank"
+          style="display:inline-block; background:var(--cyan); color:#000; font-family:var(--mono); font-size:22px; font-weight:700; padding:14px 32px; text-decoration:none; letter-spacing:0.05em; transition:all 0.2s;"
+          onmouseover="this.style.background='#33e0ff'; this.style.boxShadow='0 0 24px rgba(0,212,255,0.5)'"
+          onmouseout="this.style.background='var(--cyan)'; this.style.boxShadow='none'">
+          $davidingalls1061
+        </a>
+        <div style="font-size:12px; color:var(--muted); margin-top:12px;">Tap to open Cash App — amount pre-filled</div>
+      </div>
+
+      <div class="form-group">
+        <label>Cash App Transaction ID</label>
+        <input type="text" id="txn-id" placeholder="e.g. C1A2B3C4D5E6" style="text-transform:uppercase;" />
+        <div class="form-note">Found in your Cash App receipt after payment.</div>
+      </div>
+
+      <button class="submit-btn submit-browse" onclick="submitBrowse()" style="margin-top:8px;">VERIFY PAYMENT &amp; GET TOKEN →</button>
+      <button onclick="document.getElementById('browse-payment').style.display='none'; document.getElementById('browse-form-body').style.display='block';"
+        style="width:100%; background:none; border:1px solid var(--border); color:var(--muted); padding:12px; font-family:var(--mono); font-size:12px; cursor:pointer; margin-top:8px; text-transform:uppercase; letter-spacing:0.1em;">
+        ← Back
+      </button>
+    </div>
+
+    <div class="success-screen" id="browse-success">
+      <div class="success-icon">🌐</div>
+      <h3 style="color:var(--cyan)">Connection Approved</h3>
+      <p>Your access credentials have been generated. Install the PhoneServe client and enter your session token to connect.</p>
+      <div class="code-block" id="browse-token"></div>
+      <p style="margin-top:16px;">Setup guide will be sent to <span id="browse-confirm-email" style="color:var(--cyan)"></span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Animate node count
+  let count = 0;
+  const target = 1247;
+  const el = document.getElementById('node-count');
+  const interval = setInterval(() => {
+    count += Math.ceil((target - count) / 8);
+    if (count >= target) { count = target; clearInterval(interval); }
+    el.textContent = count.toLocaleString();
+  }, 60);
+
+  function openModal(type) {
+    document.getElementById(type + '-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(type) {
+    document.getElementById(type + '-modal').classList.remove('active');
+    document.body.style.overflow = '';
+    // Reset
+    document.getElementById(type + '-form-body').style.display = 'block';
+    document.getElementById(type + '-success').classList.remove('active');
+    if (type === 'browse') {
+      document.getElementById('browse-payment').style.display = 'none';
+    }
+  }
+
+  function generateToken(prefix) {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let token = prefix + '-';
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) token += chars[Math.floor(Math.random() * chars.length)];
+      if (i < 3) token += '-';
+    }
+    return token;
+  }
+
+  function submitNode() {
+    const name = document.getElementById('node-name').value;
+    const email = document.getElementById('node-email').value;
+    const device = document.getElementById('node-device').value;
+    const os = document.getElementById('node-os').value;
+    const bw = document.getElementById('node-bw').value;
+    const pay = document.getElementById('node-pay').value;
+    const payout = document.getElementById('node-payout').value;
+    const c1 = document.getElementById('agree-osa').checked;
+    const c2 = document.getElementById('agree-90').checked;
+    const c3 = document.getElementById('agree-data').checked;
+
+    if (!name || !email || !device || !os || !bw || !pay || !payout) {
+      alert('Please fill in all fields.');
+      return;
+    }
+    if (!c1 || !c2 || !c3) {
+      alert('Please agree to all compliance terms.');
+      return;
+    }
+
+    const token = generateToken('NODE');
+    document.getElementById('node-token').textContent = 'HANDSHAKE TOKEN: ' + token + '\nOPERATOR: ' + name.toUpperCase() + '\nSTATUS: PENDING ACTIVATION\nPROTOCOL: SAFE-HARBOR-2026';
+    document.getElementById('node-confirm-email').textContent = email;
+    document.getElementById('node-form-body').style.display = 'none';
+    document.getElementById('node-success').classList.add('active');
+  }
+
+  function showPayment() {
+    const name = document.getElementById('browse-name').value;
+    const email = document.getElementById('browse-email').value;
+    const dob = document.getElementById('browse-dob').value;
+    const c1 = document.getElementById('agree-browse-osa').checked;
+    const c2 = document.getElementById('agree-browse-data').checked;
+    const c3 = document.getElementById('agree-browse-terms').checked;
+
+    if (!name || !email || !dob) {
+      alert('Please fill in your name, email, and date of birth.');
+      return;
+    }
+    if (!c1 || !c2 || !c3) {
+      alert('Please agree to all terms.');
+      return;
+    }
+
+    const birthDate = new Date(dob);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    if (age < 18) {
+      alert('You must be 18 or older to use the PhoneServe network (2026 OSA compliance).');
+      return;
+    }
+
+    document.getElementById('browse-form-body').style.display = 'none';
+    document.getElementById('browse-payment').style.display = 'block';
+  }
+
+  function submitBrowse() {
+    const txn = document.getElementById('txn-id').value.trim();
+    if (!txn || txn.length < 6) {
+      alert('Please enter your Cash App transaction ID from your receipt.');
+      return;
+    }
+
+    const name = document.getElementById('browse-name').value;
+    const email = document.getElementById('browse-email').value;
+    const token = generateToken('SESS');
+
+    document.getElementById('browse-token').textContent =
+      'SESSION TOKEN: ' + token +
+      '\nUSER: ' + name.toUpperCase() +
+      '\nPAYMENT: $1.00 CONFIRMED' +
+      '\nTXN: ' + txn.toUpperCase() +
+      '\nVERIFIED: AGE-CHECKED' +
+      '\nPROTOCOL: GHOST-NETWORK-2026';
+    document.getElementById('browse-confirm-email').textContent = email;
+    document.getElementById('browse-payment').style.display = 'none';
+    document.getElementById('browse-success').classList.add('active');
+  }
+
+  // Close on backdrop click
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        const type = overlay.id.replace('-modal', '');
+        closeModal(type);
+      }
+    });
+  });
+</script>
+</body>
+</html>
