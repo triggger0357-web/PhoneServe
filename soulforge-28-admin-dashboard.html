@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Soul Forge Admin Dashboard</title>
+  <style>
+    body {
+      background: #050505;
+      color: #00f6ff;
+      font-family: Consolas, monospace;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00f6ff;
+      text-shadow: 0 0 12px #00f6ff;
+      margin-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid #00f6ff;
+      padding: 15px;
+      background: rgba(0, 255, 255, 0.05);
+      box-shadow: 0 0 10px #00f6ff33;
+    }
+
+    button {
+      background: #000;
+      border: 1px solid #00f6ff;
+      color: #00f6ff;
+      padding: 8px;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #00f6ff;
+      color: #000;
+      cursor: pointer;
+    }
+
+    pre {
+      background: #000;
+      border: 1px solid #00f6ff;
+      padding: 10px;
+      color: #00ffcc;
+      height: 200px;
+      overflow-y: auto;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      background: #000;
+      border: 1px solid #00f6ff;
+      color: #00f6ff;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>SOUL FORGE — ADMIN DASHBOARD</h1>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2>Login</h2>
+      <input id="username" placeholder="Username">
+      <input id="password" placeholder="Password" type="password">
+      <button onclick="login()">Login</button>
+      <pre id="loginOut"></pre>
+    </div>
+
+    <div class="card">
+      <h2>Active Tokens</h2>
+      <button onclick="loadTokens()">Refresh</button>
+      <pre id="tokensOut"></pre>
+    </div>
+
+    <div class="card">
+      <h2>Revoke Token</h2>
+      <input id="revokeInput" placeholder="Token">
+      <button onclick="revoke()">Revoke</button>
+      <pre id="revokeOut"></pre>
+    </div>
+
+    <div class="card">
+      <h2>AI List</h2>
+      <button onclick="loadAIs()">Load AIs</button>
+      <pre id="aisOut"></pre>
+    </div>
+
+    <div class="card">
+      <h2>Logs</h2>
+      <button onclick="loadLogs()">Load Logs</button>
+      <pre id="logsOut"></pre>
+    </div>
+
+    <div class="card">
+      <h2>Force Save AI</h2>
+      <input id="aiId" placeholder="AI ID">
+      <textarea id="aiData" placeholder="AI JSON" style="width:100%;height:120px;background:#000;color:#00f6ff;border:1px solid #00f6ff;margin-top:5px;"></textarea>
+      <button onclick="saveAI()">Save</button>
+      <pre id="saveOut"></pre>
+    </div>
+
+  </div>
+
+  <script>
+    let token = null;
+
+    function login() {
+      fetch("/auth/token-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: document.getElementById("username").value,
+          password: document.getElementById("
