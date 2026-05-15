@@ -1,0 +1,20 @@
+edge-tech-knowledgey/
+  public/
+    index.html
+    dashboard.html
+    admin.html
+    diagnostics.html
+    styles.css
+  server/
+    app.js
+    routes-auth.js
+    routes-admin.js
+    routes-dashboard.js
+    routes-diagnostics.js
+    routes-services.js
+    routes-payments.js
+    models.js
+  users/
+  config/
+    settings.json
+  logs/
