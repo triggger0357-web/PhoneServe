@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edge Tech Knowledgey — Admin</title>
+  <link rel="stylesheet" href="admin-dashboard.css" />
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="sidebar">
+      <h1 class="logo">ETK Admin</h1>
+      <nav>
+        <button data-panel="overview">Overview</button>
+        <button data-panel="health">System Health</button>
+        <button data-panel="metrics">Performance</button>
+        <button data-panel="logs">Logs</button>
+        <button data-panel="users">Users</button>
+      </nav>
+    </aside>
+<section id="panel-ai" class="panel"></section>
+<button data-panel="ai">Admin AI</button>
+    <main class="main-panel">
+      <header class="top-bar">
+        <span class="status-pill" id="systemStatus">Loading…</span>
+      </header>
+
+      <section id="panel-overview" class="panel active"></section>
+      <section id="panel-health" class="panel"></section>
+      <section id="panel-metrics" class="panel"></section>
+      <section id="panel-logs" class="panel"></section>
+      <section id="panel-users" class="panel"></section>
+    </main>
+  </div>
+
+  <script src="admin-dashboard.js" type="module"></script>
+</body>
+</html>

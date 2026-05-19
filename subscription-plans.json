@@ -1,0 +1,5 @@
+{
+  "free": { "limits": "basic", "price": 0 },
+  "pro": { "limits": "extended", "price": 9.99 },
+  "enterprise": { "limits": "unlimited", "price": 49.99 }
+}

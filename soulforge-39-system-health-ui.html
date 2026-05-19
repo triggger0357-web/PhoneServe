@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Soul Forge — System Health Monitor</title>
+  <style>
+    body {
+      background: #050505;
+      color: #00f6ff;
+      font-family: Consolas, monospace;
+      padding: 20px;
+    }
+
+    h1 {
+      text-shadow: 0 0 12px #00f6ff;
+    }
+
+    .card {
+      border: 1px solid #00f6ff;
+      padding: 15px;
+      margin-bottom: 20px;
+      background: rgba(0, 255, 255, 0.05);
+      box-shadow: 0 0 10px #00f6ff33;
+    }
+
+    button {
+      background: #000;
+      border: 1px solid #00f6ff;
+      color: #00f6ff;
+      padding: 8px;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #00f6ff;
+      color: #000;
+      cursor: pointer;
+    }
+
+    pre {
+      background: #000;
+      border: 1px solid #00f6ff;
+      padding: 10px;
+      color: #00ffcc;
+      height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>SOUL FORGE — SYSTEM HEALTH MONITOR</h1>
+
+  <div class="card">
+    <h2>Full System Status</h2>
+    <button onclick="loadStatus()">Refresh</button>
+    <pre id="statusOut"></pre>
+  </div>
+
+  <div class="card">
+    <h2>CPU Usage</h2>
+    <button onclick="loadCPU()">Load CPU</button>
+    <pre id="cpuOut"></pre>
+  </div>
+
+  <div class="card">
+    <h2>Memory Usage</h2>
+    <button onclick="loadMemory()">Load Memory</button>
+    <pre id="memoryOut"></pre>
+  </div>
+
+  <div class="card">
+    <h2>Disk Info</h2>
+    <button onclick="loadDisk()">Load Disk</button>
+    <pre id="diskOut"></pre>
+  </div>
+
+  <div class="card">
+    <h2>Uptime</h2>
+    <button onclick="loadUptime()">Load Uptime</button>
+    <pre id="uptimeOut"></pre>
+  </div>
+
+  <script>
+    function loadStatus() {
+      fetch("/health/status")
+        .then(r => r.json())
+        .then(d => {
+          document.getElementById("statusOut").textContent = JSON

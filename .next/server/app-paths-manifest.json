@@ -1,7 +1,1 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/contact/route": "app/api/contact/route.js",
-  "/api/ai/route": "app/api/ai/route.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/ironskin/page": "app/ironskin/page.js"
-}
+{}

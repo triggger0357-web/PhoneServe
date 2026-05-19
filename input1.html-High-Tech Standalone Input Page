@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ETK Input Panel</title>
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  body {
+    margin: 0;
+    background: #020202;
+    color: #e8faff;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    padding-top: 120px;
+  }
+
+  .panel {
+    width: 60%;
+    margin: auto;
+    padding: 40px;
+    background: rgba(0, 20, 30, 0.4);
+    border: 1px solid #0ff4;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 40px #00eaff44;
+  }
+
+  input {
+    width: 80%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 8px;
+    border: 1px solid #00eaff;
+    background: #001018;
+    color: #e8faff;
+    font-size: 1.1rem;
+  }
+
+  .btn {
+    padding: 14px 30px;
+    margin-top: 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #e8faff;
+    border: 1px solid #00eaff;
+    background: #00eaff33;
+    box-shadow: 0 0 20px #00eaff55;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background: #00eaff55;
+    box-shadow: 0 0 30px #00eaffaa;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Edge Tech Knowledgey</h1>
+<h2>Secure Input Panel</h2>
+
+<div class="panel">
+  <p>Enter your information below:</p>
+
+  <input id="inputField" type="text" placeholder="Type something…" />
+
+  <button class="btn" onclick="submitInput()">Submit</button>
+</div>
+
+<script>
+function submitInput() {
+  const value = document.getElementById('inputField').value;
+
+  fetch('/api/input1', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ value })
+  })
+  .then(r => r.json())
+  .then(res => alert('Submitted: ' + res.status));
+}
+</script>
+
+</body>
+</html>

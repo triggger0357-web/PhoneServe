@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AI Task Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<h1>AI Task Assistant</h1>
+<p>Tell the AI what you need done:</p>
+
+<input id="taskInput" type="text" placeholder="Example: activate my internet" />
+
+<button onclick="sendTask()">Submit</button>
+
+<p id="aiResponse"></p>
+
+<script>
+function sendTask() {
+  const request = document.getElementById('taskInput').value;
+
+  fetch('/api/ai/task', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ request })
+  })
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById('aiResponse').textContent = data.result;
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "systemName": "Soul Forge",
+  "description": "Core configuration for AI upgrades, evolution, and personality systems.",
+  "defaultAI": "wreckoning",
+
+  "upgradeRules": {
+    "tierRequirements": {
+      "tier2_ops": 1,
+      "tier3_research": 2,
+      "tier4_advanced": 3
+    },
+    "costScaling": {
+      "technical": 1.2,
+      "creative": 1.1,
+      "safety": 1.3,
+      "operational": 1.0
+    }
+  },
+
+  "evolutionTracks": [
+    "technical",
+    "creative",
+    "safety",
+    "operational"
+  ],
+
+  "personalityDefaults": {
+    "guardian": {
+      "boosts": { "safety": 2 },
+      "limits": { "creative": 1 }
+    },
+    "navigator": {
+      "boosts": { "operational": 2 },
+      "limits": { "creative": 1 }
+    },
+    "artisan": {
+      "boosts": { "creative": 3 },
+      "limits": { "technical": 1 }
+    },
+    "oracle": {
+      "boosts": { "technical": 3 },
+      "limits": { "operational": 1 }
+    }
+  }
+}

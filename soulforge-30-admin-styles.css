@@ -1,0 +1,59 @@
+/* Soul Forge Admin Dashboard Styles (v1) */
+
+body {
+  background: #040404;
+  color: #00eaff;
+  font-family: Consolas, monospace;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #00eaff;
+  text-shadow: 0 0 12px #00eaff;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid #00eaff;
+  padding: 15px;
+  background: rgba(0, 255, 255, 0.05);
+  box-shadow: 0 0 10px #00eaff33;
+}
+
+button {
+  background: #000;
+  border: 1px solid #00eaff;
+  color: #00eaff;
+  padding: 8px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #00eaff;
+  color: #000;
+  cursor: pointer;
+}
+
+pre {
+  background: #000;
+  border: 1px solid #00eaff;
+  padding: 10px;
+  color: #00ffcc;
+  height: 200px;
+  overflow-y: auto;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  background: #000;
+  border: 1px solid #00eaff;
+  color: #00eaff;
+  margin-top: 5px;
+}
