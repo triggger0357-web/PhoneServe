@@ -3,135 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHONESERVE | EDGE TECH</title>
+    <title>PhoneServe Node Gateway</title>
     <style>
         body {
-            background-color: #050505;
-            color: #00ff41; /* Matrix/Terminal Green */
-            font-family: 'Courier New', Courier, monospace;
+            background: radial-gradient(circle at center, #111827, #030712);
+            color: #f9fafb;
+            font-family: system-ui, -apple-system, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            overflow: hidden;
+            padding: 20px;
+        }
+        .container {
+            max-width: 650px;
+            width: 100%;
+            padding: 30px;
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+        }
+        .header { text-align: center; margin-bottom: 25px; }
+        .logo {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            color: #10b981;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
             text-transform: uppercase;
         }
-
-        #bg-effect {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, #1a1a1a 0%, #000 90%);
-            z-index: -1;
-            opacity: 0.6;
+        .card {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(31, 41, 55, 0.4);
+            border: 1px solid #374151;
+            border-radius: 12px;
         }
-
-        .container {
-            text-align: center;
-            border: 1px solid #00ff41;
-            padding: 50px;
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
-        }
-
-        h1 {
-            font-size: clamp(2rem, 8vw, 4rem);
-            letter-spacing: 12px;
-            margin: 0;
-            color: #00ff41;
-            text-shadow: 3px 3px #ff003c; /* Red glitch shadow */
-            animation: glitch 2s infinite;
-        }
-
-        @keyframes glitch {
-            0% { text-shadow: 2px 2px #ff003c; }
-            50% { text-shadow: -2px -2px #00e5ff; }
-            100% { text-shadow: 2px 2px #ff003c; }
-        }
-
-        .subtitle {
+        .card-title {
             font-size: 0.9rem;
-            margin-top: 15px;
-            color: #ffffff;
-            letter-spacing: 4px;
-            opacity: 0.8;
+            color: #9ca3af;
+            font-family: monospace;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-
-        .status-box {
-            margin-top: 40px;
-            padding: 15px;
-            border-left: 3px solid #00ff41;
-            background: rgba(0, 255, 65, 0.05);
-            font-size: 0.75rem;
-            text-align: left;
-            line-height: 1.6;
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .stat-box { background: #0b0f19; padding: 12px; border-radius: 8px; border: 1px solid #1f2937; }
+        .stat-label { font-size: 0.75rem; color: #6b7280; font-family: monospace; }
+        .stat-val { font-size: 1.1rem; font-weight: 600; color: #f3f4f6; margin-top: 4px; }
+        .input-group { display: flex; gap: 10px; }
+        input[type="text"] {
+            flex: 1; padding: 12px; background: #0b0f19; border: 1px solid #4b5563;
+            border-radius: 8px; color: #fff; font-family: monospace; outline: none;
         }
-
-        .pulse {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #00ff41;
-            border-radius: 50%;
-            margin-right: 12px;
-            animation: pulse-animation 1.5s infinite;
+        button {
+            padding: 12px 24px; background: #3b82f6; border: none; border-radius: 8px;
+            color: #fff; font-weight: 600; cursor: pointer; transition: background 0.2s;
         }
-
-        @keyframes pulse-animation {
-            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(0, 255, 65, 0); }
-            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(0, 255, 65, 0); }
+        button:hover { background: #2563eb; }
+        button.success { background: #10b981; }
+        button.success:hover { background: #059669; }
+        pre {
+            margin-top: 15px; padding: 12px; background: #020617; border: 1px solid #1e293b;
+            border-radius: 8px; color: #10b981; font-family: monospace; font-size: 0.85rem;
+            overflow-x: auto; max-height: 180px; white-space: pre-wrap; word-break: break-all;
         }
-
-        .btn {
-            margin-top: 50px;
-            display: inline-block;
-            padding: 18px 40px;
-            background: transparent;
-            color: #00ff41;
-            border: 1px solid #00ff41;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: bold;
-            letter-spacing: 3px;
-            transition: all 0.4s ease;
-        }
-
-        .btn:hover {
-            background: #00ff41;
-            color: #000;
-            box-shadow: 0 0 40px #00ff41;
-            transform: translateY(-3px);
-        }
-
-        .footer-text {
-            position: fixed;
-            bottom: 20px;
-            font-size: 0.6rem;
-            color: #333;
-            letter-spacing: 2px;
-        }
+        .footer { text-align: center; margin-top: 30px; font-size: 0.85rem; color: #4b5563; font-family: monospace; }
     </style>
 </head>
 <body>
-    <div id="bg-effect"></div>
+
     <div class="container">
-        <h1>PHONESERVE</h1>
-        <div class="subtitle">Sovereign Architecture | Edge Tech</div>
-        
-        <div class="status-box">
-            <div><span class="pulse"></span>GATEWAY: <span style="color: #fff;">ACTIVE</span></div>
-            <div>[NODE: VANCOUVER_WA_USA]</div>
-            <div>[ENCRYPTION: AES-256-GCM]</div>
-            <div>[SYSTEM: PROJECT SANCTUARY]</div>
+        <div class="header">
+            <div class="logo">PhoneServe</div>
+            <div class="status-badge">
+                <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
+                Edge Node Sovereign
+            </div>
         </div>
 
-        <a href="https://edgetech-gateway.triggger0357.workers.dev" class="btn">ACCESS GATEWAY</a>
+        <!-- Layer 1: Real-Time System Diagnostics -->
+        <div class="card">
+            <div class="card-title">⚙️ Layer 1: Operational Diagnostics</div>
+            <div class="grid">
+                <div class="stat-box">
+                    <div class="stat-label">NODE UPTIME</div>
+                    <div id="diag-uptime" class="stat-val">Loading...</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">RAM UTILITY (USED/TOTAL)</div>
+                    <div id="diag-ram" class="stat-val">Loading...</div>
+                </div>
+                <div class="stat-box" style="grid-column: span 2;">
+                    <div class="stat-label">ED25519 NODE PUBLIC KEY IDENTIFIER</div>
+                    <div id="diag-key" class="stat-val" style="font-size: 0.75rem; font-family: monospace; color: #3b82f6;">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Layer 2: Safe Harbor Compliance Handshake -->
+        <div class="card">
+            <div class="card-title">🛡️ Layer 2: Safe Harbor Gateway Access</div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #9ca3af; cursor: pointer;">
+                    <input type="checkbox" id="ageCheck" checked style="transform: scale(1.2);"> Age Verification Token Checked
+                </label>
+                <button onclick="runComplianceHandshake()" class="success" style="padding: 8px 16px; font-size: 0.85rem;">Execute Handshake</button>
+            </div>
+            <pre id="complianceResult" style="display: none;"></pre>
+        </div>
+
+        <!-- Layer 3: Cryptographically Signed Proxy Gateway -->
+        <div class="card">
+            <div class="card-title">🛰️ Layer 3: Secure Signed Proxy Routing</div>
+            <div class="input-group">
+                <input type="text" id="targetUrl" value="https://api.ipify.org?format=json">
+                <button onclick="routeTraffic()">Route</button>
+            </div>
+            <div id="loader" style="display: none; margin-top: 15px; font-size: 0.9rem; color: #3b82f6; font-family: monospace;">🔄 Generating Ed25519 Cryptographic Frame...</div>
+            <pre id="resultBox" style="display: none;"></pre>
+        </div>
+
+        <div class="footer">
+            Node ID: PS-0357 // Location: Localhost
+        </div>
     </div>
-    <div class="footer-text">PROPERTY OF EDGE TECH KNOWLEDGEY - ALL RIGHTS RESERVED</div>
+
+    <script>
+        // System Diagnostics Monitoring Loop
+        async function updateDiagnostics() {
+            try {
+                const res = await fetch('/api/diagnostics');
+                const data = await res.json();
+                document.getElementById('diag-uptime').textContent = data.uptime + 's';
+                document.getElementById('diag-ram').textContent = data.memory.used + ' / ' + data.memory.total;
+                document.getElementById('diag-key').textContent = data.publicKey;
+            } catch (err) {
+                console.error('Diagnostics offline');
+            }
+        }
+        setInterval(updateDiagnostics, 3000);
+        updateDiagnostics();
+
+        // Safe Harbor Execution
+        async function runComplianceHandshake() {
+            const hasAge = document.getElementById('ageCheck').checked;
+            const box = document.getElementById('complianceResult');
+            box.style.display = 'block';
+            box.textContent = 'Initiating compliance protocol...';
+            
+            try {
+                const res = await fetch('/api/safe-harbor', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ageVerified: hasAge, userConsent: true })
+                });
+                const data = await res.json();
+                box.textContent = JSON.stringify(data, null, 4);
+            } catch (err) {
+                box.textContent = 'Handshake Error: ' + err.message;
+            }
+        }
+
+        // Cryptographically Signed Traffic Router
+        async function routeTraffic() {
+            const urlInput = document.getElementById('targetUrl').value;
+            const resultBox = document.getElementById('resultBox');
+            const loader = document.getElementById('loader');
+            
+            if (!urlInput) return alert('Please enter a target URL');
+            
+            loader.style.display = 'block';
+            resultBox.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/gateway?url=' + encodeURIComponent(urlInput));
+                const data = await response.json();
+                
+                resultBox.textContent = JSON.stringify(data, null, 4);
+                resultBox.style.display = 'block';
+            } catch (err) {
+                resultBox.textContent = 'Routing Error: ' + err.message;
+                resultBox.style.display = 'block';
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+    </script>
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-.import time
+import time
 import json
 from node_handshake import PhoneServeNode
 from data_relay import RelayNode, DataPacket

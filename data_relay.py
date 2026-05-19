@@ -1,3 +1,4 @@
+# AUTHORITY: THE COURT | CO-FOUNDERS: JOHN D. COURT & DAVID BRIAN INGALLS
 import json
 import time
 import hashlib

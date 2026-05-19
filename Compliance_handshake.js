@@ -1,3 +1,5 @@
+global.window = global;
+const Ed25519 = require('@noble/ed25519');
 const security = require('./src/security/secure_handshake');/**
  * PhoneServe Compliance Authority
  * Protocol: Safe Harbor v1

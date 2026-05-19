@@ -1,0 +1,85 @@
+const express = require('express');
+const path = require('path');
+const { exec } = require('child_process');
+
+const app = express();
+const AUTH_TOKEN = Buffer.from(NODE_PASSCODE).toString('base64'); // Simple robust token generation
+
+app.use(express.json());
+
+const projectDir = '/data/data/com.termux/files/home/PhoneServe';
+
+// Serve public static assets seamlessly
+app.use(express.static(path.join(projectDir, 'public')));
+
+// Public Root Route
+app.get('/', (req, res) => {
+    res.sendFile(path.app.post('/api/auth', (req, res) => {
+    const { passcode } = req.body;
+    if (passcode === NODE_PASSCODE) {
+        return res.json({ token: AUTH_TOKEN });
+    }
+    res.status(401).json({ error: "Invalid Node Passcode." });
+});
+
+// Admin Control Panel Route
+app.get('/manage-node-0357', (req, res) => {
+    res.sendFile(path.join(projectDir, 'admin.html'));
+});
+
+// Secure Admin API Lifecycle Endpoint
+app.post('/api/admin', requireAuth, (req, res) => {
+    const { action } = req.body;
+    
+    if (action === 'status') {
+        return res.json({ status: "PhoneServe Node is active, secure, and operational." });
+    } 
+    
+    if (action === 'restart') {
+        res.json({ status: "Server reboot sequence initiated..." });
+        
+        setTimeout(() => {
+            const { spawn } = require('child_process');
+            const child = spawn('sleep 2 && node start-node.js', {
+                detached: true,
+                stdio: 'ignore',
+                shell: true
+            });
+            child.unref();
+            process.exit(0);
+        }, 1000);
+        return;
+    }
+    
+    res.status(400).json({ error: "Invalid action." });
+});
+
+// Secure Custom Terminal Execution Engine
+app.post('/api/execute', requireAuth, (req, res) => {
+    const { command } = req.body;
+
+    if (!command) {
+        return res.status(400).json({ error: "No command provided." });
+    }
+
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            return res.json({ output: `Error: ${error.message}` });
+        }
+        res.json({ output: stdout || stderr || "Command executed successfully with zero output." });
+    });
+});
+
+// Bind Server
+try {
+    app.listen(PORT, () => {
+        console.log(`==================================================`);
+        console.log(`PhoneServe Network Node Online (Secured)`);
+        console.log(` Local Control: http://localhost:${PORT}/manage-node-0357`);
+        console.log(`==================================================`);
+    });
+
+    setInterval(() => {}, 86400000);
+} catch (err) {
+    console.error("Server failed to bind:", err);
+}

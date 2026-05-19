@@ -1,0 +1,3 @@
+nohup: ignoring input
+"cloudflared tunnel run" requires the ID or name of the tunnel to run as the last command line argument or in the configuration file.
+See 'cloudflared tunnel run --help'.

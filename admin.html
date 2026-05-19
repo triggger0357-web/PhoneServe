@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneServe Node Management</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 { color: #58a6ff; border-bottom: 1px solid #21262d; padding-bottom: 8px; }
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #238636;
+            color: #ffffff;
+            border: 1px solid rgba(240,246,252,0.1);
+            border-radius: 6px;
+            padding: 6px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .btn-danger { background-color: #da3633; }
+        .btn:hover { opacity: 0.9; }
+        input[type="text"], input[type="password"] {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-family: monospace;
+        }
+        #cmd-input { width: 70%; }
+        pre {
+            background-color: #010409;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 12px;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+            color: #7ee787;
+            min-height: 40px;
+        }
+        .hidden { display: none !important; }
+        #login-form { max-width: 400px; margin: 100px auto; text-align: center; }
+        #login-form input { width: 100%; margin-bottom: 15px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+    <!-- Auth Gateway Section -->
+    <div id="login-interface" class="card oily-barrier">
+        <h2>Node Security Verification</h2>
+        <p style="color: #8b949e;">Enter the administrative node passcode to establish a session.</p>
+        <input type="password" id="node-passcode-input" placeholder="Enter Admin Passcode" onkeydown="if(event.key === 'Enter') attemptLogin()">
+        <br><br>
+        <button class="btn" onclick="attemptLogin()">Verify Identity</button>
+        <p id="login-error" style="color: #da3633; font-size: 14px; margin-top: 10px;"></p>
+    </div>
+
+    <!-- Main Admin Panel Content (Hidden by default) -->
+    <div id="admin-interface" class="hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>PhoneServe Node Control Panel</h1>
+            <button class="btn btn-danger" onclick="logout()" style="height: fit-content;">Lock Node</button>
+        </div>
+
+        <div class="card">
+            <h2>System Operations</h2>
+            <button class="btn" onclick="sendAdminAction('status')">Check Node Status</button>
+            <button class="btn btn-danger" onclick="sendAdminAction('restart')">Restart Node</button>
+            <h3>System Output:</h3>
+            <pre id="admin-output">Awaiting action...</pre>
+        </div>
+
+        <div class="card">
+            <h2>Terminal Command Execution</h2>
+            <p style="color: #8b949e; font-size: 13px;">⚠️ Executing raw commands runs directly inside the host Termux environment.</p>
+            <input type="text" id="cmd-input" placeholder="e.g., pwd, ls -la, top -n 1" onkeydown="if(event.key === 'Enter') executeCommand()">
+            <button class="btn" onclick="executeCommand()">Run</button>
+            <h3>Terminal Output:</h3>
+            <pre id="terminal-output">Terminal idle.</pre>
+        </div>
+    </div>
+
+    <script>
+        // Check local storage for an existing valid token session on load
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("node_session_token")) {
+                showDashboard();
+            }
+        });
+
+        function showDashboard() {
+            document.getElementById("login-interface").classList.add("hidden");
+            document.getElementById("admin-interface").classList.remove("hidden");
+        }
+
+        function logout() {
+            localStorage.removeItem("node_session_token");
+            window.location.reload();
+        }
+
+        async function attemptLogin() {
+            const passcode = document.getElementById("node-passcode-input").value;
+            const errorBox = document.getElementById("login-error");
+            
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ passcode })
+                });
+                
+                const data = await response.json();
+                if (response.ok && data.token) {
+                    localStorage.setItem("node_session_token", data.token);
+                    errorBox.innerText = "";
+                    showDashboard();
+                } else {
+                    errorBox.innerText = data.error || "Authentication Failed.";
+                }
+            } catch (err) {
+                errorBox.innerText = "Error contacting node security layer.";
+            }
+        }
+
+        async function sendAdminAction(actionType) {
+            const outputBox = document.getElementById('admin-output');
+            const token = localStorage.getItem("node_session_token");
+            outputBox.innerText = `Sending ${actionType} request...`;
+            
+            try {
+                const response = await fetch('/api/admin', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-Auth-Token': token
+                    },
+                    body: JSON.stringify({ action: actionType })
+                });
+                const data = await response.json();
+                outputBox.innerText = data.status || data.error || JSON.stringify(data);
+                
+                if (response.status === 401) logout();
+            } catch (err) {
+                outputBox.innerText = `Connection Error: ${err.message}`;
+            }
+        }
+
+        async function executeCommand() {
+            const inputField = document.getElementById('cmd-input');
+            const outputBox = document.getElementById('terminal-output');
+            const commandText = inputField.value.trim();
+            const token = localStorage.getItem("node_session_token");
+
+            if (!commandText) return;
+            outputBox.innerText = "Executing command...";
+
+            try {
+                const response = await fetch('/api/execute', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-Auth-Token': token
+                    },
+                    body: JSON.stringify({ command: commandText })
+                });
+                const data = await response.json();
+                outputBox.innerText = data.output || data.error;
+                
+                if (response.status === 401) logout();
+            } catch (err) {
+                outputBox.innerText = `Execution Error: ${err.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
