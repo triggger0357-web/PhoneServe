@@ -1,0 +1,17 @@
+[Unit]
+Description=EdgeTech Quadlet Container Unit
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+Image=edgetech/node:latest
+Restart=on-failure
+Secrets=proxy_auth_pass:PROXY_SECRET
+Environment=HTTP_PROXY=http://edgetech_node:$PROXY_SECRET@proxy.edgetech.io
+Environment=HTTPS_PROXY=https://edgetech_node:$PROXY_SECRET@proxy.edgetech.io
+Environment=NO_PROXY=localhost,127.0.0.1,.phoneserve.internal
+MemoryLimit=1024M
+CPUQuota=50%
+
+[Install]
+WantedBy=multi-user.target
