@@ -1,4 +1,8 @@
+.env.local
+keys/
 # This is a sample .gitignore file
 # Add files and directories to ignore here
+.next/
+node_modules/
 .next/
 node_modules/
