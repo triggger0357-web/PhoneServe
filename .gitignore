@@ -6,3 +6,6 @@ keys/
 node_modules/
 .next/
 node_modules/
+
+# Local Netlify folder
+.netlify

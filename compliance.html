@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhoneServe Compliance // ETK</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#020408;--deep:#050d14;--panel:#0a1a24;--panel2:#0d2030;
+  --edge:#00d4ff;--spark:#00ff9d;--pulse:#ff3c6e;--gold:#ffcc00;
+  --dim:#1a3040;--muted:#4a7a8a;--text:#c8e8f0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:var(--void);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100%;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;
+  background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* LAYOUT */
+.page{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:0 0 60px;}
+
+/* HEADER */
+header{display:flex;justify-content:space-between;align-items:center;
+  padding:14px 24px;border-bottom:1px solid var(--dim);flex-wrap:wrap;gap:10px;
+  background:rgba(2,4,8,0.7);backdrop-filter:blur(8px);
+  position:sticky;top:0;z-index:20;}
+.brand{font-family:'Orbitron',monospace;font-size:12px;font-weight:900;
+  letter-spacing:.15em;color:var(--edge);}
+.brand .sub{color:var(--muted);font-size:9px;font-weight:400;display:block;letter-spacing:.2em;margin-top:2px;}
+.back-btn{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);
+  text-decoration:none;letter-spacing:.1em;transition:color .2s;}
+.back-btn:hover{color:var(--edge);}
+.status-badge{font-family:'Share Tech Mono',monospace;font-size:10px;
+  padding:5px 12px;border:1px solid;letter-spacing:.08em;display:flex;align-items:center;gap:6px;}
+.status-badge.verified{border-color:var(--spark);color:var(--spark);}
+.status-badge.unverified{border-color:var(--pulse);color:var(--pulse);}
+.status-badge.pending{border-color:var(--gold);color:var(--gold);}
+.sbdot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse-dot 2s infinite;}
+
+/* HERO BANNER */
+.hero{padding:28px 24px;border-bottom:1px solid var(--dim);
+  background:linear-gradient(135deg,rgba(0,212,255,0.04),rgba(0,255,157,0.02));}
+.hero-title{font-family:'Orbitron',monospace;font-size:clamp(18px,4vw,28px);
+  font-weight:900;letter-spacing:.1em;color:#fff;margin-bottom:6px;}
+.hero-title .hl{color:var(--edge);}
+.hero-sub{font-family:'Share Tech Mono',monospace;font-size:11px;
+  color:var(--muted);letter-spacing:.12em;line-height:1.8;}
+.authority-row{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;}
+.auth-chip{font-family:'Share Tech Mono',monospace;font-size:10px;
+  padding:4px 12px;border:1px solid var(--dim);color:var(--muted);letter-spacing:.08em;}
+.auth-chip .v{color:var(--edge);}
+
+/* SECTIONS */
+.section{border-bottom:1px solid var(--dim);}
+.sec-head{padding:14px 24px;display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;user-select:none;transition:background .15s;}
+.sec-head:hover{background:rgba(0,212,255,0.03);}
+.sec-title{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;
+  letter-spacing:.15em;color:var(--edge);text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.sec-num{font-size:9px;color:var(--muted);font-family:'Share Tech Mono',monospace;}
+.sec-arrow{font-size:10px;color:var(--muted);transition:transform .2s;}
+.sec-arrow.open{transform:rotate(90deg);}
+.sec-body{padding:0 24px 20px;display:none;}
+.sec-body.open{display:block;}
+
+/* AGE VERIFICATION */
+.verify-flow{display:flex;flex-direction:column;gap:12px;}
+.verify-step{padding:14px 16px;background:var(--panel);border:1px solid var(--dim);
+  display:flex;gap:14px;align-items:flex-start;}
+.step-num{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;
+  color:var(--dim);min-width:28px;margin-top:2px;}
+.step-num.done{color:var(--spark);}
+.step-num.active{color:var(--gold);}
+.step-content{}
+.step-title{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;
+  letter-spacing:.1em;color:#fff;margin-bottom:4px;}
+.step-desc{font-family:'Share Tech Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:.06em;line-height:1.7;margin-bottom:8px;}
+
+.dob-inputs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.dob-input{background:var(--deep);border:1px solid var(--dim);
+  padding:8px 12px;font-family:'Share Tech Mono',monospace;font-size:13px;
+  color:var(--text);outline:none;width:80px;text-align:center;transition:border-color .2s;}
+.dob-input:focus{border-color:var(--edge);}
+.dob-input.wide{width:100px;}
+.dob-label{font-family:'Share Tech Mono',monospace;font-size:9px;
+  color:var(--muted);letter-spacing:.1em;display:block;margin-bottom:3px;}
+
+.comp-btn{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;
+  padding:9px 20px;letter-spacing:.12em;cursor:pointer;text-transform:uppercase;
+  border:1px solid;transition:all .2s;background:transparent;}
+.comp-btn.primary{border-color:var(--spark);color:var(--spark);}
+.comp-btn.primary:hover{background:var(--spark);color:var(--void);}
+.comp-btn.secondary{border-color:var(--edge);color:var(--edge);}
+.comp-btn.secondary:hover{background:var(--edge);color:var(--void);}
+.comp-btn.danger{border-color:var(--pulse);color:var(--pulse);}
+.comp-btn.danger:hover{background:var(--pulse);color:#fff;}
+.comp-btn:disabled{opacity:.3;cursor:not-allowed;}
+
+.verify-result{padding:12px 16px;font-family:'Share Tech Mono',monospace;
+  font-size:11px;letter-spacing:.08em;border:1px solid;margin-top:8px;display:none;}
+.verify-result.ok{border-color:var(--spark);color:var(--spark);background:rgba(0,255,157,0.05);}
+.verify-result.fail{border-color:var(--pulse);color:var(--pulse);background:rgba(255,60,110,0.05);}
+
+/* HANDSHAKE */
+.handshake-panel{background:var(--panel);border:1px solid var(--dim);padding:16px;}
+.hs-input-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.hs-input{flex:1;min-width:180px;background:var(--deep);border:1px solid var(--dim);
+  padding:9px 14px;font-family:'Share Tech Mono',monospace;font-size:12px;
+  color:var(--text);outline:none;transition:border-color .2s;letter-spacing:.06em;}
+.hs-input:focus{border-color:var(--edge);}
+.hs-input::placeholder{color:var(--muted);}
+
+.token-box{background:var(--deep);border:1px solid var(--dim);
+  padding:12px 14px;font-family:'Share Tech Mono',monospace;font-size:10px;
+  color:var(--spark);letter-spacing:.06em;line-height:1.8;word-break:break-all;
+  margin-bottom:10px;display:none;}
+.token-box.visible{display:block;}
+.token-box.error{color:var(--pulse);border-color:var(--pulse);}
+
+.hs-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.hs-field{padding:8px 12px;background:var(--deep);border:1px solid var(--dim);}
+.hs-field-label{font-family:'Share Tech Mono',monospace;font-size:9px;
+  color:var(--muted);letter-spacing:.1em;margin-bottom:3px;}
+.hs-field-val{font-family:'Share Tech Mono',monospace;font-size:10px;
+  color:var(--edge);letter-spacing:.06em;word-break:break-all;}
+
+/* HEADER BUILDER */
+.header-preview{background:var(--deep);border:1px solid var(--edge);
+  padding:14px;font-family:'Share Tech Mono',monospace;font-size:11px;
+  color:var(--spark);letter-spacing:.06em;line-height:1.8;margin-bottom:10px;
+  display:none;word-break:break-all;}
+.header-preview.visible{display:block;}
+.prompt-preview{background:var(--deep);border:1px solid var(--dim);
+  padding:14px;font-family:'Share Tech Mono',monospace;font-size:10px;
+  color:var(--text);letter-spacing:.06em;line-height:1.8;margin-bottom:10px;
+  display:none;word-break:break-all;white-space:pre-wrap;}
+.prompt-preview.visible{display:block;}
+.prompt-input{width:100%;background:var(--deep);border:1px solid var(--dim);
+  padding:10px 14px;font-family:'Share Tech Mono',monospace;font-size:11px;
+  color:var(--text);outline:none;min-height:80px;resize:vertical;margin-bottom:8px;
+  transition:border-color .2s;letter-spacing:.04em;}
+.prompt-input:focus{border-color:var(--edge);}
+.copy-btn{font-family:'Share Tech Mono',monospace;font-size:10px;
+  padding:5px 12px;border:1px solid var(--muted);color:var(--muted);
+  cursor:pointer;background:transparent;letter-spacing:.08em;transition:all .2s;}
+.copy-btn:hover{border-color:var(--edge);color:var(--edge);}
+
+/* STATUS DASHBOARD */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:14px;}
+.dash-card{background:var(--panel);border:1px solid var(--dim);padding:12px 14px;}
+.dash-label{font-family:'Share Tech Mono',monospace;font-size:9px;
+  color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
+.dash-val{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;}
+.dash-val.green{color:var(--spark);}
+.dash-val.red{color:var(--pulse);}
+.dash-val.gold{color:var(--gold);}
+.dash-val.blue{color:var(--edge);}
+.dash-sub{font-family:'Share Tech Mono',monospace;font-size:9px;
+  color:var(--muted);margin-top:3px;letter-spacing:.06em;}
+
+.log-list{max-height:200px;overflow-y:auto;}
+.log-item{font-family:'Share Tech Mono',monospace;font-size:10px;
+  padding:5px 0;border-bottom:1px solid rgba(26,48,64,0.5);
+  display:flex;gap:10px;color:var(--muted);}
+.log-item .lt{color:var(--edge);flex-shrink:0;}
+.log-item .lm{flex:1;}
+.log-item.ok .lm{color:var(--spark);}
+.log-item.fail .lm{color:var(--pulse);}
+
+/* INTEGRATION CODE */
+.code-block{background:var(--deep);border:1px solid var(--dim);
+  padding:14px;font-family:'Share Tech Mono',monospace;font-size:10px;
+  color:var(--text);line-height:1.8;overflow-x:auto;white-space:pre;margin-bottom:10px;}
+.code-block .kw{color:var(--violet,#b060ff);}
+.code-block .str{color:var(--spark);}
+.code-block .cm{color:var(--muted);}
+.code-block .fn{color:var(--edge);}
+.code-block .num{color:var(--gold);}
+
+/* TICKER */
+.ticker-wrap{position:fixed;bottom:0;left:0;right:0;z-index:10;
+  background:var(--deep);border-top:1px solid var(--dim);overflow:hidden;height:28px;}
+.ticker{display:flex;align-items:center;height:100%;white-space:nowrap;animation:ticker 50s linear infinite;}
+.ticker-item{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);padding:0 28px;letter-spacing:.08em;}
+.ticker-item .hi{color:var(--spark);}
+.ticker-item .info{color:var(--edge);}
+.ticker-item .warn{color:var(--pulse);}
+.ticker-item .gold{color:var(--gold);}
+
+#toast{position:fixed;top:16px;right:16px;z-index:200;
+  font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.1em;
+  padding:9px 16px;border:1px solid var(--spark);background:var(--deep);
+  color:var(--spark);display:none;animation:fadeUp .3s ease;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes ticker{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div id="toast"></div>
+
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="brand">PHONESERVE COMPLIANCE
+      <span class="sub">EDGE TECH KNOWLEDGEY · 2026-18PLUS-V1</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+    <div class="status-badge unverified" id="global-status-badge">
+      <div class="sbdot"></div>
+      <span id="global-status-text">NOT VERIFIED</span>
+    </div>
+    <a class="back-btn" href="edge-search-v2.html">← ETK HOME</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-title"><span class="hl">PhoneServe</span> Compliance Authority</div>
+  <div class="hero-sub">
+    2026 Online Safety Act — Under-18 AI Content Compliance<br>
+    Sovereign age-verification infrastructure for ETK ecosystem products
+  </div>
+  <div class="authority-row">
+    <div class="auth-chip">AUTHORITY: <span class="v">PhoneServe Compliance Authority</span></div>
+    <div class="auth-chip">STANDARD: <span class="v">2026 Online Safety Act</span></div>
+    <div class="auth-chip">VERSION: <span class="v">2026-18plus-v1</span></div>
+  </div>
+</div>
+
+<!-- SECTION 1: AGE VERIFICATION -->
+<div class="section">
+  <div class="sec-head" onclick="toggleSection('s1')">
+    <div class="sec-title"><span class="sec-num">01</span> Age Verification</div>
+    <span class="sec-arrow open" id="arrow-s1">▶</span>
+  </div>
+  <div class="sec-body open" id="s1">
+    <div class="verify-flow">
+
+      <div class="verify-step" id="step1">
+        <div class="step-num active" id="stepnum1">1</div>
+        <div class="step-content">
+          <div class="step-title">Date of Birth</div>
+          <div class="step-desc">Enter your date of birth to begin verification.<br>Must be 13+ to access ETK standard content. 18+ for adult-classified content.</div>
+          <div class="dob-inputs">
+            <div>
+              <div class="dob-label">MONTH</div>
+              <input class="dob-input" id="dob-mm" type="number" min="1" max="12" placeholder="MM" maxlength="2">
+            </div>
+            <div>
+              <div class="dob-label">DAY</div>
+              <input class="dob-input" id="dob-dd" type="number" min="1" max="31" placeholder="DD" maxlength="2">
+            </div>
+            <div>
+              <div class="dob-label">YEAR</div>
+              <input class="dob-input wide" id="dob-yyyy" type="number" min="1900" max="2026" placeholder="YYYY" maxlength="4">
+            </div>
+          </div>
+          <button class="comp-btn primary" onclick="verifyAge()">Verify Age</button>
+        </div>
+      </div>
+
+      <div class="verify-result" id="verify-result"></div>
+
+      <div class="verify-step" id="step2" style="opacity:.4">
+        <div class="step-num" id="stepnum2">2</div>
+        <div class="step-content">
+          <div class="step-title">Compliance Token Issued</div>
+          <div class="step-desc">Once verified, a signed compliance token is generated and stored for this session. All ETK products check this token via <code style="color:var(--edge)">window.__PHONESERVE_COMPLIANCE__.handshake()</code></div>
+          <div class="token-box" id="token-display"></div>
+        </div>
+      </div>
+
+      <div class="verify-step" id="step3" style="opacity:.4">
+        <div class="step-num" id="stepnum3">3</div>
+        <div class="step-content">
+          <div class="step-title">Access Level Granted</div>
+          <div class="step-desc" id="access-desc">Access level will display here after verification.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;" id="access-btns"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: HANDSHAKE API -->
+<div class="section">
+  <div class="sec-head" onclick="toggleSection('s2')">
+    <div class="sec-title"><span class="sec-num">02</span> Handshake API</div>
+    <span class="sec-arrow" id="arrow-s2">▶</span>
+  </div>
+  <div class="sec-body" id="s2">
+    <div class="handshake-panel">
+      <div class="step-desc" style="margin-bottom:12px;">Call <span style="color:var(--edge)">handshake(aiName)</span> before any AI interaction. Returns ok:true with token, or ok:false with reason.</div>
+      <div class="hs-input-row">
+        <input class="hs-input" id="hs-ainame" placeholder="Enter AI name (e.g. VoidOdysseyAI)" />
+        <button class="comp-btn secondary" onclick="doHandshake()">Run Handshake</button>
+      </div>
+      <div class="token-box" id="hs-result"></div>
+      <div class="hs-fields" id="hs-fields" style="display:none">
+        <div class="hs-field">
+          <div class="hs-field-label">TOKEN</div>
+          <div class="hs-field-val" id="hf-token">—</div>
+        </div>
+        <div class="hs-field">
+          <div class="hs-field-label">VERSION</div>
+          <div class="hs-field-val" id="hf-version">—</div>
+        </div>
+        <div class="hs-field">
+          <div class="hs-field-label">VERIFIED AT</div>
+          <div class="hs-field-val" id="hf-verifiedAt">—</div>
+        </div>
+        <div class="hs-field">
+          <div class="hs-field-label">HANDSHAKE AT</div>
+          <div class="hs-field-val" id="hf-handshakeAt">—</div>
+        </div>
+        <div class="hs-field">
+          <div class="hs-field-label">STANDARD</div>
+          <div class="hs-field-val" id="hf-standard" style="font-size:9px">—</div>
+        </div>
+        <div class="hs-field">
+          <div class="hs-field-label">STATUS</div>
+          <div class="hs-field-val" id="hf-status">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: HEADER BUILDER -->
+<div class="section">
+  <div class="sec-head" onclick="toggleSection('s3')">
+    <div class="sec-title"><span class="sec-num">03</span> Compliance Header Builder</div>
+    <span class="sec-arrow" id="arrow-s3">▶</span>
+  </div>
+  <div class="sec-body" id="s3">
+    <div class="step-desc" style="margin-bottom:12px;">Generate the full compliance header string to prepend to any LLM prompt. Requires a verified session.</div>
+    <button class="comp-btn secondary" onclick="buildHeader()" style="margin-bottom:12px;">Generate Header</button>
+    <div class="header-preview" id="header-preview"></div>
+    <div class="step-desc" style="margin-bottom:8px;">Paste your prompt below to build the full compliant prompt:</div>
+    <textarea class="prompt-input" id="prompt-input" placeholder="Your AI prompt here..."></textarea>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+      <button class="comp-btn primary" onclick="buildFullPrompt()">Build Full Prompt</button>
+      <button class="copy-btn" onclick="copyPrompt()">Copy</button>
+    </div>
+    <div class="prompt-preview" id="prompt-preview"></div>
+  </div>
+</div>
+
+<!-- SECTION 4: STATUS DASHBOARD -->
+<div class="section">
+  <div class="sec-head" onclick="toggleSection('s4')">
+    <div class="sec-title"><span class="sec-num">04</span> Compliance Status Dashboard</div>
+    <span class="sec-arrow" id="arrow-s4">▶</span>
+  </div>
+  <div class="sec-body" id="s4">
+    <div class="dash-grid">
+      <div class="dash-card">
+        <div class="dash-label">Verification Status</div>
+        <div class="dash-val red" id="d-status">UNVERIFIED</div>
+        <div class="dash-sub" id="d-status-sub">No session active</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Access Level</div>
+        <div class="dash-val gold" id="d-access">—</div>
+        <div class="dash-sub" id="d-access-sub">Pending verification</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Token</div>
+        <div class="dash-val blue" id="d-token" style="font-size:10px;word-break:break-all;">—</div>
+        <div class="dash-sub" id="d-token-sub">No token</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Handshakes Run</div>
+        <div class="dash-val green" id="d-handshakes">0</div>
+        <div class="dash-sub">This session</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Standard</div>
+        <div class="dash-val blue" style="font-size:10px">2026-OSA</div>
+        <div class="dash-sub">2026 Online Safety Act</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Authority</div>
+        <div class="dash-val blue" style="font-size:9px">PHONESERVE</div>
+        <div class="dash-sub">Compliance Authority</div>
+      </div>
+    </div>
+    <div class="step-desc" style="margin-bottom:8px;">Audit Log</div>
+    <div class="log-list" id="audit-log">
+      <div class="log-item"><span class="lt">SYSTEM</span><span class="lm">Compliance module loaded · 2026-18plus-v1</span></div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="comp-btn danger" onclick="revokeSession()">Revoke Session</button>
+      <button class="comp-btn secondary" onclick="exportLog()">Export Log</button>
+    </div>
+  </div>
+</div>
+
+<!-- INTEGRATION CODE REFERENCE -->
+<div class="section">
+  <div class="sec-head" onclick="toggleSection('s5')">
+    <div class="sec-title"><span class="sec-num">05</span> Integration Reference</div>
+    <span class="sec-arrow" id="arrow-s5">▶</span>
+  </div>
+  <div class="sec-body" id="s5">
+    <div class="step-desc" style="margin-bottom:10px;">Drop this into any ETK product to enforce compliance before AI calls:</div>
+    <div class="code-block"><span class="cm">// 1. Check authority</span>
+<span class="kw">const</span> compliance = window.__PHONESERVE_COMPLIANCE__;
+console.<span class="fn">log</span>(compliance.authority);
+<span class="cm">// → "PhoneServe Compliance Authority"</span>
+console.<span class="fn">log</span>(compliance.standard);
+<span class="cm">// → "2026 Online Safety Act — Under-18 AI Content Compliance"</span>
+console.<span class="fn">log</span>(compliance.version);
+<span class="cm">// → "2026-18plus-v1"</span>
+
+<span class="cm">// 2. Run handshake before any AI call</span>
+<span class="kw">const</span> result = window.__PHONESERVE_COMPLIANCE__.<span class="fn">handshake</span>(<span class="str">'YourAIName'</span>);
+
+<span class="kw">if</span> (!result.ok) {
+  console.<span class="fn">error</span>(result.reason);
+  <span class="kw">return</span>; <span class="cm">// Stop — do not proceed</span>
+}
+
+<span class="cm">// 3. Attach header to prompt</span>
+<span class="kw">const</span> { handshake } = result;
+console.<span class="fn">log</span>(handshake.token);       <span class="cm">// "COMP-2026-XXXXXXXX-..."</span>
+console.<span class="fn">log</span>(handshake.verifiedAt);  <span class="cm">// ISO timestamp</span>
+console.<span class="fn">log</span>(handshake.handshakeAt); <span class="cm">// ISO timestamp</span>
+
+<span class="cm">// 4. Build compliant prompt</span>
+<span class="kw">const</span> header = window.__PHONESERVE_COMPLIANCE__.<span class="fn">header</span>();
+<span class="kw">const</span> fullPrompt = <span class="str">`${header}\n\nYour actual prompt here...`</span>;
+
+<span class="cm">// Now send fullPrompt to your LLM</span></div>
+    <div class="step-desc" style="margin-bottom:10px;">Success response shape:</div>
+    <div class="code-block">{
+  ok: <span class="num">true</span>,
+  handshake: {
+    token:       <span class="str">"COMP-2026-XXXXXXXX-1234567890"</span>,
+    version:     <span class="str">"2026-18plus-v1"</span>,
+    verifiedAt:  <span class="str">"2026-03-04T10:00:00.000Z"</span>,
+    standard:    <span class="str">"2026 Online Safety Act — Under-18 AI Content Compliance"</span>,
+    handshakeAt: <span class="str">"2026-03-04T12:34:56.789Z"</span>
+  }
+}</div>
+    <div class="step-desc" style="margin-bottom:10px;">Failure response shapes:</div>
+    <div class="code-block">{ ok: <span class="num">false</span>, reason: <span class="str">"Compliance path closed: age verification not completed."</span> }
+{ ok: <span class="num">false</span>, reason: <span class="str">"Access blocked: user identified as under 18."</span> }
+{ ok: <span class="num">false</span>, reason: <span class="str">"Compliance token missing or invalid format."</span> }</div>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item"><span class="hi">● PHONESERVE COMPLIANCE</span> AUTHORITY ONLINE · 2026-18PLUS-V1</span>
+    <span class="ticker-item"><span class="info">STANDARD:</span> 2026 Online Safety Act — Under-18 AI Content Compliance</span>
+    <span class="ticker-item"><span class="gold">ETK ECOSYSTEM</span> VOID ODYSSEY · SOUL FORGE · AI SUITE PROTECTED</span>
+    <span class="ticker-item"><span class="warn">GDPR ART.32/35</span> AUDIT TRAIL ACTIVE · PROOF-OF-ERASURE READY</span>
+    <span class="ticker-item"><span class="hi">SOVEREIGN</span> AGE VERIFICATION · NO THIRD-PARTY DATA SHARING</span>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// PHONESERVE COMPLIANCE MODULE — window.__PHONESERVE_COMPLIANCE__
+// ══════════════════════════════════════════════════════════
+(function() {
+  const AUTHORITY = "PhoneServe Compliance Authority";
+  const STANDARD  = "2026 Online Safety Act — Under-18 AI Content Compliance";
+  const VERSION   = "2026-18plus-v1";
+
+  let _state = {
+    verified:    false,
+    underAge:    false,
+    accessLevel: null,   // 'under13' | 'teen' | 'adult'
+    token:       null,
+    verifiedAt:  null,
+    age:         null,
+  };
+
+  function _genToken() {
+    const hex = () => Math.random().toString(16).slice(2,10).toUpperCase();
+    return `COMP-2026-${hex()}-${Date.now()}`;
+  }
+
+  function _validateToken(token) {
+    return typeof token === 'string' && /^COMP-2026-[A-F0-9]{8}-\d+$/.test(token);
+  }
+
+  window.__PHONESERVE_COMPLIANCE__ = {
+    authority: AUTHORITY,
+    standard:  STANDARD,
+    version:   VERSION,
+
+    // Called by age-verification UI
+    _setVerified(age) {
+      _state.age         = age;
+      _state.underAge    = age < 18;
+      _state.verified    = age >= 13;
+      _state.token       = _state.verified ? _genToken() : null;
+      _state.verifiedAt  = _state.verified ? new Date().toISOString() : null;
+      _state.accessLevel = age < 13 ? 'under13' : age < 18 ? 'teen' : 'adult';
+    },
+
+    _revoke() {
+      _state = { verified:false, underAge:false, accessLevel:null, token:null, verifiedAt:null, age:null };
+    },
+
+    getState() { return {..._state}; },
+
+    handshake(aiName) {
+      if (!_state.verified) {
+        return { ok:false, reason:"Compliance path closed: age verification not completed." };
+      }
+      if (_state.underAge) {
+        return { ok:false, reason:"Access blocked: user identified as under 18." };
+      }
+      if (!_state.token || !_validateToken(_state.token)) {
+        return { ok:false, reason:"Compliance token missing or invalid format." };
+      }
+      return {
+        ok: true,
+        handshake: {
+          token:       _state.token,
+          version:     VERSION,
+          verifiedAt:  _state.verifiedAt,
+          standard:    STANDARD,
+          handshakeAt: new Date().toISOString(),
+          aiName:      aiName || 'unnamed',
+        }
+      };
+    },
+
+    header() {
+      if (!_state.token) return "[2026-COMPLIANCE | UNVERIFIED]";
+      return `[2026-COMPLIANCE | token:${_state.token} | v:${VERSION} | verified:${_state.verifiedAt} | standard:${STANDARD} | authority:${AUTHORITY}]`;
+    },
+  };
+})();
+
+// ── UI STATE ────────────────────────────────────────────────
+let handshakeCount = 0;
+let auditLog = [{ type:'system', msg:'Compliance module loaded · 2026-18plus-v1', time:now() }];
+
+function now(){ return new Date().toLocaleTimeString(); }
+
+function toast(msg, type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.display='block';
+  t.style.borderColor=type==='ok'?'var(--spark)':'var(--pulse)';
+  t.style.color=type==='ok'?'var(--spark)':'var(--pulse)';
+  clearTimeout(toast._t);
+  toast._t=setTimeout(()=>t.style.display='none',2800);
+}
+
+function addLog(type, msg){
+  auditLog.unshift({type,msg,time:now()});
+  renderLog();
+}
+
+function renderLog(){
+  const el=document.getElementById('audit-log');
+  el.innerHTML=auditLog.slice(0,50).map(l=>`
+    <div class="log-item ${l.type==='ok'?'ok':l.type==='fail'?'fail':''}">
+      <span class="lt">${l.time}</span>
+      <span class="lm">${l.msg}</span>
+    </div>`).join('');
+}
+
+// ── SECTION TOGGLES ─────────────────────────────────────────
+function toggleSection(id){
+  const body=document.getElementById(id);
+  const arrow=document.getElementById('arrow-'+id);
+  const open=body.classList.toggle('open');
+  arrow.classList.toggle('open',open);
+}
+
+// ── AGE VERIFICATION ────────────────────────────────────────
+function verifyAge(){
+  const mm=parseInt(document.getElementById('dob-mm').value);
+  const dd=parseInt(document.getElementById('dob-dd').value);
+  const yyyy=parseInt(document.getElementById('dob-yyyy').value);
+  const res=document.getElementById('verify-result');
+
+  if(!mm||!dd||!yyyy||yyyy<1900||yyyy>2026){
+    res.className='verify-result fail'; res.style.display='block';
+    res.textContent='⚠ Invalid date of birth — please check your entry.';
+    addLog('fail','Age verification failed: invalid DOB input');
+    return;
+  }
+
+  const dob=new Date(yyyy,mm-1,dd);
+  const today=new Date();
+  let age=today.getFullYear()-dob.getFullYear();
+  const m=today.getMonth()-dob.getMonth();
+  if(m<0||(m===0&&today.getDate()<dob.getDate())) age--;
+
+  if(age<0||age>130){
+    res.className='verify-result fail'; res.style.display='block';
+    res.textContent='⚠ Invalid date of birth.';
+    return;
+  }
+
+  window.__PHONESERVE_COMPLIANCE__._setVerified(age);
+  const state=window.__PHONESERVE_COMPLIANCE__.getState();
+
+  if(age<13){
+    res.className='verify-result fail'; res.style.display='block';
+    res.innerHTML='✕ ACCESS DENIED — Under-13 users cannot access ETK services.<br>Reason: Access blocked: user identified as under 18.';
+    addLog('fail','Age verification blocked: user under 13');
+    updateGlobalStatus();
+    return;
+  }
+
+  const levelLabel = age<18 ? 'TEEN (13–17) · Standard ETK content only' : 'ADULT (18+) · Full ETK ecosystem access';
+  res.className='verify-result ok'; res.style.display='block';
+  res.innerHTML=`✓ VERIFIED · Age: ${age} · Access Level: ${state.accessLevel.toUpperCase()}`;
+
+  // Step 2
+  document.getElementById('step2').style.opacity='1';
+  document.getElementById('stepnum2').className='step-num done';
+  document.getElementById('stepnum1').className='step-num done';
+  const td=document.getElementById('token-display');
+  td.className='token-box visible';
+  td.innerHTML=`TOKEN: ${state.token}<br>VERIFIED AT: ${state.verifiedAt}<br>VERSION: 2026-18plus-v1`;
+
+  // Step 3
+  document.getElementById('step3').style.opacity='1';
+  document.getElementById('stepnum3').className='step-num done';
+  document.getElementById('access-desc').innerHTML=
+    `Access Level: <span style="color:var(--spark)">${state.accessLevel.toUpperCase()}</span> — ${levelLabel}`;
+  const ab=document.getElementById('access-btns');
+  ab.innerHTML=`
+    <a href="void-odyssey.html"><button class="comp-btn primary">▶ Void Odyssey</button></a>
+    <a href="soul-forge.html"><button class="comp-btn secondary">▶ Soul Forge</button></a>
+    ${age>=18?'<button class="comp-btn secondary" onclick="toast(\'Full AI Suite access granted\')">▶ AI Suite (18+)</button>':''}
+  `;
+
+  addLog('ok',`Age verified: ${age}yrs · Level: ${state.accessLevel} · Token: ${state.token.slice(0,20)}…`);
+  updateGlobalStatus();
+  updateDashboard();
+  toast('✓ VERIFIED · '+state.accessLevel.toUpperCase());
+}
+
+// ── HANDSHAKE ───────────────────────────────────────────────
+function doHandshake(){
+  const aiName=document.getElementById('hs-ainame').value.trim()||'UnnamedAI';
+  const result=window.__PHONESERVE_COMPLIANCE__.handshake(aiName);
+  const box=document.getElementById('hs-result');
+  const fields=document.getElementById('hs-fields');
+  box.className='token-box visible'+(result.ok?'':' error');
+  box.style.display='block';
+  handshakeCount++;
+
+  if(result.ok){
+    const h=result.handshake;
+    box.innerHTML=`✓ ok: true · AI: ${aiName}`;
+    fields.style.display='grid';
+    document.getElementById('hf-token').textContent=h.token;
+    document.getElementById('hf-version').textContent=h.version;
+    document.getElementById('hf-verifiedAt').textContent=h.verifiedAt;
+    document.getElementById('hf-handshakeAt').textContent=h.handshakeAt;
+    document.getElementById('hf-standard').textContent=h.standard;
+    document.getElementById('hf-status').innerHTML='<span style="color:var(--spark)">PASSED</span>';
+    addLog('ok',`Handshake OK · AI: ${aiName} · token: ${h.token.slice(0,18)}…`);
+    toast('✓ Handshake passed · '+aiName);
+  } else {
+    box.innerHTML=`✕ ok: false\nreason: "${result.reason}"`;
+    fields.style.display='none';
+    addLog('fail','Handshake FAILED · '+result.reason);
+    toast('✕ '+result.reason,'fail');
+  }
+  updateDashboard();
+}
+
+// ── HEADER BUILDER ───────────────────────────────────────────
+function buildHeader(){
+  const h=window.__PHONESERVE_COMPLIANCE__.header();
+  const el=document.getElementById('header-preview');
+  el.className='header-preview visible';
+  el.textContent=h;
+  addLog('ok','Compliance header generated');
+  toast('Header generated');
+}
+
+function buildFullPrompt(){
+  const h=window.__PHONESERVE_COMPLIANCE__.header();
+  const p=document.getElementById('prompt-input').value.trim();
+  const full=`${h}\n\n${p||'[Your prompt here]'}`;
+  const el=document.getElementById('prompt-preview');
+  el.className='prompt-preview visible';
+  el.textContent=full;
+  addLog('ok','Full compliant prompt built');
+}
+
+function copyPrompt(){
+  const el=document.getElementById('prompt-preview');
+  if(!el.textContent||!el.classList.contains('visible')){ toast('Build prompt first','fail'); return; }
+  navigator.clipboard.writeText(el.textContent).then(()=>toast('Copied to clipboard'));
+}
+
+// ── DASHBOARD ───────────────────────────────────────────────
+function updateDashboard(){
+  const s=window.__PHONESERVE_COMPLIANCE__.getState();
+  document.getElementById('d-handshakes').textContent=handshakeCount;
+  if(s.verified){
+    document.getElementById('d-status').textContent='VERIFIED';
+    document.getElementById('d-status').className='dash-val green';
+    document.getElementById('d-status-sub').textContent='Session active';
+    document.getElementById('d-access').textContent=s.accessLevel.toUpperCase();
+    document.getElementById('d-access-sub').textContent=s.age+' years old';
+    document.getElementById('d-token').textContent=s.token;
+    document.getElementById('d-token-sub').textContent='Valid · '+s.verifiedAt?.slice(0,10);
+  }
+}
+
+function updateGlobalStatus(){
+  const s=window.__PHONESERVE_COMPLIANCE__.getState();
+  const badge=document.getElementById('global-status-badge');
+  const text=document.getElementById('global-status-text');
+  if(s.verified && !s.underAge){
+    badge.className='status-badge verified';
+    text.textContent=s.accessLevel.toUpperCase()+' VERIFIED';
+  } else if(s.underAge){
+    badge.className='status-badge unverified';
+    text.textContent='ACCESS DENIED';
+  } else {
+    badge.className='status-badge unverified';
+    text.textContent='NOT VERIFIED';
+  }
+}
+
+function revokeSession(){
+  window.__PHONESERVE_COMPLIANCE__._revoke();
+  addLog('fail','Session revoked by user');
+  updateGlobalStatus();
+  updateDashboard();
+  document.getElementById('verify-result').style.display='none';
+  document.getElementById('token-display').className='token-box';
+  document.getElementById('step2').style.opacity='.4';
+  document.getElementById('step3').style.opacity='.4';
+  document.getElementById('stepnum1').className='step-num active';
+  document.getElementById('stepnum2').className='step-num';
+  document.getElementById('stepnum3').className='step-num';
+  document.getElementById('d-status').textContent='UNVERIFIED';
+  document.getElementById('d-status').className='dash-val red';
+  document.getElementById('d-token').textContent='—';
+  document.getElementById('d-access').textContent='—';
+  toast('Session revoked','fail');
+}
+
+function exportLog(){
+  const text=auditLog.map(l=>`[${l.time}] ${l.type.toUpperCase()}: ${l.msg}`).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(text);
+  a.download='phoneserve-compliance-log.txt';
+  a.click();
+}
+
+// ── STARFIELD ────────────────────────────────────────────────
+(function(){
+  const c=document.getElementById('stars'),ctx=c.getContext('2d');let s=[];
+  function resize(){c.width=innerWidth;c.height=innerHeight;}
+  function init(){s=[];for(let i=0;i<180;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.1,a:Math.random(),drift:(Math.random()-.5)*.06});}
+  function draw(){ctx.clearRect(0,0,c.width,c.height);for(let p of s){ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(0,212,255,${p.a*.3})`;ctx.fill();ctx.beginPath();ctx.arc(p.x,p.y,p.r*.4,0,Math.PI*2);ctx.fillStyle=`rgba(200,230,255,${p.a})`;ctx.fill();p.a+=(Math.random()-.5)*.012;p.a=Math.max(.05,Math.min(1,p.a));p.x+=p.drift;if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;}requestAnimationFrame(draw);}
+  window.addEventListener('resize',()=>{resize();init();});resize();init();draw();
+})();
+
+// Init log
+renderLog();
+</script>
+</body>
+</html>

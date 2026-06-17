@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge Tech Knowledgey</title>
+<script>
+// ══════════════════════════════════════════════════════
+// PHONESERVE COMPLIANCE — RUNS BEFORE ANYTHING ELSE
+// 2026 Online Safety Act · 2026-18plus-v1
+// ══════════════════════════════════════════════════════
+(function(){
+  const AUTHORITY = "PhoneServe Compliance Authority";
+  const STANDARD  = "2026 Online Safety Act — Under-18 AI Content Compliance";
+  const VERSION   = "2026-18plus-v1";
+  let _state = { verified:false, underAge:false, accessLevel:null, token:null, verifiedAt:null };
+
+  function genToken(){ return 'COMP-2026-'+Math.random().toString(16).slice(2,10).toUpperCase()+'-'+Date.now(); }
+  function validToken(t){ return typeof t==='string'&&/^COMP-2026-[A-F0-9]{8}-\d+$/.test(t); }
+
+  window.__PHONESERVE_COMPLIANCE__ = {
+    authority: AUTHORITY, standard: STANDARD, version: VERSION,
+    _setVerified(age){
+      _state.age=age; _state.underAge=age<18; _state.verified=age>=13;
+      _state.token=_state.verified?genToken():null;
+      _state.verifiedAt=_state.verified?new Date().toISOString():null;
+      _state.accessLevel=age<13?'under13':age<18?'teen':'adult';
+    },
+    getState(){ return {..._state}; },
+    handshake(aiName){
+      if(!_state.verified) return {ok:false,reason:"Compliance path closed: age verification not completed."};
+      if(_state.underAge)  return {ok:false,reason:"Access blocked: user identified as under 18."};
+      if(!validToken(_state.token)) return {ok:false,reason:"Compliance token missing or invalid format."};
+      return {ok:true,handshake:{token:_state.token,version:VERSION,verifiedAt:_state.verifiedAt,
+        standard:STANDARD,handshakeAt:new Date().toISOString(),aiName:aiName||'unnamed'}};
+    },
+    header(){
+      if(!_state.token) return "[2026-COMPLIANCE | UNVERIFIED]";
+      return `[2026-COMPLIANCE | token:${_state.token} | v:${VERSION} | verified:${_state.verifiedAt} | standard:${STANDARD} | authority:${AUTHORITY}]`;
+    }
+  };
+})();
+</script>
+<style>
+/* COMPLIANCE GATE — shown before page content */
+#compliance-gate{
+  position:fixed;inset:0;z-index:9999;
+  background:#020408;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Courier New',monospace;
+}
+.cg-box{
+  width:min(92vw,420px);
+  border:1px solid #00d4ff;
+  box-shadow:0 0 40px rgba(0,212,255,0.15);
+  background:#050d14;
+  animation:cgFadeUp .5s ease both;
+}
+.cg-head{
+  padding:16px 20px;border-bottom:1px solid #1a3040;
+  font-size:11px;font-weight:700;letter-spacing:.2em;
+  color:#00d4ff;text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;
+}
+.cg-dot{width:7px;height:7px;border-radius:50%;background:#ffcc00;
+  box-shadow:0 0 8px #ffcc00;animation:cgPulse 1s infinite;}
+.cg-body{padding:22px 20px;}
+.cg-authority{font-size:9px;color:#4a7a8a;letter-spacing:.15em;margin-bottom:6px;text-transform:uppercase;}
+.cg-title{font-size:15px;color:#fff;font-weight:700;letter-spacing:.06em;margin-bottom:4px;}
+.cg-standard{font-size:10px;color:#4a7a8a;letter-spacing:.08em;margin-bottom:20px;line-height:1.6;}
+.cg-inputs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.cg-input-wrap{display:flex;flex-direction:column;gap:3px;}
+.cg-label{font-size:9px;color:#4a7a8a;letter-spacing:.12em;text-transform:uppercase;}
+.cg-input{background:#020408;border:1px solid #1a3040;padding:9px 10px;
+  font-family:'Courier New',monospace;font-size:14px;color:#c8e8f0;
+  outline:none;text-align:center;transition:border-color .2s;width:70px;}
+.cg-input.wide{width:88px;}
+.cg-input:focus{border-color:#00d4ff;}
+.cg-btn{width:100%;padding:12px;background:transparent;
+  border:1px solid #00ff9d;color:#00ff9d;
+  font-family:'Courier New',monospace;font-size:11px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;cursor:pointer;
+  transition:all .2s;margin-bottom:8px;}
+.cg-btn:hover{background:#00ff9d;color:#020408;}
+.cg-result{font-size:10px;letter-spacing:.08em;padding:8px 10px;
+  border:1px solid;display:none;line-height:1.6;}
+.cg-result.ok{border-color:#00ff9d;color:#00ff9d;background:rgba(0,255,157,0.05);}
+.cg-result.fail{border-color:#ff3c6e;color:#ff3c6e;background:rgba(255,60,110,0.05);}
+.cg-footer{font-size:9px;color:#1a3040;letter-spacing:.1em;margin-top:12px;text-align:center;}
+@keyframes cgFadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cgPulse{0%,100%{opacity:1}50%{opacity:.2}}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:#020408;--deep:#050d14;--panel:#0a1a24;
+    --edge:#00d4ff;--spark:#00ff9d;--pulse:#ff3c6e;
+    --gold:#ffcc00;--dim:#1a3040;--muted:#4a7a8a;--text:#c8e8f0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;min-height:100%;background:var(--void);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
+  #stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+  body::before{content:'';position:fixed;inset:0;z-index:0;
+    background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);
+    background-size:40px 40px;pointer-events:none;}
+  body::after{content:'';position:fixed;inset:0;z-index:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);
+    pointer-events:none;}
+
+  /* HEADER */
+  header{position:relative;z-index:10;display:flex;justify-content:space-between;align-items:center;
+    padding:14px 24px;border-bottom:1px solid var(--dim);flex-wrap:wrap;gap:10px;}
+  .brand{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+  .nav-links{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+  .nav-links a{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:.1em;transition:color .2s;}
+  .nav-links a:hover{color:var(--edge);}
+  .btn-node{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:.15em;padding:8px 16px;
+    background:transparent;border:1px solid var(--spark);color:var(--spark);cursor:pointer;text-transform:uppercase;transition:all .2s;
+    clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+  .btn-node:hover{background:var(--spark);color:var(--void);}
+
+  /* NODE BANNER */
+  #node-panel{position:relative;z-index:10;display:flex;justify-content:center;padding:0 24px;}
+  .node-banner{width:100%;max-width:760px;margin:10px 0;padding:10px 18px;
+    font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.08em;
+    border:1px solid var(--dim);display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    transition:border-color .4s,box-shadow .4s;background:rgba(10,26,36,0.7);}
+  .node-banner.detected{border-color:var(--spark);box-shadow:0 0 16px rgba(0,255,157,.12);}
+  .node-banner.not-detected{border-color:var(--pulse);box-shadow:0 0 16px rgba(255,60,110,.1);}
+  .node-banner.checking{border-color:var(--gold);}
+  .node-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--muted);}
+  .node-dot.green{background:var(--spark);box-shadow:0 0 8px var(--spark);animation:pulse-dot 2s infinite;}
+  .node-dot.red{background:var(--pulse);box-shadow:0 0 8px var(--pulse);}
+  .node-dot.gold{background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse-dot 1s infinite;}
+  .node-msg{flex:1;color:var(--text);}
+  .node-location{color:var(--edge);font-size:11px;display:flex;align-items:center;gap:5px;}
+  .node-action{font-family:'Orbitron',monospace;font-size:9px;font-weight:700;letter-spacing:.12em;padding:5px 12px;
+    background:transparent;border:1px solid var(--pulse);color:var(--pulse);cursor:pointer;text-transform:uppercase;transition:all .2s;
+    clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+  .node-action:hover{background:var(--pulse);color:#fff;}
+
+  /* MAIN */
+  main{position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;
+    min-height:calc(100vh - 200px);padding:20px 20px 60px;}
+
+  .logo-wrap{margin-bottom:24px;text-align:center;animation:fadeUp .8s ease both;}
+  .logo-main{font-family:'Orbitron',monospace;font-size:clamp(26px,5.5vw,50px);font-weight:900;
+    letter-spacing:.08em;line-height:1.1;color:#fff;
+    text-shadow:0 0 20px rgba(0,212,255,.6),0 0 60px rgba(0,212,255,.2);}
+  .logo-edge{color:var(--edge);}
+  .logo-k{color:var(--spark);}
+  .logo-sub{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.3em;
+    color:var(--muted);margin-top:8px;text-transform:uppercase;}
+  .logo-sub span{color:var(--pulse);animation:blink 2s infinite;}
+
+  /* SEARCH */
+  .search-wrap{width:100%;max-width:640px;position:relative;animation:fadeUp .8s .15s ease both;}
+  .search-bar{width:100%;background:var(--panel);border:1px solid var(--dim);border-radius:2px;
+    padding:15px 56px 15px 20px;font-family:'Rajdhani',sans-serif;font-size:18px;color:var(--text);
+    outline:none;transition:border-color .2s,box-shadow .2s;
+    clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);}
+  .search-bar::placeholder{color:var(--muted);}
+  .search-bar:focus{border-color:var(--edge);box-shadow:0 0 0 1px var(--edge),0 0 24px rgba(0,212,255,.15);}
+  .search-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);
+    color:var(--muted);cursor:pointer;transition:color .2s;font-size:18px;}
+  .search-icon:hover{color:var(--edge);}
+
+  .search-btns{display:flex;gap:12px;justify-content:center;margin-top:14px;animation:fadeUp .8s .25s ease both;}
+  .q-btn{font-family:'Share Tech Mono',monospace;font-size:12px;padding:9px 20px;
+    background:var(--panel);border:1px solid var(--dim);color:var(--muted);cursor:pointer;letter-spacing:.1em;transition:all .2s;}
+  .q-btn:hover{border-color:var(--edge);color:var(--edge);background:rgba(0,212,255,.05);}
+  .q-btn.mesh-active{border-color:var(--spark);color:var(--spark);}
+
+  /* RESULTS */
+  #results-panel{width:100%;max-width:640px;margin-top:18px;display:none;animation:fadeUp .4s ease both;}
+  .result-header{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);
+    padding:8px 0;border-bottom:1px solid var(--dim);margin-bottom:12px;display:flex;justify-content:space-between;}
+  .result-source{color:var(--spark);}
+  .result-item{padding:12px 16px;background:var(--panel);border:1px solid var(--dim);
+    margin-bottom:8px;cursor:pointer;transition:border-color .2s;
+    clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+  .result-item:hover{border-color:var(--edge);}
+  .result-title{font-family:'Rajdhani',sans-serif;font-size:16px;color:var(--edge);font-weight:600;}
+  .result-url{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--spark);margin:3px 0;}
+  .result-snippet{font-size:13px;color:var(--muted);line-height:1.5;}
+  .result-tag{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:9px;
+    padding:2px 7px;border:1px solid var(--dim);color:var(--muted);margin-top:5px;letter-spacing:.08em;}
+  .result-tag.mesh-tag{border-color:var(--spark);color:var(--spark);}
+  .result-fallback{text-align:center;padding:14px;font-family:'Share Tech Mono',monospace;
+    font-size:11px;color:var(--muted);border-top:1px solid var(--dim);margin-top:8px;}
+  .result-fallback a{color:var(--edge);text-decoration:none;}
+  .result-fallback a:hover{text-decoration:underline;}
+  .result-loading{text-align:center;padding:20px;font-family:'Share Tech Mono',monospace;
+    font-size:12px;color:var(--gold);letter-spacing:.1em;}
+
+  /* SHORTCUTS */
+  .shortcuts{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+    margin-top:28px;max-width:640px;animation:fadeUp .8s .35s ease both;}
+  .shortcut{display:flex;flex-direction:column;align-items:center;gap:8px;
+    cursor:pointer;text-decoration:none;transition:transform .2s;}
+  .shortcut:hover{transform:translateY(-3px);}
+  .shortcut-icon{width:56px;height:56px;background:var(--panel);border:1px solid var(--dim);
+    display:flex;align-items:center;justify-content:center;font-size:22px;
+    transition:border-color .2s,box-shadow .2s;
+    clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+  .shortcut:hover .shortcut-icon{border-color:var(--edge);box-shadow:0 0 16px rgba(0,212,255,.2);}
+  .shortcut-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);
+    letter-spacing:.1em;text-transform:uppercase;}
+
+  /* NODE MAP MODAL */
+  #map-modal{display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(2,4,8,.92);align-items:center;justify-content:center;}
+  #map-modal.open{display:flex;}
+  .map-box{width:min(92vw,700px);background:var(--deep);border:1px solid var(--edge);
+    box-shadow:0 0 40px rgba(0,212,255,.15);position:relative;animation:fadeUp .3s ease;}
+  .map-header{display:flex;justify-content:space-between;align-items:center;
+    padding:14px 20px;border-bottom:1px solid var(--dim);
+    font-family:'Orbitron',monospace;font-size:12px;letter-spacing:.15em;color:var(--edge);text-transform:uppercase;}
+  .map-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;transition:color .2s;}
+  .map-close:hover{color:var(--pulse);}
+  #node-map-canvas{width:100%;height:320px;display:block;background:#030a10;}
+  .map-footer{padding:12px 20px;border-top:1px solid var(--dim);
+    font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);
+    display:flex;gap:20px;flex-wrap:wrap;}
+  .map-stat .val{color:var(--spark);}
+  .your-node-info{padding:10px 20px;background:rgba(0,255,157,.05);border-bottom:1px solid var(--dim);
+    font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);display:none;}
+  .your-node-info.visible{display:block;}
+  .your-node-info .hi{color:var(--spark);}
+
+  /* TICKER */
+  .ticker-wrap{position:fixed;bottom:0;left:0;right:0;z-index:10;background:var(--deep);
+    border-top:1px solid var(--dim);overflow:hidden;height:30px;}
+  .ticker{display:flex;align-items:center;height:100%;white-space:nowrap;animation:ticker 50s linear infinite;}
+  .ticker-item{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);
+    padding:0 28px;letter-spacing:.08em;}
+  .ticker-item .hi{color:var(--spark);}
+  .ticker-item .warn{color:var(--pulse);}
+  .ticker-item .info{color:var(--edge);}
+  .ticker-item .gold{color:var(--gold);}
+
+  .corner{position:fixed;z-index:5;width:60px;height:60px;pointer-events:none;}
+  .corner-tl{top:0;left:0;border-top:2px solid var(--edge);border-left:2px solid var(--edge);opacity:.4;}
+  .corner-tr{top:0;right:0;border-top:2px solid var(--edge);border-right:2px solid var(--edge);opacity:.4;}
+  .corner-bl{bottom:30px;left:0;border-bottom:2px solid var(--edge);border-left:2px solid var(--edge);opacity:.4;}
+  .corner-br{bottom:30px;right:0;border-bottom:2px solid var(--edge);border-right:2px solid var(--edge);opacity:.4;}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.35}}
+  @keyframes blink{0%,90%,100%{opacity:1}95%{opacity:0}}
+  @keyframes ticker{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+</style>
+</head>
+<body>
+
+<!-- ═══ PHONESERVE COMPLIANCE GATE — BLOCKS ALL CONTENT UNTIL VERIFIED ═══ -->
+<div id="compliance-gate">
+  <div class="cg-box">
+    <div class="cg-head">
+      <div class="cg-dot"></div>
+      PhoneServe Compliance Check
+    </div>
+    <div class="cg-body">
+      <div class="cg-authority">PhoneServe Compliance Authority</div>
+      <div class="cg-title">Edge Tech Knowledgey</div>
+      <div class="cg-standard">
+        2026 Online Safety Act — Under-18 AI Content Compliance<br>
+        Version: 2026-18plus-v1<br><br>
+        You must verify your age before accessing ETK services.
+      </div>
+      <div class="cg-inputs">
+        <div class="cg-input-wrap">
+          <span class="cg-label">Month</span>
+          <input class="cg-input" id="cg-mm" type="number" min="1" max="12" placeholder="MM">
+        </div>
+        <div class="cg-input-wrap">
+          <span class="cg-label">Day</span>
+          <input class="cg-input" id="cg-dd" type="number" min="1" max="31" placeholder="DD">
+        </div>
+        <div class="cg-input-wrap">
+          <span class="cg-label">Year</span>
+          <input class="cg-input wide" id="cg-yyyy" type="number" min="1900" max="2026" placeholder="YYYY">
+        </div>
+      </div>
+      <button class="cg-btn" onclick="cgVerify()">Verify Age &amp; Enter</button>
+      <div class="cg-result" id="cg-result"></div>
+      <div class="cg-footer">
+        TOKEN: <span id="cg-token-preview">PENDING VERIFICATION</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<canvas id="stars"></canvas>
+<div class="corner corner-tl"></div>
+<div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div>
+<div class="corner corner-br"></div>
+
+<header>
+  <div class="brand">ETK // v2.6</div>
+  <ul class="nav-links">
+    <li><a href="https://phone-serve.vercel.app" target="_blank">PhoneServe</a></li>
+    <li><a href="void-odyssey.html">Void Odyssey</a></li>
+    <li><a href="soul-forge.html">AI Suite</a></li>
+    <li><a href="#" onclick="openNodeMap(event)">Node Map</a></li>
+  </ul>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <button class="btn-node" onclick="openNodeMap(event)">Node Map</button>
+    <a href="email.html" style="font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:.15em;padding:8px 16px;background:transparent;border:1px solid var(--edge);color:var(--edge);text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);">MAIL</a>
+    <a href="join.html" style="font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:.15em;padding:8px 16px;background:var(--edge);border:1px solid var(--edge);color:var(--void);text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);">JOIN</a>
+  </div>
+</header>
+
+<div id="node-panel">
+  <div class="node-banner checking" id="node-banner">
+    <div class="node-dot gold" id="node-dot"></div>
+    <div class="node-msg" id="node-msg">
+      <span style="color:var(--muted)">LOCAL NODE:</span>
+      <span id="node-status-text"> Scanning 127.0.0.1:8080…</span>
+    </div>
+    <div class="node-location" id="node-location-display" style="display:none">
+      📍 <span id="location-text">Locating…</span>
+    </div>
+  </div>
+</div>
+
+<!-- NODE MAP MODAL -->
+<div id="map-modal">
+  <div class="map-box">
+    <div class="map-header">◈ PhoneServe Node Map
+      <button class="map-close" onclick="closeNodeMap()">✕</button>
+    </div>
+    <div class="your-node-info" id="your-node-info">
+      <span class="hi">▸ YOUR NODE:</span>
+      <span id="your-node-coords"></span> · <span id="your-node-city"></span>
+    </div>
+    <canvas id="node-map-canvas"></canvas>
+    <div class="map-footer">
+      <div class="map-stat">NODES: <span class="val" id="map-node-count">20</span></div>
+      <div class="map-stat">YOUR NODE: <span class="val" id="map-local-status">—</span></div>
+      <div class="map-stat">REGION: <span class="val" id="map-region">—</span></div>
+      <div class="map-stat">PROXY: <span class="val">127.0.0.1:1080</span></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="logo-wrap">
+    <div class="logo-main">
+      <span class="logo-edge">Edge</span>Tech<br>
+      <span class="logo-k">K</span>nowledgey
+    </div>
+    <div class="logo-sub">Sovereign Infrastructure <span>▮</span> Mesh Search</div>
+  </div>
+
+  <div class="search-wrap">
+    <input class="search-bar" type="text" placeholder="Search through the mesh…" id="searchInput" autocomplete="off"/>
+    <span class="search-icon" onclick="doSearch()">⌕</span>
+  </div>
+
+  <div class="search-btns">
+    <button class="q-btn" id="mesh-btn" onclick="doSearch()">⬡ Mesh Search</button>
+    <button class="q-btn" onclick="feelingSovereign()">Feeling Sovereign</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results-panel"></div>
+
+  <div class="shortcuts" id="shortcuts-wrap">
+    <a class="shortcut" href="https://phone-serve.vercel.app" target="_blank">
+      <div class="shortcut-icon">🛰️</div>
+      <span class="shortcut-label">PhoneServe</span>
+    </a>
+    <a class="shortcut" href="void-odyssey.html">
+      <div class="shortcut-icon">🌌</div>
+      <span class="shortcut-label">Void Odyssey</span>
+    </a>
+    <a class="shortcut" href="soul-forge.html">
+      <div class="shortcut-icon">🤖</div>
+      <span class="shortcut-label">AI Suite</span>
+    </a>
+    <a class="shortcut" href="#" onclick="openNodeMap(event)">
+      <div class="shortcut-icon">📡</div>
+      <span class="shortcut-label">Node Map</span>
+    </a>
+    <a class="shortcut" href="compliance.html">
+      <div class="shortcut-icon">🔐</div>
+      <span class="shortcut-label">Compliance</span>
+    </a>
+    <a class="shortcut" href="admin.html">
+      <div class="shortcut-icon">💎</div>
+      <span class="shortcut-label">ETK Tokens</span>
+    </a>
+  </div>
+</main>
+
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker">
+    <span class="ticker-item"><span class="hi">● MESH PROXY</span> 127.0.0.1:1080 READY</span>
+    <span class="ticker-item"><span class="info">PHONESERVE</span> KADEMLIA DHT SYNC COMPLETE</span>
+    <span class="ticker-item"><span class="gold">ETK_TOKEN</span> +12.4% | 1 ETK = 0.0024 BTC</span>
+    <span class="ticker-item"><span class="warn">NASA SBIR</span> ALIGNMENT: A1.02 · A2.04 · S1.08</span>
+    <span class="ticker-item"><span class="info">VOID ODYSSEY</span> WARP GATE EVENT · SECTOR 7</span>
+    <span class="ticker-item"><span class="hi">PROOF-OF-ERASURE</span> VERIFIED · GDPR AUDIT CLEAN</span>
+  </div>
+</div>
+
+<script>
+// ── GATEWAY CONFIG ─────────────────────────────────────────
+const MESH_GATEWAY  = 'http://127.0.0.1:8080';  // status + search API
+const PROXY_ADDR    = '127.0.0.1:1080';          // browser proxy (set in OS/browser settings)
+
+// ── MESH SEARCH ────────────────────────────────────────────
+let localNodeOnline = false;
+
+async function doSearch() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) return;
+
+  const panel = document.getElementById('results-panel');
+  panel.style.display = 'block';
+  document.getElementById('shortcuts-wrap').style.marginTop = '12px';
+  panel.innerHTML = `<div class="result-loading">⬡ ROUTING THROUGH MESH… "${q}"</div>`;
+
+  if (localNodeOnline) {
+    try {
+      const res = await fetch(`${MESH_GATEWAY}/search?q=${encodeURIComponent(q)}`, {
+        signal: AbortSignal.timeout(5000)
+      });
+      const data = await res.json();
+      renderResults(data, q);
+      return;
+    } catch(e) {
+      // fall through to clearweb
+    }
+  }
+  // No node — show clearweb fallback with ETK skin
+  renderResults({
+    query: q,
+    source: 'clearweb-fallback',
+    results: [],
+    fallback_url: `https://www.google.com/search?q=${encodeURIComponent(q)}`
+  }, q);
+}
+
+function renderResults(data, q) {
+  const panel = document.getElementById('results-panel');
+  const isMesh = data.source && data.source.includes('Mesh');
+  const sourceLabel = isMesh
+    ? `<span class="result-source">⬡ ETK MESH</span>`
+    : `<span style="color:var(--pulse)">⚠ NO LOCAL NODE · CLEARWEB FALLBACK</span>`;
+
+  let html = `
+    <div class="result-header">
+      ${sourceLabel}
+      <span>QUERY: <span style="color:var(--gold)">${escHtml(q)}</span></span>
+    </div>`;
+
+  if (data.results && data.results.length > 0) {
+    data.results.forEach(r => {
+      const tag = r.source === 'mesh'
+        ? `<span class="result-tag mesh-tag">MESH NODE</span>`
+        : `<span class="result-tag">CLEARWEB</span>`;
+      html += `
+        <div class="result-item" onclick="window.open('${escHtml(r.url)}','_blank')">
+          <div class="result-title">${escHtml(r.title)}</div>
+          <div class="result-url">${escHtml(r.url)}</div>
+          <div class="result-snippet">${escHtml(r.snippet)}</div>
+          ${tag}
+        </div>`;
+    });
+  }
+
+  // Always show clearweb fallback link
+  if (data.fallback_url) {
+    html += `
+      <div class="result-fallback">
+        ${isMesh ? 'Also search clearweb:' : 'Open in browser:'}
+        <a href="${data.fallback_url}" target="_blank">Google → ${escHtml(q)}</a>
+      </div>`;
+  }
+
+  panel.innerHTML = html;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+const sovereignTopics = [
+  'decentralized+internet+sovereignty',
+  'PhoneServe+edge+nodes',
+  'ETK+token+ecosystem',
+  'distributed+edge+computing',
+  'Web3+data+ownership'
+];
+function feelingSovereign() {
+  const t = sovereignTopics[Math.floor(Math.random()*sovereignTopics.length)];
+  document.getElementById('searchInput').value = decodeURIComponent(t.replace(/\+/g,' '));
+  doSearch();
+}
+
+// ── NODE DETECTION ─────────────────────────────────────────
+async function checkLocalNode() {
+  const banner = document.getElementById('node-banner');
+  const dot    = document.getElementById('node-dot');
+  const msg    = document.getElementById('node-status-text');
+  const mbtn   = document.getElementById('mesh-btn');
+  try {
+    const res = await fetch(`${MESH_GATEWAY}/status`, { signal: AbortSignal.timeout(3000) });
+    if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+      localNodeOnline = true;
+      banner.className = 'node-banner detected';
+      dot.className    = 'node-dot green';
+      msg.innerHTML    = `<span style="color:var(--spark)">NODE ONLINE</span> · ID: <span style="color:var(--gold)">${data.nodeId||'ETK-LOCAL'}</span> · ${data.peers||'—'} peers · <span style="color:var(--edge)">${data.mesh_routed||0} mesh / ${data.clearweb_routed||0} clearweb</span>`;
+      mbtn.classList.add('mesh-active');
+      mbtn.textContent = '⬡ Mesh Search';
+      document.getElementById('map-local-status').textContent = 'ONLINE';
+    } else throw new Error();
+  } catch(_) {
+    localNodeOnline = false;
+    banner.className = 'node-banner not-detected';
+    dot.className    = 'node-dot red';
+    msg.innerHTML    = `<span style="color:var(--pulse)">NO LOCAL NODE</span> · 127.0.0.1:8080 unreachable · <span style="color:var(--muted)">searches use clearweb fallback</span>`;
+    mbtn.classList.remove('mesh-active');
+    mbtn.textContent = '⬡ Search';
+    document.getElementById('map-local-status').textContent = 'OFFLINE';
+    if (!document.getElementById('run-node-btn')) {
+      const btn = document.createElement('button');
+      btn.id = 'run-node-btn'; btn.className = 'node-action';
+      btn.textContent = 'Run Node';
+      btn.onclick = () => window.open('https://phone-serve.vercel.app','_blank');
+      banner.appendChild(btn);
+    }
+  }
+}
+
+// ── GEOLOCATION ────────────────────────────────────────────
+let userLocation = null;
+function getLocation() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(pos => {
+    userLocation = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+    const locEl = document.getElementById('node-location-display');
+    const locTxt = document.getElementById('location-text');
+    locEl.style.display = 'flex';
+    locTxt.textContent = `${userLocation.lat.toFixed(3)}, ${userLocation.lon.toFixed(3)}`;
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${userLocation.lat}&lon=${userLocation.lon}&format=json`)
+      .then(r=>r.json()).then(d => {
+        const city  = d.address?.city||d.address?.town||d.address?.county||'';
+        const state = d.address?.state||'';
+        const label = [city,state].filter(Boolean).join(', ');
+        if (label) locTxt.textContent = label;
+        document.getElementById('map-region').textContent = label||'UNKNOWN';
+        const yni = document.getElementById('your-node-info');
+        yni.classList.add('visible');
+        document.getElementById('your-node-coords').textContent = `${userLocation.lat.toFixed(4)}, ${userLocation.lon.toFixed(4)}`;
+        document.getElementById('your-node-city').textContent = label;
+        const ticker = document.getElementById('ticker');
+        const item = document.createElement('span');
+        item.className = 'ticker-item';
+        item.innerHTML = `<span class="hi">YOUR LOCATION</span> ${label} · LAT ${userLocation.lat.toFixed(2)} LON ${userLocation.lon.toFixed(2)}`;
+        ticker.appendChild(item);
+      }).catch(()=>{});
+  }, ()=>{});
+}
+
+// ── NODE MAP ───────────────────────────────────────────────
+const SEED_NODES = [
+  {lat:40.71,lon:-74.00,label:'NYC-01'},{lat:51.51,lon:-0.13,label:'LON-01'},
+  {lat:35.68,lon:139.69,label:'TYO-01'},{lat:37.77,lon:-122.4,label:'SFO-01'},
+  {lat:52.52,lon:13.40,label:'BER-01'},{lat:1.35,lon:103.82,label:'SGP-01'},
+  {lat:-33.87,lon:151.21,label:'SYD-01'},{lat:48.85,lon:2.35,label:'PAR-01'},
+  {lat:55.75,lon:37.62,label:'MSK-01'},{lat:19.07,lon:72.88,label:'MUM-01'},
+  {lat:25.20,lon:55.27,label:'DXB-01'},{lat:-23.55,lon:-46.63,label:'SAO-01'},
+  {lat:43.65,lon:-79.38,label:'TOR-01'},{lat:41.90,lon:12.50,label:'ROM-01'},
+  {lat:34.05,lon:-118.2,label:'LAX-01'},{lat:28.61,lon:77.21,label:'DEL-01'},
+  {lat:39.91,lon:116.39,label:'BEI-01'},{lat:6.52,lon:3.38,label:'LAG-01'},
+  {lat:59.33,lon:18.07,label:'STO-01'},{lat:45.42,lon:-75.70,label:'OTT-01'},
+];
+
+function latLonToXY(lat,lon,W,H){
+  return {x:((lon+180)/360)*W, y:((90-lat)/180)*H};
+}
+
+function drawNodeMap() {
+  const canvas = document.getElementById('node-map-canvas');
+  const W = canvas.offsetWidth; const H = 320;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle='#030a10'; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(0,212,255,0.06)'; ctx.lineWidth=1;
+  for(let lon=-180;lon<=180;lon+=30){const{x}=latLonToXY(0,lon,W,H);ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let lat=-90;lat<=90;lat+=30){const{y}=latLonToXY(lat,0,W,H);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  ctx.strokeStyle='rgba(0,212,255,0.08)'; ctx.lineWidth=0.8;
+  for(let i=0;i<SEED_NODES.length;i++)for(let j=i+1;j<SEED_NODES.length;j++){
+    const a=latLonToXY(SEED_NODES[i].lat,SEED_NODES[i].lon,W,H);
+    const b=latLonToXY(SEED_NODES[j].lat,SEED_NODES[j].lon,W,H);
+    if(Math.hypot(a.x-b.x,a.y-b.y)<W*0.28){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+  }
+  SEED_NODES.forEach(n=>{
+    const{x,y}=latLonToXY(n.lat,n.lon,W,H);
+    const g=ctx.createRadialGradient(x,y,0,x,y,10);
+    g.addColorStop(0,'rgba(0,255,157,0.5)');g.addColorStop(1,'rgba(0,255,157,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#00ff9d';ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(0,255,157,0.7)';ctx.font='9px Share Tech Mono,monospace';ctx.fillText(n.label,x+5,y-5);
+  });
+  if(userLocation){
+    const{x,y}=latLonToXY(userLocation.lat,userLocation.lon,W,H);
+    const c=localNodeOnline?'#00ff9d':'#ff3c6e';
+    ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);ctx.stroke();
+    ctx.strokeStyle=localNodeOnline?'rgba(0,255,157,0.25)':'rgba(255,60,110,0.25)';
+    ctx.beginPath();ctx.arc(x,y,16,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,4.5,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=c;ctx.font='bold 10px Share Tech Mono,monospace';ctx.fillText('YOU',x+7,y-8);
+    let nearest=null,nd=Infinity;
+    SEED_NODES.forEach(n=>{const p=latLonToXY(n.lat,n.lon,W,H);const d=Math.hypot(p.x-x,p.y-y);if(d<nd){nd=d;nearest=p;}});
+    if(nearest){ctx.strokeStyle=localNodeOnline?'rgba(0,255,157,0.4)':'rgba(255,60,110,0.3)';
+      ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(nearest.x,nearest.y);ctx.stroke();ctx.setLineDash([]);}
+  }
+  document.getElementById('map-node-count').textContent=SEED_NODES.length+(localNodeOnline?1:0);
+}
+
+function openNodeMap(e){if(e)e.preventDefault();document.getElementById('map-modal').classList.add('open');setTimeout(drawNodeMap,50);}
+function closeNodeMap(){document.getElementById('map-modal').classList.remove('open');}
+document.getElementById('map-modal').addEventListener('click',function(e){if(e.target===this)closeNodeMap();});
+
+// ── STARFIELD ──────────────────────────────────────────────
+(function(){
+  const c=document.getElementById('stars'),ctx=c.getContext('2d');let s=[];
+  function resize(){c.width=innerWidth;c.height=innerHeight;}
+  function init(){s=[];for(let i=0;i<220;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.2,a:Math.random(),drift:(Math.random()-.5)*.08});}
+  function draw(){ctx.clearRect(0,0,c.width,c.height);for(let p of s){ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,230,255,${p.a})`;ctx.fill();p.a+=(Math.random()-.5)*.015;p.a=Math.max(.05,Math.min(1,p.a));p.x+=p.drift;if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;}requestAnimationFrame(draw);}
+  window.addEventListener('resize',()=>{resize();init();});resize();init();draw();
+})();
+
+// ── COMPLIANCE GATE ────────────────────────────────────────
+function cgVerify() {
+  const mm   = parseInt(document.getElementById('cg-mm').value);
+  const dd   = parseInt(document.getElementById('cg-dd').value);
+  const yyyy = parseInt(document.getElementById('cg-yyyy').value);
+  const res  = document.getElementById('cg-result');
+
+  if (!mm || !dd || !yyyy || yyyy < 1900 || yyyy > 2026) {
+    res.className = 'cg-result fail'; res.style.display = 'block';
+    res.textContent = '✕ Invalid date — please check your entry.';
+    return;
+  }
+
+  const dob = new Date(yyyy, mm - 1, dd);
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const m = today.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+
+  if (age < 0 || age > 130) {
+    res.className = 'cg-result fail'; res.style.display = 'block';
+    res.textContent = '✕ Invalid date of birth.'; return;
+  }
+
+  window.__PHONESERVE_COMPLIANCE__._setVerified(age);
+  const state = window.__PHONESERVE_COMPLIANCE__.getState();
+
+  if (age < 13) {
+    res.className = 'cg-result fail'; res.style.display = 'block';
+    res.innerHTML = '✕ ACCESS DENIED<br>Reason: Access blocked: user identified as under 18.';
+    return;
+  }
+
+  // Passed — show token briefly then dismiss gate
+  const tokenPreview = document.getElementById('cg-token-preview');
+  tokenPreview.textContent = state.token;
+  res.className = 'cg-result ok'; res.style.display = 'block';
+  res.innerHTML = `✓ VERIFIED · Age: ${age} · Level: ${state.accessLevel.toUpperCase()}<br>Token: ${state.token.slice(0,28)}…`;
+
+  setTimeout(() => {
+    document.getElementById('compliance-gate').style.opacity = '0';
+    document.getElementById('compliance-gate').style.transition = 'opacity .5s';
+    setTimeout(() => {
+      document.getElementById('compliance-gate').style.display = 'none';
+      // Now boot everything
+      checkLocalNode();
+      getLocation();
+      setInterval(checkLocalNode, 30000);
+    }, 500);
+  }, 900);
+}
+
+// Allow Enter key on DOB inputs
+['cg-mm','cg-dd','cg-yyyy'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') cgVerify();
+  });
+});
+
+// ── BOOT (deferred until compliance passes) ────────────────
+// checkLocalNode / getLocation called by cgVerify above
+</script>
+</body>
+</html>
+

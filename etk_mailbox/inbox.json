@@ -1,0 +1,14 @@
+[
+  {
+    "id": "fee4e235-6bf6-4fa8-9e61-8765957cf47e",
+    "from_name": "ETK Mail Server",
+    "from_addr": "server@edgetech-knowledgey.fwh.is",
+    "to": "david@edgetech-knowledgey.fwh.is",
+    "subject": "Welcome to ETK Sovereign Mail",
+    "body": "Welcome, David Ingalls.\n\nYour sovereign ETK mail server is now running on your device.\n\nAccount  : david@edgetech-knowledgey.fwh.is\nRole     : Chief Architect \u00b7 ADMINISTRATOR\nDomain   : edgetech-knowledgey.fwh.is\nServer   : PhoneServe Mesh Node\n\nThis email server runs entirely on your Moto G Stylus 5G.\nNo third parties. No data sharing. Fully sovereign.\n\nSMTP Port : 8025\nIMAP Port : 8143\nAPI  Port : 8585\n\n\u2014 ETK Mail Server v1.0\nEdge Tech Knowledgey",
+    "timestamp": "2026-06-10T01:57:21.126256",
+    "read": false,
+    "starred": true,
+    "label": "system"
+  }
+]

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETK Mail // EdgeTech.io</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#020408;--deep:#050d14;--panel:#0a1a24;--panel2:#0d2030;
+  --edge:#00d4ff;--spark:#00ff9d;--pulse:#ff3c6e;--gold:#ffcc00;
+  --violet:#b060ff;--dim:#1a3040;--muted:#4a7a8a;--text:#c8e8f0;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{background:var(--void);color:var(--text);font-family:'Rajdhani',sans-serif;height:100%;overflow:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;
+  background-image:linear-gradient(rgba(0,212,255,0.02) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(0,212,255,0.02) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;}
+
+/* COMPLIANCE GATE */
+#compliance-gate{position:fixed;inset:0;z-index:9999;background:var(--void);
+  display:flex;align-items:center;justify-content:center;}
+.cg-box{width:min(92vw,380px);border:1px solid var(--edge);background:var(--deep);animation:fadeUp .5s ease both;}
+.cg-head{padding:14px 20px;border-bottom:1px solid var(--dim);font-family:'Orbitron',monospace;
+  font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--edge);display:flex;align-items:center;gap:8px;}
+.cg-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulseDot 1s infinite;}
+.cg-body{padding:20px;}
+.cg-sub{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.08em;line-height:1.7;margin-bottom:16px;}
+.cg-inputs{display:flex;gap:8px;margin-bottom:12px;}
+.cg-iw{display:flex;flex-direction:column;gap:3px;}
+.cg-lbl{font-size:9px;color:var(--muted);letter-spacing:.12em;}
+.cg-in{background:var(--void);border:1px solid var(--dim);padding:9px 10px;
+  font-family:'Share Tech Mono',monospace;font-size:14px;color:var(--text);
+  outline:none;text-align:center;transition:border-color .2s;width:68px;}
+.cg-in.wide{width:88px;}
+.cg-in:focus{border-color:var(--edge);}
+.cg-btn{width:100%;padding:11px;background:transparent;border:1px solid var(--spark);
+  color:var(--spark);font-family:'Orbitron',monospace;font-size:10px;font-weight:700;
+  letter-spacing:.2em;cursor:pointer;transition:all .2s;margin-bottom:8px;}
+.cg-btn:hover{background:var(--spark);color:var(--void);}
+.cg-res{font-size:10px;letter-spacing:.08em;padding:7px 10px;border:1px solid;display:none;line-height:1.6;}
+.cg-res.ok{border-color:var(--spark);color:var(--spark);}
+.cg-res.fail{border-color:var(--pulse);color:var(--pulse);}
+
+/* APP LAYOUT */
+#app{display:none;position:relative;z-index:5;height:100vh;flex-direction:column;}
+#app.visible{display:flex;}
+
+/* TOP BAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;border-bottom:1px solid var(--dim);
+  background:rgba(2,4,8,0.9);backdrop-filter:blur(8px);flex-shrink:0;flex-wrap:wrap;gap:8px;}
+.topbar-left{display:flex;align-items:center;gap:12px;}
+.back-btn{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);
+  text-decoration:none;letter-spacing:.1em;transition:color .2s;}
+.back-btn:hover{color:var(--edge);}
+.mail-brand{font-family:'Orbitron',monospace;font-size:13px;font-weight:900;letter-spacing:.12em;}
+.mail-brand .etk{color:var(--edge);}
+.mail-brand .mail{color:#fff;}
+.mail-addr{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--spark);letter-spacing:.08em;}
+.topbar-right{display:flex;gap:8px;align-items:center;}
+.compose-btn{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;
+  padding:7px 16px;border:1px solid var(--spark);color:var(--spark);
+  background:transparent;cursor:pointer;letter-spacing:.12em;transition:all .2s;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+.compose-btn:hover{background:var(--spark);color:var(--void);}
+
+/* MAIN AREA */
+.mail-body{display:flex;flex:1;overflow:hidden;}
+
+/* SIDEBAR */
+.sidebar{width:200px;border-right:1px solid var(--dim);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
+.sidebar-section{padding:10px 0;}
+.folder-btn{display:flex;align-items:center;gap:10px;padding:9px 14px;
+  font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);
+  cursor:pointer;letter-spacing:.06em;transition:all .15s;border:none;
+  background:transparent;width:100%;text-align:left;}
+.folder-btn:hover,.folder-btn.active{color:var(--edge);background:rgba(0,212,255,0.05);}
+.folder-btn.active{border-left:2px solid var(--edge);}
+.folder-icon{font-size:14px;width:18px;}
+.folder-cnt{margin-left:auto;font-size:9px;padding:1px 6px;
+  background:var(--pulse);color:#fff;border-radius:8px;}
+
+/* EMAIL LIST */
+.email-list{width:280px;border-right:1px solid var(--dim);display:flex;flex-direction:column;flex-shrink:0;}
+.list-head{padding:10px 14px;border-bottom:1px solid var(--dim);
+  font-family:'Orbitron',monospace;font-size:10px;font-weight:700;
+  letter-spacing:.15em;color:var(--muted);display:flex;justify-content:space-between;align-items:center;}
+.list-search{padding:8px 10px;border-bottom:1px solid var(--dim);}
+.search-in{width:100%;background:var(--panel);border:1px solid var(--dim);
+  padding:7px 10px;font-family:'Share Tech Mono',monospace;font-size:11px;
+  color:var(--text);outline:none;transition:border-color .2s;letter-spacing:.04em;}
+.search-in:focus{border-color:var(--edge);}
+.search-in::placeholder{color:var(--muted);}
+.email-items{flex:1;overflow-y:auto;}
+.email-item{padding:10px 14px;border-bottom:1px solid rgba(26,48,64,0.4);
+  cursor:pointer;transition:background .15s;position:relative;}
+.email-item:hover,.email-item.active{background:var(--panel);}
+.email-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--edge);}
+.email-item.unread .ei-from{color:#fff;font-weight:700;}
+.ei-row1{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.ei-from{font-family:'Rajdhani',sans-serif;font-size:13px;color:var(--text);font-weight:600;}
+.ei-time{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);}
+.ei-subject{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--edge);
+  letter-spacing:.04em;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ei-preview{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.unread-dot{width:6px;height:6px;border-radius:50%;background:var(--edge);
+  position:absolute;left:4px;top:50%;transform:translateY(-50%);}
+
+/* EMAIL DETAIL */
+.email-detail{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.detail-empty{flex:1;display:flex;align-items:center;justify-content:center;
+  font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.1em;}
+.detail-head{padding:14px 18px;border-bottom:1px solid var(--dim);flex-shrink:0;}
+.detail-subject{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;
+  letter-spacing:.06em;color:#fff;margin-bottom:8px;}
+.detail-meta{display:flex;gap:16px;flex-wrap:wrap;}
+.detail-meta-item{font-family:'Share Tech Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:.06em;}
+.detail-meta-item span{color:var(--edge);}
+.detail-actions{display:flex;gap:8px;padding:10px 18px;border-bottom:1px solid var(--dim);flex-wrap:wrap;}
+.da-btn{font-family:'Share Tech Mono',monospace;font-size:10px;
+  padding:5px 12px;border:1px solid var(--dim);color:var(--muted);
+  cursor:pointer;background:transparent;letter-spacing:.08em;transition:all .2s;}
+.da-btn:hover{border-color:var(--edge);color:var(--edge);}
+.da-btn.ai{border-color:var(--violet);color:var(--violet);}
+.da-btn.ai:hover{background:var(--violet);color:#fff;}
+.detail-body{flex:1;overflow-y:auto;padding:18px;}
+.detail-body-text{font-family:'Rajdhani',sans-serif;font-size:15px;
+  color:var(--text);line-height:1.8;white-space:pre-wrap;}
+
+/* COMPOSE MODAL */
+#compose-modal{display:none;position:fixed;inset:0;z-index:100;
+  background:rgba(2,4,8,0.85);align-items:flex-end;justify-content:center;}
+#compose-modal.open{display:flex;}
+.compose-box{width:min(95vw,640px);background:var(--deep);border:1px solid var(--edge);
+  border-bottom:none;box-shadow:0 0 40px rgba(0,212,255,0.15);
+  display:flex;flex-direction:column;max-height:90vh;animation:slideUp .3s ease;}
+.compose-head{padding:12px 16px;border-bottom:1px solid var(--dim);
+  font-family:'Orbitron',monospace;font-size:11px;font-weight:700;
+  letter-spacing:.15em;color:var(--edge);display:flex;justify-content:space-between;align-items:center;}
+.compose-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;transition:color .2s;}
+.compose-close:hover{color:var(--pulse);}
+.compose-fields{padding:0;}
+.cf{display:flex;align-items:center;border-bottom:1px solid var(--dim);}
+.cf-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);
+  letter-spacing:.1em;padding:10px 14px;width:60px;flex-shrink:0;}
+.cf-input{flex:1;background:transparent;border:none;padding:10px 14px 10px 0;
+  font-family:'Rajdhani',sans-serif;font-size:14px;color:var(--text);
+  outline:none;letter-spacing:.02em;}
+.cf-input::placeholder{color:var(--muted);}
+.compose-body-area{flex:1;min-height:180px;padding:14px 16px;
+  font-family:'Rajdhani',sans-serif;font-size:14px;color:var(--text);
+  outline:none;resize:none;background:transparent;border:none;
+  border-bottom:1px solid var(--dim);line-height:1.7;letter-spacing:.02em;}
+.compose-body-area::placeholder{color:var(--muted);}
+
+/* AI PANEL */
+.ai-panel{border-top:1px solid var(--dim);background:rgba(176,96,255,0.04);}
+.ai-panel-head{padding:8px 16px;display:flex;align-items:center;gap:8px;
+  font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--violet);
+  letter-spacing:.1em;cursor:pointer;border-bottom:1px solid var(--dim);}
+.ai-panel-head .ai-dot{width:6px;height:6px;border-radius:50%;background:var(--violet);
+  box-shadow:0 0 6px var(--violet);animation:pulseDot 2s infinite;}
+.ai-tools{padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--dim);}
+.ai-tool-btn{font-family:'Share Tech Mono',monospace;font-size:9px;
+  padding:5px 10px;border:1px solid var(--violet);color:var(--violet);
+  cursor:pointer;background:transparent;letter-spacing:.08em;transition:all .2s;}
+.ai-tool-btn:hover{background:var(--violet);color:#fff;}
+.ai-prompt-row{display:flex;gap:8px;padding:10px 16px;}
+.ai-prompt-in{flex:1;background:var(--panel);border:1px solid var(--dim);
+  padding:8px 12px;font-family:'Share Tech Mono',monospace;font-size:11px;
+  color:var(--text);outline:none;transition:border-color .2s;letter-spacing:.04em;}
+.ai-prompt-in:focus{border-color:var(--violet);}
+.ai-prompt-in::placeholder{color:var(--muted);}
+.ai-go-btn{font-family:'Orbitron',monospace;font-size:9px;font-weight:700;
+  padding:8px 14px;border:1px solid var(--violet);color:var(--violet);
+  cursor:pointer;background:transparent;letter-spacing:.1em;transition:all .2s;}
+.ai-go-btn:hover{background:var(--violet);color:#fff;}
+.ai-response{margin:0 16px 10px;padding:10px;background:var(--panel);
+  border:1px solid var(--violet);font-family:'Share Tech Mono',monospace;
+  font-size:10px;color:var(--text);line-height:1.7;letter-spacing:.04em;display:none;}
+.ai-response.visible{display:block;}
+.ai-use-btn{font-family:'Share Tech Mono',monospace;font-size:9px;
+  padding:4px 10px;border:1px solid var(--spark);color:var(--spark);
+  cursor:pointer;background:transparent;letter-spacing:.08em;margin:0 16px 10px;
+  transition:all .2s;display:none;}
+.ai-use-btn.visible{display:inline-block;}
+.ai-use-btn:hover{background:var(--spark);color:var(--void);}
+.ai-loading{color:var(--violet);font-family:'Share Tech Mono',monospace;
+  font-size:10px;padding:8px 16px;letter-spacing:.08em;display:none;}
+.ai-loading.visible{display:block;}
+
+.compose-footer{padding:10px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.send-btn{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;
+  padding:9px 24px;border:1px solid var(--spark);color:var(--spark);
+  background:transparent;cursor:pointer;letter-spacing:.15em;transition:all .2s;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+.send-btn:hover{background:var(--spark);color:var(--void);}
+.discard-btn{font-family:'Share Tech Mono',monospace;font-size:10px;
+  padding:9px 14px;border:1px solid var(--dim);color:var(--muted);
+  background:transparent;cursor:pointer;letter-spacing:.08em;transition:all .2s;}
+.discard-btn:hover{border-color:var(--pulse);color:var(--pulse);}
+
+/* TOAST */
+#toast{position:fixed;top:16px;right:16px;z-index:300;
+  font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.1em;
+  padding:9px 16px;border:1px solid var(--spark);background:var(--deep);
+  color:var(--spark);display:none;animation:fadeUp .3s ease;}
+
+/* TICKER */
+.ticker-wrap{position:fixed;bottom:0;left:0;right:0;z-index:10;
+  background:var(--deep);border-top:1px solid var(--dim);overflow:hidden;height:26px;flex-shrink:0;}
+.ticker{display:flex;align-items:center;height:100%;white-space:nowrap;animation:ticker 50s linear infinite;}
+.ticker-item{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);padding:0 28px;letter-spacing:.08em;}
+.ticker-item .hi{color:var(--spark);}
+.ticker-item .info{color:var(--edge);}
+.ticker-item .v{color:var(--violet);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes ticker{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+
+@media(max-width:700px){
+  .sidebar{display:none;}
+  .email-list{width:100%;border-right:none;}
+  .email-detail{display:none;}
+  .email-detail.mobile-show{display:flex;position:fixed;inset:0;z-index:50;background:var(--void);}
+}
+</style>
+</head>
+<body>
+<div id="toast"></div>
+
+<!-- COMPLIANCE GATE -->
+<div id="compliance-gate">
+  <div class="cg-box">
+    <div class="cg-head"><div class="cg-dot"></div>PhoneServe Compliance</div>
+    <div class="cg-body">
+      <div class="cg-sub">2026 Online Safety Act · 2026-18plus-v1<br>Verify age to access ETK Mail.</div>
+      <div class="cg-inputs">
+        <div class="cg-iw"><span class="cg-lbl">MONTH</span><input class="cg-in" id="cg-mm" type="number" min="1" max="12" placeholder="MM"></div>
+        <div class="cg-iw"><span class="cg-lbl">DAY</span><input class="cg-in" id="cg-dd" type="number" min="1" max="31" placeholder="DD"></div>
+        <div class="cg-iw"><span class="cg-lbl">YEAR</span><input class="cg-in wide" id="cg-yyyy" type="number" placeholder="YYYY"></div>
+      </div>
+      <button class="cg-btn" onclick="cgVerify()">Verify & Enter</button>
+      <div class="cg-res" id="cg-result"></div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <a class="back-btn" href="index.html">← ETK</a>
+      <div>
+        <div class="mail-brand"><span class="etk">ETK</span><span class="mail">MAIL</span></div>
+        <div class="mail-addr" id="mail-addr">david@edgetech.io</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="compose-btn" onclick="openCompose()">✦ Compose</button>
+    </div>
+  </div>
+
+  <div class="mail-body">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <button class="folder-btn active" onclick="setFolder('inbox',this)">
+          <span class="folder-icon">📥</span>Inbox
+          <span class="folder-cnt" id="inbox-cnt">3</span>
+        </button>
+        <button class="folder-btn" onclick="setFolder('sent',this)">
+          <span class="folder-icon">📤</span>Sent
+        </button>
+        <button class="folder-btn" onclick="setFolder('drafts',this)">
+          <span class="folder-icon">📝</span>Drafts
+        </button>
+        <button class="folder-btn" onclick="setFolder('starred',this)">
+          <span class="folder-icon">⭐</span>Starred
+        </button>
+        <button class="folder-btn" onclick="setFolder('trash',this)">
+          <span class="folder-icon">🗑</span>Trash
+        </button>
+      </div>
+      <div style="padding:10px 14px;border-top:1px solid var(--dim);">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;margin-bottom:6px;">ETK LABELS</div>
+        <button class="folder-btn" onclick="setFolder('phoneserve',this)"><span class="folder-icon">🛰️</span>PhoneServe</button>
+        <button class="folder-btn" onclick="setFolder('soulforge',this)"><span class="folder-icon">🤖</span>Soul Forge</button>
+        <button class="folder-btn" onclick="setFolder('revenue',this)"><span class="folder-icon">💵</span>Revenue</button>
+      </div>
+    </div>
+
+    <!-- EMAIL LIST -->
+    <div class="email-list">
+      <div class="list-head">
+        <span id="folder-title">INBOX</span>
+        <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);" id="email-count">0 emails</span>
+      </div>
+      <div class="list-search">
+        <input class="search-in" id="search-in" placeholder="Search emails…" oninput="searchEmails(this.value)">
+      </div>
+      <div class="email-items" id="email-items"></div>
+    </div>
+
+    <!-- EMAIL DETAIL -->
+    <div class="email-detail" id="email-detail">
+      <div class="detail-empty" id="detail-empty">SELECT AN EMAIL</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPOSE MODAL -->
+<div id="compose-modal">
+  <div class="compose-box">
+    <div class="compose-head">
+      ✦ New Message
+      <button class="compose-close" onclick="closeCompose()">✕</button>
+    </div>
+    <div class="compose-fields">
+      <div class="cf"><span class="cf-label">TO</span><input class="cf-input" id="c-to" placeholder="recipient@email.com"></div>
+      <div class="cf"><span class="cf-label">FROM</span><input class="cf-input" id="c-from" value="david@edgetech.io" readonly style="color:var(--spark)"></div>
+      <div class="cf"><span class="cf-label">SUBJ</span><input class="cf-input" id="c-subject" placeholder="Subject line…"></div>
+    </div>
+    <textarea class="compose-body-area" id="c-body" placeholder="Write your message…"></textarea>
+
+    <!-- AI PANEL -->
+    <div class="ai-panel">
+      <div class="ai-panel-head">
+        <div class="ai-dot"></div>
+        ETK AI WRITING ASSISTANT
+      </div>
+      <div class="ai-tools">
+        <button class="ai-tool-btn" onclick="aiTool('write')">✦ Write for me</button>
+        <button class="ai-tool-btn" onclick="aiTool('improve')">↑ Improve</button>
+        <button class="ai-tool-btn" onclick="aiTool('shorten')">⬡ Shorten</button>
+        <button class="ai-tool-btn" onclick="aiTool('formal')">◈ Make formal</button>
+        <button class="ai-tool-btn" onclick="aiTool('casual')">~ Make casual</button>
+        <button class="ai-tool-btn" onclick="aiTool('subject')">✎ Generate subject</button>
+      </div>
+      <div class="ai-prompt-row">
+        <input class="ai-prompt-in" id="ai-prompt" placeholder="Tell the AI what to write…">
+        <button class="ai-go-btn" onclick="runAI()">GO</button>
+      </div>
+      <div class="ai-loading" id="ai-loading">⬡ AI thinking…</div>
+      <div class="ai-response" id="ai-response"></div>
+      <button class="ai-use-btn" id="ai-use-btn" onclick="useAIResponse()">↓ Use this</button>
+    </div>
+
+    <div class="compose-footer">
+      <button class="send-btn" onclick="sendEmail()">⬡ SEND</button>
+      <button class="discard-btn" onclick="closeCompose()">Discard</button>
+    </div>
+  </div>
+</div>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item"><span class="hi">● ETK MAIL</span> david@edgetech.io · ONLINE</span>
+    <span class="ticker-item"><span class="v">AI WRITING ASSISTANT</span> POWERED BY CLAUDE · ACTIVE</span>
+    <span class="ticker-item"><span class="info">PHONESERVE MESH</span> EMAIL ROUTING ACTIVE · END-TO-END</span>
+    <span class="ticker-item"><span class="hi">ETK ECOSYSTEM</span> SOUL FORGE · VOID ODYSSEY · COMPLIANCE</span>
+  </div>
+</div>
+
+<script>
+// ── COMPLIANCE ─────────────────────────────────────────────
+function cgVerify(){
+  const mm=parseInt(document.getElementById('cg-mm').value);
+  const dd=parseInt(document.getElementById('cg-dd').value);
+  const yyyy=parseInt(document.getElementById('cg-yyyy').value);
+  const res=document.getElementById('cg-result');
+  if(!mm||!dd||!yyyy||yyyy<1900||yyyy>2026){res.className='cg-res fail';res.style.display='block';res.textContent='✕ Invalid date.';return;}
+  const dob=new Date(yyyy,mm-1,dd);
+  let age=new Date().getFullYear()-dob.getFullYear();
+  const m=new Date().getMonth()-dob.getMonth();
+  if(m<0||(m===0&&new Date().getDate()<dob.getDate()))age--;
+  if(age<13){res.className='cg-res fail';res.style.display='block';res.textContent='✕ ACCESS DENIED.';return;}
+  res.className='cg-res ok';res.style.display='block';res.textContent='✓ VERIFIED · Loading ETK Mail…';
+  setTimeout(()=>{
+    document.getElementById('compliance-gate').style.opacity='0';
+    document.getElementById('compliance-gate').style.transition='opacity .4s';
+    setTimeout(()=>{document.getElementById('compliance-gate').style.display='none';
+      document.getElementById('app').classList.add('visible');
+      initMail();},400);
+  },700);
+}
+['cg-mm','cg-dd','cg-yyyy'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')cgVerify();}));
+
+// ── OWNER IDENTITY ─────────────────────────────────────────
+const OWNER = {
+  name:        'David Ingalls',
+  email:       'david@edgetech.io',
+  role:        'CHIEF ARCHITECT',
+  company:     'Edge Tech Knowledgey',
+  sovereignId: 'ETK-SOVEREIGN-DAVID-ADMIN-OWNER',
+  cashApp:     '$davidingalls1061',
+  accessLevel: 'ADMINISTRATOR',
+  products:    ['PhoneServe','Soul Forge','Void Odyssey','Compliance','Mesh Search','ETK Mail','Admin Panel'],
+};
+
+// Inject admin identity into UI after load
+window.addEventListener('DOMContentLoaded', () => {
+  const addrEl = document.getElementById('mail-addr');
+  if (addrEl) addrEl.innerHTML =
+    `<span style="color:var(--spark)">${OWNER.email}</span>` +
+    `<span style="color:var(--gold);margin-left:8px;font-size:9px;">● ${OWNER.role} · ${OWNER.accessLevel}</span>`;
+  const fromEl = document.getElementById('c-from');
+  if (fromEl) fromEl.value = OWNER.email;
+});
+
+// ── EMAIL DATA ─────────────────────────────────────────────
+let emails = [];
+let sentEmails = [];
+let currentFolder = 'inbox';
+let selectedEmail = null;
+let aiResponseText = '';
+
+const SENDERS = [
+  {name:'PhoneServe Node',   addr:'nodes@phoneserve.net'},
+  {name:'Soul Forge System', addr:'system@soulforge.etk'},
+  {name:'ETK Revenue Alert', addr:'revenue@edgetech.io'},
+  {name:'Void Odyssey',      addr:'game@voidodyssey.etk'},
+  {name:'Compliance Auth',   addr:'compliance@phoneserve.net'},
+  {name:'Node Operator #247',addr:'node247@phoneserve.net'},
+  {name:'ETK Community',     addr:'community@edgetech.io'},
+];
+
+const SAMPLE_EMAILS = [
+  {subject:'Your PhoneServe node earned $42.80 today',
+   body:'Congratulations! Your sovereign node processed 1,847 requests today and earned $42.80 (90% revenue split applied).\n\nNode ID: ETK-NODE-A7F2\nUptime: 99.4%\nRequests: 1,847\nEarnings: $42.80\n\nPayment sent to $davidingalls1061 via Cash App.\n\nKeep your node running to maximize earnings.\n\n— PhoneServe Network',
+   sender:0,unread:true,starred:true,label:'revenue'},
+  {subject:'Soul Forge: AXIOM-7 created 12 new works',
+   body:'Your AI entity AXIOM-7 has been busy dreaming.\n\n12 new creations generated in the last 24 hours:\n• 4 Music compositions\n• 5 Visual artworks\n• 3 Literary pieces\n\nTotal estimated value: $186.40\n3 pieces are currently listed for sale.\n\nLog in to Soul Forge to review and price your AI\'s creations.\n\n— Soul Forge System',
+   sender:1,unread:true,starred:false,label:'soulforge'},
+  {subject:'Compliance token renewal required',
+   body:'Your PhoneServe compliance token is approaching expiration.\n\nToken: COMP-2026-A1B2C3D4-...\nIssued: 2026-03-01\nExpires: 2026-04-01\nStandard: 2026 Online Safety Act\n\nPlease renew your compliance token to ensure uninterrupted access to ETK services.\n\nVisit compliance.html to renew.\n\n— PhoneServe Compliance Authority',
+   sender:4,unread:true,starred:false,label:'phoneserve'},
+  {subject:'Welcome to Edge Tech Knowledgey',
+   body:'Welcome to the ETK sovereign ecosystem.\n\nYour account is now active:\n• Email: david@edgetech.io\n• Sovereign ID: ETK-SOVEREIGN-DAVID-...\n• Plan: SOVEREIGN+\n\nYou now have access to:\n✓ PhoneServe Node Network\n✓ Soul Forge AI Suite\n✓ Void Odyssey Game\n✓ Compliance Authority\n✓ Mesh Search\n✓ ETK Mail\n\nRevenue splits to $davidingalls1061 automatically.\n\nWelcome to the edge.\n\n— Edge Tech Knowledgey',
+   sender:6,unread:false,starred:true,label:''},
+  {subject:'Void Odyssey: New warp gate event active',
+   body:'A new warp gate event has opened in Sector Omega.\n\nEvent: VOID RIFT SIGMA\nDuration: 48 hours\nReward: 2,400 credits + Elite ship unlock\nDifficulty: Admiral class\n\nWarp to coordinates [847, -392] to participate.\n\nTop pilots earn exclusive ETK token rewards.\n\n— Void Odyssey Command',
+   sender:3,unread:false,starred:false,label:''},
+];
+
+function initMail() {
+  const now = new Date();
+  emails = SAMPLE_EMAILS.map((e,i)=>({
+    ...e,
+    id:'msg_'+i,
+    time: new Date(now - i*3600000*2).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),
+    date: new Date(now - i*3600000*2),
+  }));
+  renderEmailList();
+  updateCounts();
+}
+
+// ── FOLDER / RENDER ────────────────────────────────────────
+function setFolder(folder, btn) {
+  currentFolder = folder;
+  document.querySelectorAll('.folder-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('folder-title').textContent = folder.toUpperCase();
+  selectedEmail = null;
+  document.getElementById('email-detail').innerHTML = '<div class="detail-empty">SELECT AN EMAIL</div>';
+  renderEmailList();
+}
+
+function getFilteredEmails(folder) {
+  if(folder==='inbox') return emails;
+  if(folder==='sent')  return sentEmails;
+  if(folder==='starred') return emails.filter(e=>e.starred);
+  if(folder==='drafts'||folder==='trash') return [];
+  return emails.filter(e=>e.label===folder);
+}
+
+function renderEmailList(filter='') {
+  const list = getFilteredEmails(currentFolder)
+    .filter(e=>!filter||e.subject.toLowerCase().includes(filter)||
+      SENDERS[e.sender].name.toLowerCase().includes(filter));
+  const container = document.getElementById('email-items');
+  document.getElementById('email-count').textContent = list.length+' emails';
+  if(!list.length){
+    container.innerHTML=`<div style="padding:20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);">No emails</div>`;
+    return;
+  }
+  container.innerHTML = list.map(e=>{
+    const s = SENDERS[e.sender];
+    return `<div class="email-item ${e.unread?'unread':''} ${selectedEmail===e.id?'active':''}"
+      onclick="openEmail('${e.id}')">
+      ${e.unread?'<div class="unread-dot"></div>':''}
+      <div class="ei-row1">
+        <div class="ei-from">${s.name}</div>
+        <div class="ei-time">${e.time}</div>
+      </div>
+      <div class="ei-subject">${e.subject}</div>
+      <div class="ei-preview">${e.body.slice(0,60)}…</div>
+    </div>`;
+  }).join('');
+}
+
+function openEmail(id) {
+  const e = [...emails,...sentEmails].find(m=>m.id===id);
+  if(!e) return;
+  selectedEmail = id;
+  e.unread = false;
+  updateCounts();
+  renderEmailList();
+  const s = SENDERS[e.sender]||{name:'You',addr:'david@edgetech.io'};
+  const detail = document.getElementById('email-detail');
+  detail.innerHTML = `
+    <div class="detail-head">
+      <div class="detail-subject">${e.subject}</div>
+      <div class="detail-meta">
+        <div class="detail-meta-item">FROM: <span>${s.name} &lt;${s.addr}&gt;</span></div>
+        <div class="detail-meta-item">TO: <span>david@edgetech.io</span></div>
+        <div class="detail-meta-item">TIME: <span>${e.time}</span></div>
+      </div>
+    </div>
+    <div class="detail-actions">
+      <button class="da-btn" onclick="replyEmail('${id}')">↩ Reply</button>
+      <button class="da-btn" onclick="forwardEmail('${id}')">→ Forward</button>
+      <button class="da-btn ai" onclick="aiSummarize('${id}')">⬡ AI Summarize</button>
+      <button class="da-btn ai" onclick="aiReply('${id}')">⬡ AI Reply</button>
+      <button class="da-btn" onclick="toggleStar('${id}')">${e.starred?'★ Starred':'☆ Star'}</button>
+      <button class="da-btn" onclick="deleteEmail('${id}')">🗑 Delete</button>
+    </div>
+    <div class="detail-body">
+      <div class="detail-body-text" id="body-${id}">${e.body}</div>
+    </div>`;
+  // mobile
+  detail.classList.add('mobile-show');
+}
+
+// ── EMAIL ACTIONS ──────────────────────────────────────────
+function replyEmail(id) {
+  const e = [...emails,...sentEmails].find(m=>m.id===id);
+  if(!e) return;
+  const s = SENDERS[e.sender];
+  document.getElementById('c-to').value = s.addr;
+  document.getElementById('c-subject').value = 'Re: '+e.subject;
+  document.getElementById('c-body').value = '\n\n---\nOriginal: '+e.body.slice(0,100)+'…';
+  openCompose();
+}
+
+function forwardEmail(id) {
+  const e = [...emails,...sentEmails].find(m=>m.id===id);
+  if(!e) return;
+  document.getElementById('c-to').value = '';
+  document.getElementById('c-subject').value = 'Fwd: '+e.subject;
+  document.getElementById('c-body').value = '\n\n---\nForwarded:\n'+e.body;
+  openCompose();
+}
+
+function toggleStar(id) {
+  const e = emails.find(m=>m.id===id);
+  if(e){ e.starred=!e.starred; openEmail(id); renderEmailList(); }
+}
+
+function deleteEmail(id) {
+  emails = emails.filter(e=>e.id!==id);
+  selectedEmail = null;
+  document.getElementById('email-detail').innerHTML = '<div class="detail-empty">SELECT AN EMAIL</div>';
+  renderEmailList(); updateCounts();
+  toast('Email deleted');
+}
+
+function searchEmails(val) { renderEmailList(val.toLowerCase()); }
+
+function updateCounts() {
+  const unread = emails.filter(e=>e.unread).length;
+  const cnt = document.getElementById('inbox-cnt');
+  if(unread>0){cnt.textContent=unread;cnt.style.display='inline';}
+  else cnt.style.display='none';
+}
+
+// ── COMPOSE ────────────────────────────────────────────────
+function openCompose() { document.getElementById('compose-modal').classList.add('open'); }
+function closeCompose() {
+  document.getElementById('compose-modal').classList.remove('open');
+  document.getElementById('c-to').value='';
+  document.getElementById('c-subject').value='';
+  document.getElementById('c-body').value='';
+  document.getElementById('ai-response').classList.remove('visible');
+  document.getElementById('ai-use-btn').classList.remove('visible');
+  document.getElementById('ai-prompt').value='';
+}
+
+function sendEmail() {
+  const to = document.getElementById('c-to').value.trim();
+  const subj = document.getElementById('c-subject').value.trim();
+  const body = document.getElementById('c-body').value.trim();
+  if(!to||!subj){ toast('To and Subject required','warn'); return; }
+  const msg = {
+    id:'sent_'+Date.now(), subject:subj, body:body||'(no body)',
+    sender:0, to, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
+    date:new Date(), unread:false, starred:false, label:'',
+    sentByMe:true,
+  };
+  sentEmails.unshift(msg);
+  closeCompose();
+  toast('✓ Message sent to '+to);
+}
+
+// ── AI EMAIL TOOLS ─────────────────────────────────────────
+async function runAI() {
+  const prompt = document.getElementById('ai-prompt').value.trim();
+  const body   = document.getElementById('c-body').value.trim();
+  const subj   = document.getElementById('c-subject').value.trim();
+  if(!prompt){ toast('Enter a prompt first','warn'); return; }
+  await callAI(`You are the AI writing assistant for David Ingalls (david@edgetech.io), Chief Architect and ADMINISTRATOR of Edge Tech Knowledgey. David owns the full ETK ecosystem: PhoneServe, Soul Forge, Void Odyssey, Compliance Authority, and ETK Mail. Revenue routes to $davidingalls1061 on Cash App. David has full admin access to all ETK products.\n\nEmail subject: ${subj||'(none)'}\nCurrent draft: ${body||'(empty)'}\n\nUser request: ${prompt}\n\nWrite or improve the email body only. Professional, concise, ETK sovereign tech brand voice. Sign off as David Ingalls, Chief Architect — Edge Tech Knowledgey.`);
+}
+
+async function aiTool(type) {
+  const body = document.getElementById('c-body').value.trim();
+  const subj = document.getElementById('c-subject').value.trim();
+  const prompts = {
+    write:   `Write a professional email for Edge Tech Knowledgey (david@edgetech.io). Subject: "${subj||'(no subject)'}". Write a complete, polished email body.`,
+    improve: `Improve this email draft for Edge Tech Knowledgey:\n\n${body||'(empty draft)'}\n\nMake it clearer, more professional, and on-brand for a sovereign tech company.`,
+    shorten: `Shorten this email to the essential points only:\n\n${body||'(empty)'}`,
+    formal:  `Rewrite this email in a formal, professional tone:\n\n${body||'(empty)'}`,
+    casual:  `Rewrite this email in a friendly, casual tone while staying professional:\n\n${body||'(empty)'}`,
+    subject: `Generate 3 compelling email subject lines for this email body:\n\n${body||'(empty)'}`,
+  };
+  await callAI(prompts[type]);
+}
+
+async function aiSummarize(id) {
+  const e = [...emails,...sentEmails].find(m=>m.id===id);
+  if(!e) return;
+  const el = document.getElementById('body-'+id);
+  if(el) el.textContent = '⬡ Summarizing…';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:300,
+        messages:[{role:'user',content:`Summarize this email in 2-3 bullet points:\n\n${e.body}`}]
+      })
+    });
+    const data = await res.json();
+    const summary = data.content?.[0]?.text||'Could not summarize.';
+    if(el) el.textContent = '⬡ SUMMARY:\n\n'+summary+'\n\n---\nORIGINAL:\n\n'+e.body;
+    toast('⬡ AI summary ready');
+  } catch(err) {
+    if(el) el.textContent = e.body;
+    toast('AI unavailable — check connection','warn');
+  }
+}
+
+async function aiReply(id) {
+  const e = [...emails,...sentEmails].find(m=>m.id===id);
+  if(!e) return;
+  const s = SENDERS[e.sender];
+  document.getElementById('c-to').value = s.addr;
+  document.getElementById('c-subject').value = 'Re: '+e.subject;
+  openCompose();
+  document.getElementById('ai-prompt').value = 'Write a reply to this email: '+e.body.slice(0,200);
+  await runAI();
+}
+
+async function callAI(prompt) {
+  const loading = document.getElementById('ai-loading');
+  const respEl  = document.getElementById('ai-response');
+  const useBtn  = document.getElementById('ai-use-btn');
+  loading.classList.add('visible');
+  respEl.classList.remove('visible');
+  useBtn.classList.remove('visible');
+  aiResponseText = '';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:600,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await res.json();
+    aiResponseText = data.content?.[0]?.text||'No response.';
+    loading.classList.remove('visible');
+    respEl.textContent = aiResponseText;
+    respEl.classList.add('visible');
+    useBtn.classList.add('visible');
+  } catch(err) {
+    loading.classList.remove('visible');
+    respEl.textContent = '⚠ AI unavailable. Check your connection.';
+    respEl.classList.add('visible');
+  }
+}
+
+function useAIResponse() {
+  if(!aiResponseText) return;
+  document.getElementById('c-body').value = aiResponseText;
+  document.getElementById('ai-response').classList.remove('visible');
+  document.getElementById('ai-use-btn').classList.remove('visible');
+  document.getElementById('ai-prompt').value = '';
+  toast('✓ AI text applied to message');
+}
+
+// ── TOAST ──────────────────────────────────────────────────
+function toast(msg, type='ok') {
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  t.style.borderColor=type==='warn'?'var(--gold)':'var(--spark)';
+  t.style.color=type==='warn'?'var(--gold)':'var(--spark)';
+  clearTimeout(toast._t);
+  toast._t=setTimeout(()=>t.style.display='none',3000);
+}
+
+// Enter key on AI prompt
+document.getElementById('ai-prompt').addEventListener('keydown',e=>{if(e.key==='Enter')runAI();});
+</script>
+</body>
+</html>
