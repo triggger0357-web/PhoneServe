@@ -1,3 +1,5 @@
+node_modules/
+.next/
 .env.local
 keys/
 # This is a sample .gitignore file
