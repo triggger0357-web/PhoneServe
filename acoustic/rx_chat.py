@@ -1,44 +1,89 @@
-import os
+#!/usr/bin/env python3
+"""
+PhoneServe Acoustic Data Transmission - Receiver & Listener (rx_chat.py)
+Listens for the sync chirp, synchronizes, and decodes FSK audio payloads.
+"""
+
 import numpy as np
-import receiver
-import fec
+import wave
+import sys
+import time
 
-def bits_to_text(bits):
-    bytes_list = []
-    for i in range(0, len(bits), 8):
-        byte_bits = bits[i : i + 8]
-        if len(byte_bits) < 8:
+try:
+    import sounddevice as sd
+except ImportError:
+    print("[!] sounddevice not found. Install via: pip install sounddevice")
+    sys.exit(1)
+
+SAMPLE_RATE = 44100
+CHIRP_DURATION = 0.5
+F_START = 500
+F_END = 2500
+BAUD_RATE = 20
+TONE_0 = 1200
+TONE_1 = 2200
+
+def generate_sync_chirp():
+    t = np.linspace(0, CHIRP_DURATION, int(SAMPLE_RATE * CHIRP_DURATION), endpoint=False)
+    phase = 2 * np.pi * (F_START * t + 0.5 * (F_END - F_START) * (t / CHIRP_DURATION))
+    signal = np.sin(phase)
+    window = np.hanning(len(signal))
+    return signal * window
+
+def decode_fsk(signal, sample_rate=SAMPLE_RATE, baud=BAUD_RATE):
+    samples_per_symbol = int(sample_rate / baud)
+    num_symbols = len(signal) // samples_per_symbol
+    binary_chars = []
+    
+    for i in range(num_symbols):
+        symbol_chunk = signal[i * samples_per_symbol : (i + 1) * samples_per_symbol]
+        if len(symbol_chunk) < samples_per_symbol:
             break
-        byte_str = "".join(str(b) for b in byte_bits)
-        bytes_list.append(int(byte_str, 2))
+        fft_res = np.abs(np.fft.rfft(symbol_chunk))
+        freqs = np.fft.rfftfreq(len(symbol_chunk), 1/sample_rate)
         
-    raw_text = bytes(bytes_list).decode('ascii', errors='replace')
-    return raw_text.replace('\x00', '')
+        idx_0 = np.argmin(np.abs(freqs - TONE_0))
+        idx_1 = np.argmin(np.abs(freqs - TONE_1))
+        
+        bit = '1' if fft_res[idx_1] > fft_res[idx_0] else '0'
+        binary_chars.append(bit)
+        
+    binary_str = ''.join(binary_chars)
+    chars = []
+    for j in range(0, len(binary_str) - 7, 8):
+        byte = binary_str[j:j+8]
+        if len(byte) == 8:
+            chars.append(chr(int(byte, 2)))
+    return ''.join(chars)
 
-def main():
-    target_file = "phoneserve_packet.wav"
-    if not os.path.exists(target_file):
-        print("Error: Target 'phoneserve_packet.wav' not found.")
-        return
-        
-    audio_data = receiver.load_wav(target_file)
-    rx_bits = receiver.demodulate_audio_to_bits(audio_data)
+def listen_loop():
+    print("[*] Listening for PhoneServe acoustic sync chirp...")
+    chirp_template = generate_sync_chirp()
+    chunk_duration = 3.0  
+    chunk_samples = int(SAMPLE_RATE * chunk_duration)
     
-    if len(rx_bits) == 0:
-        print("Error: No bitstream data recovered from stream.")
-        return
+    while True:
+        audio_chunk = sd.rec(chunk_samples, samplerate=SAMPLE_RATE, channels=1, dtype='float32')
+        sd.wait()
+        audio_flat = audio_chunk.flatten()
         
-    unshuffled_bits = fec.deinterleave(rx_bits)
-    decoded_bits, corrected_errors = fec.fec_stream_to_bits(unshuffled_bits)
-    decoded_message = bits_to_text(decoded_bits)
-    
-    print("\n==================================================")
-    print(f"📩 MESH DECODER: Burst-Corrected Report")
-    print("==================================================")
-    print(f"Total Bit Positions Untangled: {len(rx_bits)}")
-    print(f"Healed Burst Bit Flips:        {corrected_errors} errors cleanly auto-corrected")
-    print(f"--> {decoded_message}")
-    print("==================================================")
+        correlation = np.correlate(audio_flat, chirp_template, mode='valid')
+        if len(correlation) > 0:
+            max_idx = np.argmax(correlation)
+            peak_val = correlation[max_idx]
+            
+            if peak_val > 10.0:  
+                print(f"[+] Sync chirp detected! (Peak: {peak_val:.2f})")
+                data_start = max_idx + len(chirp_template) + int(SAMPLE_RATE * 0.1)
+                data_len = int(SAMPLE_RATE * (400 / BAUD_RATE))
+                
+                if data_start + data_len <= len(audio_flat):
+                    data_segment = audio_flat[data_start:data_start + data_len]
+                    decoded_text = decode_fsk(data_segment)
+                    print(f"[+] Decoded Payload: {decoded_text}")
+                    return decoded_text
+                else:
+                    print("[!] Chirp near frame boundary, re-listening...")
 
 if __name__ == "__main__":
-    main()
+    listen_loop()
