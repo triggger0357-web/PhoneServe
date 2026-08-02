@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "username": "chief",
+      "display_name": "Chief Architect",
+      "email": "chief@edgetech-knowledgey.fwh.is",
+      "password_hash": "cdb59ac48dc26ea4f7d9b448777a6032754d77da15bf580ac3f55788b3ea577d",
+      "created": 1783672604.5626535,
+      "storage_used": 0,
+      "storage_limit": 1073741824,
+      "tier": "sovereign"
+    },
+    {
+      "username": "friend1",
+      "display_name": "Friend One",
+      "email": "friend1@edgetech-knowledgey.fwh.is",
+      "password_hash": "ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae",
+      "created": 1783689593.1683784,
+      "storage_used": 0,
+      "storage_limit": 1073741824,
+      "tier": "sovereign"
+    },
+    {
+      "username": "david2",
+      "display_name": "David Test",
+      "email": "david2@edgetech-knowledgey.fwh.is",
+      "password_hash": "ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae",
+      "created": 1783879418.441602,
+      "storage_used": 0,
+      "storage_limit": 1073741824,
+      "tier": "sovereign"
+    },
+    {
+      "username": "christoher nulph",
+      "display_name": "Christopher",
+      "email": "christoher nulph@edgetech-knowledgey.fwh.is",
+      "password_hash": "e0acfdffa9cf25e68ad9e74bbb1921db645fea23b6526edc8c351c628fe67c70",
+      "created": 1783879436.883045,
+      "storage_used": 0,
+      "storage_limit": 1073741824,
+      "tier": "sovereign"
+    }
+  ],
+  "signups": []
+}

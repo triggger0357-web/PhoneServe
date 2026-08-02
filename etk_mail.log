@@ -1,0 +1,945 @@
+2026-07-10 01:43:42,652 [ETK-MAIL] INFO: 📤 Sent: Sovereign Transmission to david@edgetech-knowledgey.fwh.is
+2026-07-10 01:43:42,654 [ETK-MAIL] INFO: 📥 Delivered: Sovereign Transmission from david@edgetech-knowledgey.fwh.is
+2026-07-10 01:43:42,654 [ETK-MAIL] INFO: API SEND → david@edgetech-knowledgey.fwh.is: Sovereign Transmission
+2026-07-10 23:30:41,929 [ETK-MAIL] INFO: Loaded 3 emails from inbox
+2026-07-10 23:30:41,930 [ETK-MAIL] INFO: Loaded 2 emails from sent
+2026-07-10 23:30:41,933 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-10 23:30:41,934 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-10 23:30:41,934 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-10 23:30:41,934 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-10 23:30:41,935 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-10 23:30:41,935 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-10 23:30:41,935 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-10 23:30:41,935 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-10 23:30:41,936 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-10 23:30:48,116 [ETK-MAIL] INFO: Loaded 3 emails from inbox
+2026-07-10 23:30:48,116 [ETK-MAIL] INFO: Loaded 2 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-12 03:00:58,790 [ETK-MAIL] INFO: Loaded 3 emails from inbox
+2026-07-12 03:00:58,840 [ETK-MAIL] INFO: Loaded 2 emails from sent
+2026-07-12 03:00:58,889 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-12 03:00:58,890 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-12 03:00:58,890 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-12 03:00:58,890 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-12 03:00:58,890 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-12 03:00:58,890 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-12 03:00:58,890 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-12 03:00:58,891 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-12 03:00:58,891 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-12 03:02:03,564 [ETK-MAIL] INFO: Loaded 3 emails from inbox
+2026-07-12 03:02:03,744 [ETK-MAIL] INFO: Loaded 2 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-12 11:00:44,221 [ETK-MAIL] INFO: 📤 Sent: Sovereign Transmission to david@edgetech-knowledgey.fwh.is
+2026-07-12 11:00:44,228 [ETK-MAIL] INFO: 📥 Delivered: Sovereign Transmission from david@edgetech-knowledgey.fwh.is
+2026-07-12 11:00:44,228 [ETK-MAIL] INFO: API SEND → david@edgetech-knowledgey.fwh.is: Sovereign Transmission
+2026-07-12 11:15:06,322 [ETK-MAIL] INFO: Loaded 4 emails from inbox
+2026-07-12 11:15:06,354 [ETK-MAIL] INFO: Loaded 3 emails from sent
+2026-07-12 11:15:06,357 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-12 11:15:06,357 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-12 11:15:06,357 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-12 11:15:06,394 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-12 11:15:06,394 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-12 11:15:06,395 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-12 11:15:06,395 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-12 11:15:06,395 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-12 11:15:06,395 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-12 11:16:00,388 [ETK-MAIL] INFO: Loaded 4 emails from inbox
+2026-07-12 11:16:00,399 [ETK-MAIL] INFO: Loaded 3 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-12 15:17:41,311 [ETK-MAIL] INFO: 📤 Sent: Sovereign Transmission to david@edgetech-knowledgey.fwh.is
+2026-07-12 15:17:41,315 [ETK-MAIL] INFO: 📥 Delivered: Sovereign Transmission from david@edgetech-knowledgey.fwh.is
+2026-07-12 15:17:41,315 [ETK-MAIL] INFO: API SEND → david@edgetech-knowledgey.fwh.is: Sovereign Transmission
+2026-07-14 04:35:02,974 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-14 04:35:02,979 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-14 04:35:02,981 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-14 04:35:02,981 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-14 04:35:02,981 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-14 04:35:02,981 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-14 04:35:02,981 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-14 04:35:02,981 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-14 04:35:02,982 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-14 04:35:02,982 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-14 04:35:02,982 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-14 04:35:04,550 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-14 04:35:04,552 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-14 22:34:02,567 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-14 22:34:02,568 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-14 22:34:02,571 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-14 22:34:02,571 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-14 22:34:02,571 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-14 22:34:02,571 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-14 22:34:02,571 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-14 22:34:02,571 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-14 22:34:02,572 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-14 22:34:02,572 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-14 22:34:02,572 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-14 22:34:04,012 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-14 22:34:04,012 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-15 14:33:11,450 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-15 14:33:11,453 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-15 14:33:11,455 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-15 14:33:11,455 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-15 14:33:11,455 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-15 14:33:11,455 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-15 14:33:11,455 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-15 14:33:11,455 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-15 14:33:11,455 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-15 14:33:11,455 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-15 14:33:11,455 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-15 14:33:14,220 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-15 14:33:14,220 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-16 13:39:39,473 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-16 13:39:39,475 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-16 13:39:39,476 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-16 13:39:39,476 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-16 13:39:39,476 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-16 13:39:39,476 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-16 13:39:39,476 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-16 13:39:39,476 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-16 13:39:39,477 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-16 13:39:39,477 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-16 13:39:39,477 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-16 13:39:40,615 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-16 13:39:40,616 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-16 21:53:41,437 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-16 21:53:41,460 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-16 21:53:41,487 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-16 21:53:41,487 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-16 21:53:41,487 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-16 21:53:41,488 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-16 21:53:41,488 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-16 21:53:41,488 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-16 21:53:41,488 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-16 21:53:41,488 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-16 21:53:41,488 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-16 21:54:26,955 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-16 21:54:26,965 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-17 19:28:08,233 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-17 19:28:08,235 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-17 19:28:08,236 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-17 19:28:08,236 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-17 19:28:08,237 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-17 19:28:08,237 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-17 19:28:08,237 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-17 19:28:08,237 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-17 19:28:08,237 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-17 19:28:08,237 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-17 19:28:08,237 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-17 19:28:10,331 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-17 19:28:10,332 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-19 00:15:06,594 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-19 00:15:06,595 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-19 00:15:06,596 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-19 00:15:06,597 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-19 00:15:06,597 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-19 00:15:06,597 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-19 00:15:06,597 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-19 00:15:06,597 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-19 00:15:06,597 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-19 00:15:06,597 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-19 00:15:06,597 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-19 00:15:07,945 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-19 00:15:07,946 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-20 17:26:30,999 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-20 17:26:31,000 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-20 17:26:31,002 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-20 17:26:31,002 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-20 17:26:31,002 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-20 17:26:31,002 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-20 17:26:31,002 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-20 17:26:31,002 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-20 17:26:31,002 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-20 17:26:31,002 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-20 17:26:31,002 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-20 17:26:32,966 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-20 17:26:32,966 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-21 00:51:02,316 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-21 00:51:02,322 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-21 00:51:02,327 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-21 00:51:02,330 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-21 00:51:02,330 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-21 00:51:02,331 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-21 00:51:02,332 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-21 00:51:02,332 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-21 00:51:02,333 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-21 00:51:02,333 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-21 00:51:02,333 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-21 00:52:05,122 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-21 00:52:05,127 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-21 13:14:55,403 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-21 13:14:55,404 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-21 13:14:55,413 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-21 13:14:55,413 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-21 13:14:55,413 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-21 13:14:55,413 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-21 13:14:55,413 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-21 13:14:55,413 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-21 13:14:55,413 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-21 13:14:55,413 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-21 13:14:55,414 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-21 13:14:57,174 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-21 13:14:57,174 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-22 15:52:22,414 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-22 15:52:22,428 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-22 15:52:22,434 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-22 15:52:22,434 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-22 15:52:22,434 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-22 15:52:22,434 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-22 15:52:22,434 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-22 15:52:22,435 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-22 15:52:22,435 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-22 15:52:22,435 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-22 15:52:22,435 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-22 15:52:26,978 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-22 15:52:26,980 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-23 02:55:39,461 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-23 02:55:39,463 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-23 02:55:39,470 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-23 02:55:39,470 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-23 02:55:39,471 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-23 02:55:39,471 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-23 02:55:39,471 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-23 02:55:39,471 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-23 02:55:39,471 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-23 02:55:39,471 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-23 02:55:39,471 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-23 02:55:41,080 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-23 02:55:41,080 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-24 11:28:23,824 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-24 11:28:23,900 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-24 11:28:23,967 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-24 11:28:23,967 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-24 11:28:23,968 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-24 11:28:23,968 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-24 11:28:23,968 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-24 11:28:23,968 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-24 11:28:23,968 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-24 11:28:23,968 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-24 11:28:23,969 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-24 11:29:15,792 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-24 11:29:15,811 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-25 04:45:05,533 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-25 04:45:05,553 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-25 04:45:05,582 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-25 04:45:05,582 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-25 04:45:05,582 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-25 04:45:05,582 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-25 04:45:05,583 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-25 04:45:05,583 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-25 04:45:05,583 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-25 04:45:05,583 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-25 04:45:05,583 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-25 04:45:31,759 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-25 04:45:31,768 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-26 01:52:13,871 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-26 01:52:13,872 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-26 01:52:13,874 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-26 01:52:13,874 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-26 01:52:13,874 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-26 01:52:13,874 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-26 01:52:13,874 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-26 01:52:13,874 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-26 01:52:13,874 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-26 01:52:13,874 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-26 01:52:13,874 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-26 01:52:16,178 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-26 01:52:16,179 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-26 07:01:12,678 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-26 07:01:12,684 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-26 07:01:12,688 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-26 07:01:12,688 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-26 07:01:12,688 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-26 07:01:12,688 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-26 07:01:12,688 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-26 07:01:12,688 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-26 07:01:12,688 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-26 07:01:12,688 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-26 07:01:12,688 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-26 07:01:16,813 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-26 07:01:16,819 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-28 02:58:11,277 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-28 02:58:11,279 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-28 02:58:11,286 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-28 02:58:11,286 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-28 02:58:11,286 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-28 02:58:11,287 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-28 02:58:11,287 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-28 02:58:11,287 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-28 02:58:11,287 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-28 02:58:11,287 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-28 02:58:11,287 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-28 02:58:23,918 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-28 02:58:23,923 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-29 01:54:12,336 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-29 01:54:12,337 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-29 01:54:12,340 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-29 01:54:12,340 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-29 01:54:12,340 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-29 01:54:12,340 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-29 01:54:12,340 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-29 01:54:12,340 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-29 01:54:12,340 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-29 01:54:12,340 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-29 01:54:12,340 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-29 01:54:13,643 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-29 01:54:13,643 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-29 18:27:55,266 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-29 18:27:55,267 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-29 18:27:55,269 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-29 18:27:55,269 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-29 18:27:55,269 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-29 18:27:55,269 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-29 18:27:55,269 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-29 18:27:55,269 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-29 18:27:55,269 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-29 18:27:55,269 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-29 18:27:55,269 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-29 18:27:56,688 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-29 18:27:56,688 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-30 04:23:30,107 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-30 04:23:30,108 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-30 04:23:30,109 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-30 04:23:30,109 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-30 04:23:30,109 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-30 04:23:30,109 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-30 04:23:30,109 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-30 04:23:30,109 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-30 04:23:30,109 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-30 04:23:30,109 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-30 04:23:30,109 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-30 04:23:31,253 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-30 04:23:31,253 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-30 23:54:28,657 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-30 23:54:28,663 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-30 23:54:28,664 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-30 23:54:28,664 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-30 23:54:28,664 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-30 23:54:28,664 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-30 23:54:28,664 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-30 23:54:28,664 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-30 23:54:28,664 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-30 23:54:28,664 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-30 23:54:28,664 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-30 23:54:30,625 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-30 23:54:30,625 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-07-31 23:21:38,518 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-31 23:21:38,522 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-07-31 23:21:38,524 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-31 23:21:38,524 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-07-31 23:21:38,524 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-07-31 23:21:38,524 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-07-31 23:21:38,524 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-07-31 23:21:38,524 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-07-31 23:21:38,524 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-07-31 23:21:38,524 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-07-31 23:21:38,524 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-07-31 23:21:41,489 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-07-31 23:21:41,491 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use
+2026-08-01 18:22:22,235 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-01 18:22:22,237 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-01 18:22:22,239 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-01 18:22:22,239 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-01 18:22:22,239 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-01 18:22:22,239 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-01 18:22:22,239 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-01 18:22:22,239 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-01 18:22:22,239 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-01 18:22:22,239 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-01 18:22:22,239 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-01 18:22:24,412 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-01 18:22:24,412 [ETK-MAIL] INFO: Loaded 4 emails from sent
+Accounts module loaded
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 420, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/PhoneServe/etk_mail_server.py", line 400, in main
+    smtp_server = await asyncio.start_server(smtp_handler, '0.0.0.0', CONFIG['smtp_port'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/asyncio/base_events.py", line 1641, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025): [errno 98] address already in use

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ETK Sovereign Mail</title>
+<style>
+:root{--bg:#0a0f1c;--card:#121a2e;--accent:#00d4ff;--text:#e6f0ff}
+body{background:var(--bg);color:var(--text);font-family:Inter,monospace;margin:0;padding:16px}
+.header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e2a4a;padding-bottom:12px}
+.badge{background:var(--accent);color:#000;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.stats{display:flex;gap:12px;margin:16px 0;font-size:13px}
+.stat{background:var(--card);padding:8px 14px;border-radius:8px;border:1px solid #1e2a4a}
+.inbox{display:grid;gap:10px;margin-top:16px}
+.mail{background:var(--card);padding:14px;border-radius:10px;border-left:3px solid var(--accent);cursor:pointer}
+.mail.unread{border-left-color:#ffaa00}
+.mail .subj{font-weight:700;font-size:15px}
+.mail .meta{font-size:12px;opacity:.7;margin:4px 0}
+.compose{background:var(--card);padding:16px;border-radius:12px;margin-top:20px;border:1px solid #1e2a4a}
+input,textarea{width:100%;background:#0a0f1c;border:1px solid #2a3a5a;color:#fff;padding:10px;border-radius:8px;margin:6px 0;font-family:monospace}
+button{background:var(--accent);color:#000;border:0;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer}
+button:hover{filter:brightness(1.2)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <h2 style="margin:0">📡 ETK Sovereign Mail</h2>
+    <div style="font-size:12px;opacity:.6">david@edgetech-knowledgey.fwh.is • NODE ONLINE</div>
+  </div>
+  <div class="badge" id="nodeBadge">IRON CORE LIVE</div>
+</div>
+
+<div class="stats" id="stats">Loading stats...</div>
+
+<div class="compose">
+  <h3 style="margin:0 0 8px">✉️ New Transmission</h3>
+  <input id="to" value="david@edgetech-knowledgey.fwh.is" placeholder="To">
+  <input id="subject" placeholder="Subject" value="Sovereign Transmission">
+  <textarea id="body" rows="4" placeholder="Message body...">Mail server LIVE on Iron Core node ETK</textarea>
+  <button onclick="sendMail()">SEND VIA MESH</button>
+  <span id="sendStatus" style="margin-left:10px;font-size:12px"></span>
+</div>
+
+<div class="inbox" id="inbox">Loading inbox...</div>
+
+<script>
+const API = 'http://127.0.0.1:8585';
+
+async function loadStats(){
+  try{
+    const r = await fetch(`${API}/api/stats`);
+    const j = await r.json();
+    document.getElementById('stats').innerHTML = `
+      <div class="stat">📥 Inbox: ${j.inbox_total} (${j.inbox_unread} unread)</div>
+      <div class="stat">📤 Sent: ${j.sent_total}</div>
+      <div class="stat">🌐 ${j.domain}</div>
+      <div class="stat">👑 ${j.owner || 'Chief Architect'}</div>
+    `;
+  }catch(e){ document.getElementById('stats').innerText = 'Stats offline'; }
+}
+
+async function loadInbox(){
+  try{
+    const r = await fetch(`${API}/api/folder`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({folder:'inbox'})
+    });
+    const j = await r.json();
+    const box = document.getElementById('inbox');
+    if(!j.emails || j.emails.length===0){ box.innerHTML='<div>No messages</div>'; return; }
+    box.innerHTML = j.emails.map(m => `
+      <div class="mail ${m.read?'':'unread'}" onclick="viewMail('${m.id}')">
+        <div class="subj">${m.subject} ${m.starred?'⭐':''}</div>
+        <div class="meta">${m.from_name} &lt;${m.from_addr}&gt; → ${m.to} • ${new Date(m.timestamp).toLocaleString()}</div>
+        <div style="font-size:13px;opacity:.9;margin-top:6px">${m.body.substring(0,140)}${m.body.length>140?'...':''}</div>
+      </div>
+    `).join('');
+  }catch(e){
+    document.getElementById('inbox').innerText = 'Inbox offline: '+e;
+  }
+}
+
+async function sendMail(){
+  const payload = {
+    from: 'david@edgetech-knowledgey.fwh.is',
+    to: document.getElementById('to').value,
+    subject: document.getElementById('subject').value,
+    body: document.getElementById('body').value
+  };
+  document.getElementById('sendStatus').innerText='Sending...';
+  try{
+    const r = await fetch(`${API}/api/send`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const j = await r.json();
+    document.getElementById('sendStatus').innerText = j.ok ? '✅ Sent: '+j.id : '❌ '+JSON.stringify(j);
+    loadInbox(); loadStats();
+  }catch(e){ document.getElementById('sendStatus').innerText='Error: '+e; }
+}
+
+function viewMail(id){
+  fetch(`${API}/api/read`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+  loadInbox();
+}
+
+// Auto-refresh every 5s — sovereign live inbox
+loadStats(); loadInbox();
+setInterval(()=>{ loadInbox(); loadStats(); }, 5000);
+
+// Check mesh node
+fetch('http://127.0.0.1:8080/status').then(r=>r.json()).then(j=>{
+  document.getElementById('nodeBadge').innerText = `NODE ${j.nodeId} • ${j.mesh_routed} routed`;
+}).catch(()=>{ document.getElementById('nodeBadge').innerText='MESH OFFLINE'; });
+</script>
+</body>
+</html>
