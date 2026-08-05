@@ -21,14 +21,14 @@ function readBody(req) {
     });
 }
 function isAuthed(req) {
-    const auth = req.headers['authorization'] || '';
+    const auth = req.headers['x-auth-token'] || req.headers['authorization'] || '';
     const token = auth.replace('Bearer ', '').trim();
     return sessions.has(token);
 }
 const server = http.createServer(async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Auth-Token');
     if (req.method === 'OPTIONS') { res.writeHead(204); return res.end(); }
 
     if (req.url === '/api/auth' && req.method === 'POST') {
