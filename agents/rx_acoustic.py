@@ -1,12 +1,13 @@
+import wave
 import numpy as np
 import struct
 import sys
-from scipy.io import wavfile
 
 class AcousticRxDecoder:
     """
     Decodes BFSK acoustic WAV files using Goertzel tone filters.
     Detects 0xAC01 magic header, extracts payload, and verifies CRC16.
+    Uses pure NumPy and standard library wave module (Zero SciPy dependencies).
     """
     MAGIC_HEADER = b'\xac\x01'
     SAMPLE_RATE = 44100       # Hz
@@ -26,6 +27,32 @@ class AcousticRxDecoder:
                 else:
                     crc >>= 1
         return crc & 0xFFFF
+
+    @classmethod
+    def read_wav_file(cls, wav_path: str):
+        """Reads WAV file samples into float32 array using standard library wave module."""
+        with wave.open(wav_path, 'rb') as wav_in:
+            sr = wav_in.getframerate()
+            n_channels = wav_in.getnchannels()
+            sampwidth = wav_in.getsampwidth()
+            n_frames = wav_in.getnframes()
+            raw_bytes = wav_in.readframes(n_frames)
+
+            if sampwidth == 2:
+                raw_data = np.frombuffer(raw_bytes, dtype=np.int16)
+                data = raw_data.astype(np.float32) / 32768.0
+            elif sampwidth == 4:
+                raw_data = np.frombuffer(raw_bytes, dtype=np.int32)
+                data = raw_data.astype(np.float32) / 2147483648.0
+            else:
+                raw_data = np.frombuffer(raw_bytes, dtype=np.uint8)
+                data = (raw_data.astype(np.float32) - 128.0) / 128.0
+
+            # De-interleave if stereo, take channel 1
+            if n_channels > 1:
+                data = data[::n_channels]
+
+            return sr, data
 
     @classmethod
     def goertzel_filter(cls, samples: np.ndarray, target_freq: float) -> float:
@@ -51,15 +78,9 @@ class AcousticRxDecoder:
 
     @classmethod
     def decode_wav(cls, wav_path: str):
-        sr, raw_data = wavfile.read(wav_path)
+        sr, data = cls.read_wav_file(wav_path)
         if sr != cls.SAMPLE_RATE:
             raise ValueError(f"Sample rate mismatch: expected {cls.SAMPLE_RATE} Hz, got {sr} Hz")
-
-        # Normalize audio samples to [-1.0, 1.0]
-        if raw_data.dtype == np.int16:
-            data = raw_data.astype(np.float32) / 32768.0
-        else:
-            data = raw_data.astype(np.float32)
 
         samples_per_symbol = int(cls.SAMPLE_RATE * cls.SYMBOL_DURATION)
 
@@ -105,7 +126,6 @@ class AcousticRxDecoder:
                 byte2 = (byte2 << 1) | bits[offset + 8 + i]
 
             if bytes([byte1, byte2]) == cls.MAGIC_HEADER:
-                # Align bytes from header offset
                 for b_idx in range(offset, len(bits) - 7, 8):
                     val = 0
                     for i in range(8):
