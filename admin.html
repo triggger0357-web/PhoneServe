@@ -3,216 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PhoneServe - Admin & Value Engine</title>
+  <title>PhoneServe - Admin Telemetry Dashboard</title>
   <style>
     :root {
-      --bg: #0d1117;
-      --card-bg: #161b22;
-      --border: #30363d;
-      --text: #c9d1d9;
-      --accent-green: #238636;
-      --accent-glow: #2ea043;
-      --gold: #d29922;
-      --blue: #58a6ff;
+      --bg-color: #0b0f19;
+      --card-bg: #161b26;
+      --accent-green: #00ff88;
+      --accent-blue: #00bfff;
+      --text-color: #e6edf3;
+      --text-dim: #8b949e;
+      --border-color: #30363d;
     }
-
     body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       margin: 0;
-      padding: 24px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
-      background-color: var(--bg);
-      color: var(--text);
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
-    .card-title {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #8b949e;
-      margin-bottom: 12px;
-    }
-
-    .ticker-display {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #3fb950;
-      font-family: monospace;
-      text-shadow: 0 0 10px rgba(63, 185, 80, 0.2);
-    }
-
-    .rate-subtext {
-      font-size: 0.9rem;
-      color: #8b949e;
-      margin-top: 4px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-right: 6px;
-      margin-bottom: 6px;
-    }
-
-    .badge-active { background: rgba(46, 160, 67, 0.15); color: #3fb950; border: 1px solid rgba(46, 160, 67, 0.4); }
-    .badge-disabled { background: rgba(110, 118, 129, 0.1); color: #8b949e; border: 1px solid var(--border); }
-    .badge-gold { background: rgba(210, 153, 34, 0.15); color: var(--gold); border: 1px solid rgba(210, 153, 34, 0.4); }
-
-    .progress-bar {
-      height: 8px;
-      background: #21262d;
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 10px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--blue);
-      width: 48%;
-      transition: width 0.3s ease;
-    }
-
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #21262d;
-      font-size: 0.9rem;
-    }
-
-    .stat-row:last-child { border-bottom: none; }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+    h1 { margin: 0; font-size: 1.5rem; color: var(--accent-blue); }
+    .status-badge { background: rgba(0, 255, 136, 0.1); color: var(--accent-green); padding: 4px 12px; border-radius: 12px; border: 1px solid var(--accent-green); font-size: 0.85rem; font-weight: bold; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; }
+    .card-label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+    .card-value { font-size: 1.6rem; font-weight: bold; margin-top: 8px; color: var(--accent-green); }
+    .log-section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; }
+    .log-header { font-size: 1rem; font-weight: bold; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .log-box { background-color: #05070a; border: 1px solid var(--border-color); border-radius: 6px; height: 280px; overflow-y: auto; padding: 12px; font-family: "Courier New", Courier, monospace; font-size: 0.85rem; color: #39ff14; }
+    .log-entry { margin-bottom: 6px; line-height: 1.4; word-break: break-all; }
+    .log-entry .ts { color: var(--text-dim); }
+    .log-entry .tag-acoustic { color: var(--accent-green); font-weight: bold; }
+    .log-entry .tag-info { color: var(--accent-blue); }
   </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1>PhoneServe Telemetry Node</h1>
+      <span class="status-badge" id="ws-status">Connecting...</span>
+    </header>
 
-  <div style="max-width: 1100px; margin: 0 auto 24px auto;">
-    <h1 style="font-size: 1.5rem; margin-bottom: 4px;">PhoneServe Core Operations</h1>
-    <span id="connection-status" class="badge badge-disabled">Connecting to Local Daemon...</span>
-  </div>
-
-  <div class="dashboard-grid">
-
-    <!-- REAL-TIME YIELD CLOCK -->
-    <div class="card">
-      <div class="card-title">Value Engine — Unclaimed Earnings</div>
-      <div class="ticker-display" id="yield-ticker">$0.000000</div>
-      <div class="rate-subtext" id="yield-rate">+ $0.000038 / sec</div>
-      
-      <div style="margin-top: 20px;">
-        <div class="stat-row">
-          <span>Global Network Volume</span>
-          <span id="global-volume" style="color: var(--text); font-weight: 600;">$128,490.41</span>
-        </div>
-        <div class="stat-row">
-          <span>Active Nodes Routed</span>
-          <span>Voice / SMS / Proxy / AI</span>
-        </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-label">Unclaimed Balance</div>
+        <div class="card-value" id="val-balance">$0.000000</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Base Rate / sec</div>
+        <div class="card-value" id="val-rate" style="color: var(--accent-blue);">$0.000038</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Verified Strings</div>
+        <div class="card-value" id="val-strings" style="color: #ffffff;">0</div>
       </div>
     </div>
 
-    <!-- SOUL FORGE AI AGENT STATUS -->
-    <div class="card">
-      <div class="card-title">Soul Forge Bound Agent #0357</div>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <div>
-          <span class="badge badge-gold" id="agent-tier">Tier 2 - Edge Node</span>
-          <span style="font-weight: 600;" id="agent-level">Level 14</span>
-        </div>
-        <span style="font-size: 0.85rem; color: #8b949e;">48,200 / 50,000 XP</span>
+    <div class="log-section">
+      <div class="log-header">
+        <span>Acoustic & String Micro-Mint Log Feed</span>
+        <span style="font-size: 0.75rem; color: var(--text-dim);">Listening on ws://127.0.0.1:8080</span>
       </div>
-
-      <div class="progress-bar">
-        <div class="progress-fill" id="xp-bar" style="width: 96%;"></div>
-      </div>
-
-      <div style="margin-top: 20px;">
-        <div class="card-title" style="font-size: 0.75rem;">Unlocked Capabilities</div>
-        <div id="capabilities-list">
-          <span class="badge badge-active">SMS Relay</span>
-          <span class="badge badge-active">Proxy Routing</span>
-          <span class="badge badge-active">Auto-Yield Claim</span>
-          <span class="badge badge-disabled" id="legal-badge">Legal Triage (Locked)</span>
-        </div>
+      <div class="log-box" id="log-container">
+        <div class="log-entry"><span class="ts">[SYS]</span> Initializing event stream observer...</div>
       </div>
     </div>
-
   </div>
 
   <script>
-    class DashboardController {
-      constructor() {
-        this.balance = 14.829104;
-        this.ratePerSec = 0.000038;
-        this.lastTime = performance.now();
-        this.tickerElem = document.getElementById("yield-ticker");
-        this.statusElem = document.getElementById("connection-status");
-      }
+    const wsStatus = document.getElementById('ws-status');
+    const valBalance = document.getElementById('val-balance');
+    const valRate = document.getElementById('val-rate');
+    const valStrings = document.getElementById('val-strings');
+    const logContainer = document.getElementById('log-container');
 
-      init() {
-        this.connectWebSocket();
-        this.startTickerAnimation();
-      }
+    let lastMinedCount = null;
+    let lastBalance = null;
 
-      connectWebSocket() {
-        // Attempt connection to local Value Engine daemon
-        const ws = new WebSocket("ws://localhost:8080/ws/value-stream");
-
-        ws.onopen = () => {
-          this.statusElem.textContent = "Live Stream Connected";
-          this.statusElem.className = "badge badge-active";
-        };
-
-        ws.onmessage = (event) => {
-          try {
-            const data = JSON.parse(event.data);
-            this.balance = data.user_unclaimed_balance_usd;
-            this.ratePerSec = data.user_current_rate_per_sec;
-            document.getElementById("yield-rate").textContent = `+ $${this.ratePerSec.toFixed(6)} / sec`;
-          } catch(e) {}
-        };
-
-        ws.onerror = () => {
-          // Fallback simulation mode for web preview
-          this.statusElem.textContent = "Daemon Offline (Simulation Mode)";
-          this.statusElem.className = "badge badge-gold";
-        };
-      }
-
-      startTickerAnimation() {
-        const tick = (now) => {
-          const deltaSec = (now - this.lastTime) / 1000;
-          this.lastTime = now;
-          this.balance += this.ratePerSec * deltaSec;
-          this.tickerElem.textContent = `$${this.balance.toFixed(6)}`;
-          requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      }
+    function addLog(message, isAcoustic = false) {
+      const now = new Date();
+      const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      
+      const tag = isAcoustic 
+        ? '<span class="tag-acoustic">[ACOUSTIC 0xAC01]</span>' 
+        : '<span class="tag-info">[STRING MINT]</span>';
+        
+      entry.innerHTML = `<span class="ts">[${timeStr}]</span> ${tag} ${message}`;
+      logContainer.appendChild(entry);
+      logContainer.scrollTop = logContainer.scrollHeight;
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const controller = new DashboardController();
-      controller.init();
-    });
+    function connectWS() {
+      const ws = new WebSocket('ws://127.0.0.1:8080');
+
+      ws.onopen = () => {
+        wsStatus.innerText = 'ONLINE';
+        wsStatus.style.borderColor = '#00ff88';
+        wsStatus.style.color = '#00ff88';
+        addLog('WebSocket connection established with telemetry daemon.');
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          
+          if (data.user_unclaimed_balance_usd !== undefined) {
+            valBalance.innerText = '$' + data.user_unclaimed_balance_usd.toFixed(6);
+          }
+          if (data.user_current_rate_per_sec !== undefined) {
+            valRate.innerText = '$' + data.user_current_rate_per_sec.toFixed(6);
+          }
+          if (data.mined_strings_count !== undefined) {
+            valStrings.innerText = data.mined_strings_count;
+
+            if (lastMinedCount !== null && data.mined_strings_count > lastMinedCount) {
+              const deltaBalance = lastBalance !== null 
+                ? (data.user_unclaimed_balance_usd - lastBalance).toFixed(6) 
+                : '0.001500';
+              
+              // Highlight micro-mints matching acoustic sound rate ($0.0015)
+              const isAcoustic = Math.abs(parseFloat(deltaBalance) - 0.001500) < 0.0001;
+              const msg = isAcoustic 
+                ? `CRC16 frame verified via microphone stream | +$${deltaBalance}` 
+                : `Multi-string proof registered | +$${deltaBalance}`;
+
+              addLog(msg, isAcoustic);
+            }
+            
+            lastMinedCount = data.mined_strings_count;
+            lastBalance = data.user_unclaimed_balance_usd;
+          }
+        } catch (err) {
+          console.error('Failed to parse telemetry frame:', err);
+        }
+      };
+
+      ws.onclose = () => {
+        wsStatus.innerText = 'OFFLINE';
+        wsStatus.style.borderColor = '#ff4d4d';
+        wsStatus.style.color = '#ff4d4d';
+        setTimeout(connectWS, 3000);
+      };
+
+      ws.onerror = () => {
+        ws.close();
+      };
+    }
+
+    connectWS();
   </script>
 </body>
 </html>
