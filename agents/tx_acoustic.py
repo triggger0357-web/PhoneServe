@@ -2,12 +2,11 @@ import numpy as np
 import struct
 import wave
 import sys
-from scipy.io import wavfile
 
 class AcousticTxEncoder:
     """
     Encodes binary payloads into 0xAC01 acoustic frames and modulates
-    them into phase-continuous BFSK audio waveforms.
+    them into phase-continuous BFSK audio waveforms using standard library wave.
     """
     MAGIC_HEADER = b'\xac\x01'
     
@@ -57,7 +56,7 @@ class AcousticTxEncoder:
         audio_chunks = []
         phase = 0.0
 
-        # 1. Preamble Tone (100ms sync burst to wake receiver filter)
+        # 1. Preamble Tone (100ms sync burst)
         preamble_samples = int(cls.SAMPLE_RATE * 0.100)
         t_pre = np.arange(preamble_samples) / cls.SAMPLE_RATE
         audio_chunks.append(np.sin(2 * np.pi * cls.FREQ_PREAMBLE * t_pre))
@@ -68,24 +67,24 @@ class AcousticTxEncoder:
             phase_increment = 2.0 * np.pi * freq / cls.SAMPLE_RATE
             phases = phase + np.arange(samples_per_symbol) * phase_increment
             phase = (phases[-1] + phase_increment) % (2.0 * np.pi)
-            
-            chunk = np.sin(phases)
-            audio_chunks.append(chunk)
+            audio_chunks.append(np.sin(phases))
 
         # 3. Trailing Silence (50ms buffer)
         silence_samples = int(cls.SAMPLE_RATE * 0.050)
         audio_chunks.append(np.zeros(silence_samples))
 
-        # 4. Concatenate and normalize to 16-bit PCM integer WAV format
+        # 4. Concatenate and write standard 16-bit PCM WAV file
         full_waveform = np.concatenate(audio_chunks)
         normalized_pcm = np.int16(full_waveform * 32767 * 0.8)
 
-        # Save audio WAV file
-        wavfile.write(output_filename, cls.SAMPLE_RATE, normalized_pcm)
-        
-        frame_hex = frame.hex()
+        with wave.open(output_filename, 'wb') as wav_out:
+            wav_out.setnchannels(1)      # Mono
+            wav_out.setsampwidth(2)     # 16-bit PCM (2 bytes/sample)
+            wav_out.setframerate(cls.SAMPLE_RATE)
+            wav_out.writeframes(normalized_pcm.tobytes())
+
         print(f"[Acoustic TX] Encoded Payload: '{payload.decode(errors='ignore')}'")
-        print(f"[Acoustic TX] Output Frame: 0x{frame_hex}")
+        print(f"[Acoustic TX] Output Frame: 0x{frame.hex()}")
         print(f"[Acoustic TX] Generated WAV: '{output_filename}' ({len(normalized_pcm)} samples)")
         return output_filename
 
