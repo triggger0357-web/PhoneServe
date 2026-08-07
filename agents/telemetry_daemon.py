@@ -4,6 +4,7 @@ import hashlib
 import time
 import random
 import struct
+import os
 import numpy as np
 
 try:
@@ -15,6 +16,7 @@ class AcousticFrameVerifier:
     """
     Vectorized single-bin DFT tone power analysis and CRC16 frame verification
     for live PCM stream decoding using OpenBLAS matrix multiplication.
+    Supports configurable energy detection thresholds via environment variables.
     """
     MAGIC_HEADER = b'\xac\x01'
     SAMPLE_RATE = 44100       # Hz
@@ -22,6 +24,10 @@ class AcousticFrameVerifier:
     FREQ_SPACE = 1800.0       # Hz (Bit 0)
     FREQ_PREAMBLE = 3000.0    # Hz (Sync Tone)
     SYMBOL_DURATION = 0.010   # 10ms (441 samples @ 44.1kHz)
+
+    # Configurable sensitivity thresholds (defaults tuned for low-volume mic capture)
+    PREAMBLE_THRESH = float(os.getenv("ACOUSTIC_PREAMBLE_THRESH", "15.0"))
+    SYMBOL_THRESH = float(os.getenv("ACOUSTIC_SYMBOL_THRESH", "0.1"))
 
     @staticmethod
     def calculate_crc16(data: bytes) -> int:
@@ -37,12 +43,6 @@ class AcousticFrameVerifier:
 
     @classmethod
     def compute_tone_powers_vectorized(cls, chunks: np.ndarray, freqs: list) -> np.ndarray:
-        """
-        Vectorized Goertzel/DFT power filter using BLAS matrix multiplication.
-        chunks: np.ndarray of shape (N_chunks, N_samples)
-        freqs: list of target frequencies [f1, f2, ...]
-        returns: np.ndarray of shape (N_chunks, len(freqs)) containing spectral powers
-        """
         if chunks.ndim == 1:
             chunks = chunks.reshape(1, -1)
 
@@ -72,17 +72,14 @@ class AcousticFrameVerifier:
         if len(indices) == 0:
             return None
 
-        # 1. Zero-copy sliding window matrix
         sliding_chunks = np.lib.stride_tricks.sliding_window_view(data, window_shape=samples_per_symbol)[::scan_step]
-        
-        # 2. Parallel power calculation across all sliding frames
         powers = cls.compute_tone_powers_vectorized(sliding_chunks, [cls.FREQ_PREAMBLE, cls.FREQ_MARK, cls.FREQ_SPACE])
         
         p_preamble = powers[:, 0]
         p_mark = powers[:, 1]
         p_space = powers[:, 2]
 
-        preamble_mask = (p_preamble > 50.0) & (p_preamble > (p_mark + p_space) * 2)
+        preamble_mask = (p_preamble > cls.PREAMBLE_THRESH) & (p_preamble > (p_mark + p_space) * 2)
         preamble_end_idx = 0
         in_preamble = False
 
@@ -96,7 +93,6 @@ class AcousticFrameVerifier:
         if preamble_end_idx == 0:
             return None
 
-        # 3. Batch process symbols post-sync
         symbol_indices = np.arange(preamble_end_idx, len(data) - samples_per_symbol + 1, samples_per_symbol)
         if len(symbol_indices) == 0:
             return None
@@ -109,11 +105,10 @@ class AcousticFrameVerifier:
 
         bits = []
         for p_m, p_s in zip(m_power, s_power):
-            if p_m < 0.5 and p_s < 0.5:
+            if p_m < cls.SYMBOL_THRESH and p_s < cls.SYMBOL_THRESH:
                 break
             bits.append(1 if p_m >= p_s else 0)
 
-        # 4. Search bitstream for 0xAC01 header
         decoded_bytes = bytearray()
         for offset in range(len(bits) - 16):
             b1, b2 = 0, 0
@@ -173,7 +168,6 @@ class MultiStringMinerDaemon:
         return block_hash
 
     async def live_acoustic_listener(self):
-        """Asynchronous background worker capturing mic input via SoX stdout stream."""
         cmd = ["rec", "-q", "-t", "raw", "-r", "44100", "-e", "signed-integer", "-b", "16", "-c", "1", "-"]
         try:
             proc = await asyncio.create_subprocess_exec(
@@ -181,13 +175,13 @@ class MultiStringMinerDaemon:
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.DEVNULL
             )
-            print("[Acoustic Mic Listener] Active in background (SoX -> Vectorized BLAS Pipe).")
+            print(f"[Acoustic Mic Listener] Active (Preamble Thresh: {AcousticFrameVerifier.PREAMBLE_THRESH}, Symbol Thresh: {AcousticFrameVerifier.SYMBOL_THRESH}).")
         except Exception as e:
             print(f"[Acoustic Mic Listener] Warning: Could not execute SoX rec process ({e}). Live capture disabled.")
             return
 
         buffer = np.array([], dtype=np.float32)
-        chunk_size = 1024 * 2  # 1024 int16 samples (~23ms chunk)
+        chunk_size = 1024 * 2
 
         try:
             while True:
@@ -200,7 +194,7 @@ class MultiStringMinerDaemon:
                 chunk_float = chunk_int16.astype(np.float32) / 32768.0
                 buffer = np.append(buffer, chunk_float)
 
-                max_samples = 44100 * 2  # Keep trailing 2-second sliding buffer
+                max_samples = 44100 * 2
                 if len(buffer) > max_samples:
                     buffer = buffer[-max_samples:]
 
@@ -225,7 +219,6 @@ class MultiStringMinerDaemon:
         return block_hash
 
     async def simulate_mining_events(self):
-        """Simulates non-acoustic multi-string telemetry background events."""
         string_types = ["telecom_sms", "telecom_voice", "proxy_bandwidth", "ai_compute"]
         
         while True:
@@ -236,7 +229,6 @@ class MultiStringMinerDaemon:
             print(f"[Miner] Mined {active_string} string | Proof: {proof[:12]}... | +${reward:.6f}")
 
     async def ws_handler(self, websocket):
-        """Broadcasts real-time mining telemetry to dashboard UI."""
         print("[WebSocket] Dashboard client connected.")
         try:
             while True:
@@ -254,8 +246,6 @@ class MultiStringMinerDaemon:
 
 async def main():
     miner = MultiStringMinerDaemon()
-    
-    # Spawn background tasks concurrently
     asyncio.create_task(miner.live_acoustic_listener())
     asyncio.create_task(miner.simulate_mining_events())
     
