@@ -5,11 +5,16 @@ import time
 import random
 import struct
 import numpy as np
-from websockets.server import serve
+
+try:
+    from websockets.asyncio.server import serve
+except ImportError:
+    from websockets.server import serve
 
 class AcousticFrameVerifier:
     """
-    Goertzel tone analysis and CRC16 frame verification for live PCM streams.
+    Vectorized single-bin DFT tone power analysis and CRC16 frame verification
+    for live PCM stream decoding using OpenBLAS matrix multiplication.
     """
     MAGIC_HEADER = b'\xac\x01'
     SAMPLE_RATE = 44100       # Hz
@@ -31,22 +36,25 @@ class AcousticFrameVerifier:
         return crc & 0xFFFF
 
     @classmethod
-    def goertzel_filter(cls, samples: np.ndarray, target_freq: float) -> float:
-        N = len(samples)
-        if N == 0:
-            return 0.0
-        k = int(0.5 + (N * target_freq) / cls.SAMPLE_RATE)
-        w = (2.0 * np.pi / N) * k
-        coeff = 2.0 * np.cos(w)
+    def compute_tone_powers_vectorized(cls, chunks: np.ndarray, freqs: list) -> np.ndarray:
+        """
+        Vectorized Goertzel/DFT power filter using BLAS matrix multiplication.
+        chunks: np.ndarray of shape (N_chunks, N_samples)
+        freqs: list of target frequencies [f1, f2, ...]
+        returns: np.ndarray of shape (N_chunks, len(freqs)) containing spectral powers
+        """
+        if chunks.ndim == 1:
+            chunks = chunks.reshape(1, -1)
+
+        N_samples = chunks.shape[1]
+        t = np.arange(N_samples) / cls.SAMPLE_RATE
+        angles = 2.0 * np.pi * np.outer(t, freqs)
         
-        q1, q2 = 0.0, 0.0
-        for sample in samples:
-            q0 = coeff * q1 - q2 + sample
-            q2 = q1
-            q1 = q0
-            
-        real = q1 - q2 * np.cos(w)
-        imag = q2 * np.sin(w)
+        cos_mat = np.cos(angles)
+        sin_mat = np.sin(angles)
+        
+        real = chunks @ cos_mat   # Shape: (N_chunks, len(freqs))
+        imag = chunks @ sin_mat   # Shape: (N_chunks, len(freqs))
         return (real * real) + (imag * imag)
 
     @classmethod
@@ -56,37 +64,56 @@ class AcousticFrameVerifier:
             return None
 
         scan_step = 44  # ~1ms sliding window steps
+        max_start = len(data) - samples_per_symbol
+        if max_start <= 0:
+            return None
+
+        indices = np.arange(0, max_start, scan_step)
+        if len(indices) == 0:
+            return None
+
+        # 1. Zero-copy sliding window matrix
+        sliding_chunks = np.lib.stride_tricks.sliding_window_view(data, window_shape=samples_per_symbol)[::scan_step]
+        
+        # 2. Parallel power calculation across all sliding frames
+        powers = cls.compute_tone_powers_vectorized(sliding_chunks, [cls.FREQ_PREAMBLE, cls.FREQ_MARK, cls.FREQ_SPACE])
+        
+        p_preamble = powers[:, 0]
+        p_mark = powers[:, 1]
+        p_space = powers[:, 2]
+
+        preamble_mask = (p_preamble > 50.0) & (p_preamble > (p_mark + p_space) * 2)
         preamble_end_idx = 0
         in_preamble = False
 
-        for idx in range(0, len(data) - samples_per_symbol, scan_step):
-            chunk = data[idx : idx + samples_per_symbol]
-            p_preamble = cls.goertzel_filter(chunk, cls.FREQ_PREAMBLE)
-            p_mark = cls.goertzel_filter(chunk, cls.FREQ_MARK)
-            p_space = cls.goertzel_filter(chunk, cls.FREQ_SPACE)
-
-            if p_preamble > 50.0 and p_preamble > (p_mark + p_space) * 2:
+        for i, is_pre in enumerate(preamble_mask):
+            if is_pre:
                 in_preamble = True
             elif in_preamble:
-                preamble_end_idx = idx
+                preamble_end_idx = indices[i]
                 break
 
         if preamble_end_idx == 0:
             return None
 
+        # 3. Batch process symbols post-sync
+        symbol_indices = np.arange(preamble_end_idx, len(data) - samples_per_symbol + 1, samples_per_symbol)
+        if len(symbol_indices) == 0:
+            return None
+
+        symbol_chunks = np.array([data[idx : idx + samples_per_symbol] for idx in symbol_indices])
+        symbol_powers = cls.compute_tone_powers_vectorized(symbol_chunks, [cls.FREQ_MARK, cls.FREQ_SPACE])
+
+        m_power = symbol_powers[:, 0]
+        s_power = symbol_powers[:, 1]
+
         bits = []
-        curr = preamble_end_idx
-        while curr + samples_per_symbol <= len(data):
-            chunk = data[curr : curr + samples_per_symbol]
-            p_mark = cls.goertzel_filter(chunk, cls.FREQ_MARK)
-            p_space = cls.goertzel_filter(chunk, cls.FREQ_SPACE)
-
-            if p_mark < 0.5 and p_space < 0.5:
+        for p_m, p_s in zip(m_power, s_power):
+            if p_m < 0.5 and p_s < 0.5:
                 break
+            bits.append(1 if p_m >= p_s else 0)
 
-            bits.append(1 if p_mark >= p_space else 0)
-            curr += samples_per_symbol
-
+        # 4. Search bitstream for 0xAC01 header
         decoded_bytes = bytearray()
         for offset in range(len(bits) - 16):
             b1, b2 = 0, 0
@@ -154,7 +181,7 @@ class MultiStringMinerDaemon:
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.DEVNULL
             )
-            print("[Acoustic Mic Listener] Active in background (SoX -> asyncio pipe).")
+            print("[Acoustic Mic Listener] Active in background (SoX -> Vectorized BLAS Pipe).")
         except Exception as e:
             print(f"[Acoustic Mic Listener] Warning: Could not execute SoX rec process ({e}). Live capture disabled.")
             return
@@ -173,7 +200,7 @@ class MultiStringMinerDaemon:
                 chunk_float = chunk_int16.astype(np.float32) / 32768.0
                 buffer = np.append(buffer, chunk_float)
 
-                max_samples = 44100 * 2
+                max_samples = 44100 * 2  # Keep trailing 2-second sliding buffer
                 if len(buffer) > max_samples:
                     buffer = buffer[-max_samples:]
 
