@@ -33,3 +33,14 @@ app.get(['/admin', '/admin.html'], (req, res) => {
 
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => console.log(`PhoneServe node active on port ${PORT}`));
+
+// Inner Reality Clock & Health Endpoint
+app.get('/api/health', (req, res) => {
+  const mem = process.memoryUsage().heapUsed / 1024 / 1024;
+  res.json({
+    status: 'HEALTHY',
+    uptime: Math.floor(process.uptime()),
+    memoryMB: Math.round(mem),
+    timestamp: new Date().toISOString()
+  });
+});
