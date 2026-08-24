@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PhoneServe Dialer</title>
+</head>
+<body style="background:#111; color:white; text-align:center; padding:40px; font-family:sans-serif;">
+    <h2>PhoneServe Dialer</h2>
+    <div id="status" style="font-size:18px; margin-bottom:20px; color:#888;">Ready</div>
+    
+    <button onclick="startCall()" style="padding:20px 40px; font-size:24px; background:#28a745; color:white; border:none; border-radius:8px; cursor:pointer;">CALL</button>
+
+    <script>
+        let pc = new RTCPeerConnection();
+
+        pc.ontrack = e => {
+            const audio = new Audio();
+            audio.srcObject = e.streams[0];
+            audio.play();
+            document.getElementById('status').innerText = "Connected - Receiving Audio";
+        };
+
+        async function startCall() {
+            try {
+                document.getElementById('status').innerText = "Requesting microphone...";
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                stream.getTracks().forEach(t => pc.addTrack(t, stream));
+
+                const offer = await pc.createOffer();
+                await pc.setLocalDescription(offer);
+
+                document.getElementById('status').innerText = "Sending offer to server...";
+                await fetch("/offer", {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(offer)
+                });
+
+                document.getElementById('status').innerText = "Call initiated! Waiting for peer...";
+            } catch (err) {
+                console.error(err);
+                document.getElementById('status').innerText = "Error: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneServe Dialer</title>
+    <style>
+        body { font-family: sans-serif; background: #121212; color: #fff; text-align: center; padding: 20px; }
+        input, button { font-size: 18px; padding: 10px; margin: 10px; border-radius: 5px; border: none; }
+        button { background: #4CAF50; color: white; cursor: pointer; }
+        button:hover { background: #45a049; }
+        #status { margin-top: 15px; color: #aaa; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <h1>PhoneServe VoIP Dialer</h1>
+    
+    <div>
+        <input type="text" id="targetNumber" placeholder="Enter number or ID...">
+        <br>
+        <button onclick="startCall()">Call</button>
+    </div>
+
+    <div id="status">Status: Disconnected</div>
+
+    <!-- Hidden audio element for incoming voice stream -->
+    <audio id="remoteAudio" autoplay></audio>
+
+    <script>
+        const ws = new WebSocket('ws://' + window.location.host);
+        let localStream;
+        let peerConnection;
+
+        // Free public STUN servers for local/network NAT traversal
+        const rtcConfig = {
+            iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+        };
+
+        ws.onopen = () => {
+            document.getElementById('status').innerText = 'Status: Connected to PhoneServe network';
+        };
+
+        ws.onmessage = async (event) => {
+            const data = JSON.parse(event.data);
+            
+            if (data.type === 'call-request') {
+                document.getElementById('status').innerText = 'Incoming call from: ' + data.target;
+                await setupPeerConnection();
+                const offer = await peerConnection.createOffer();
+                await peerConnection.setLocalDescription(offer);
+                ws.send(JSON.stringify({ type: 'offer', sdp: offer }));
+            } else if (data.type === 'offer') {
+                await setupPeerConnection();
+                await peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp));
+                const answer = await peerConnection.createAnswer();
+                await peerConnection.setLocalDescription(answer);
+                ws.send(JSON.stringify({ type: 'answer', sdp: answer }));
+            } else if (data.type === 'answer') {
+                await peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp));
+            } else if (data.type === 'candidate' && peerConnection) {
+                await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+            }
+        };
+
+        async function setupPeerConnection() {
+            if (peerConnection) return;
+            
+            peerConnection = new RTCPeerConnection(rtcConfig);
+
+            // Get local microphone audio
+            try {
+                localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+            } catch (err) {
+                alert('Microphone access denied or unavailable: ' + err.message);
+            }
+
+            // Handle incoming remote audio stream
+            peerConnection.ontrack = (event) => {
+                document.getElementById('remoteAudio').srcObject = event.streams[0];
+                document.getElementById('status').innerText = 'Status: Call active (Audio connected)';
+            };
+
+            // Send ICE candidates to peer
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    ws.send(JSON.stringify({ type: 'candidate', candidate: event.candidate }));
+                }
+            };
+        }
+
+        async function startCall() {
+            const num = document.getElementById('targetNumber').value;
+            if (!num) return alert('Please enter a number or ID');
+            
+            document.getElementById('status').innerText = 'Calling ' + num + '...';
+            await setupPeerConnection();
+            
+            const offer = await peerConnection.createOffer();
+            await peerConnection.setLocalDescription(offer);
+            ws.send(JSON.stringify({ type: 'call-request', target: num, sdp: offer }));
+        }
+    </script>
+
+</body>
+</html>

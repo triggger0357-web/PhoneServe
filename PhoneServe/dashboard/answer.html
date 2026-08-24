@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body style="background:#111; color:white; text-align:center; padding:20px;">
+<h2>Incoming Call</h2>
+<button onclick="answerCall()" style="padding:20px; font-size:24px;">Answer</button>
+
+<script>
+let pc = new RTCPeerConnection();
+
+async function answerCall() {
+    const offer = await (await fetch("http://10.0.0.15:3000/offer")).json();
+    await pc.setRemoteDescription(offer);
+
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream.getTracks().forEach(t => pc.addTrack(t, stream));
+
+    pc.ontrack = e => {
+        const audio = new Audio();
+        audio.srcObject = e.streams[0];
+        audio.play();
+    };
+
+    const answer = await pc.createAnswer();
+    await pc.setLocalDescription(answer);
+
+    await fetch("http://10.0.0.15:3000/answer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(answer)
+    });
+
+    alert("Connected");
+}
+</script>
+</body>
+</html>
