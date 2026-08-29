@@ -1168,3 +1168,289 @@ OSError: [Errno 98] error while attempting to bind on address ('0.0.0.0', 8025):
 2026-08-20 17:21:51,340 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
 2026-08-20 17:21:51,340 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
 2026-08-20 17:21:51,340 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-24 11:46:23,084 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-24 11:46:23,096 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-24 11:46:23,110 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 11:46:23,110 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-24 11:46:23,110 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-24 11:46:23,131 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-24 11:46:23,132 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-24 11:46:23,132 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-24 11:46:23,132 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-24 11:46:23,132 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 11:46:23,133 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-24 11:46:44,632 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-24 11:46:44,636 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-24 11:46:44,657 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 11:46:44,657 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-24 11:46:44,657 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-24 11:46:44,657 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-24 11:46:44,657 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-24 11:46:44,658 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-24 11:46:44,658 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-24 11:46:44,658 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 11:46:44,658 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-24 12:34:57,181 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-24 12:34:57,185 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-24 12:34:57,188 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 12:34:57,188 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-24 12:34:57,189 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-24 12:34:57,189 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-24 12:34:57,189 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-24 12:34:57,189 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-24 12:34:57,189 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-24 12:34:57,189 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 12:34:57,189 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-24 12:35:03,578 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-24 12:35:03,579 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-24 12:35:03,581 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 12:35:03,581 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-24 12:35:03,581 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-24 12:35:03,582 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-24 12:35:03,582 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-24 12:35:03,582 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-24 12:35:03,582 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-24 12:35:03,582 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 12:35:03,582 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-24 16:12:26,680 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-24 16:12:26,719 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-24 16:12:26,731 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 16:12:26,731 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-24 16:12:26,732 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-24 16:12:26,732 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-24 16:12:26,732 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-24 16:12:26,732 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-24 16:12:26,732 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-24 16:12:26,732 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 16:12:26,733 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-24 16:12:54,425 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-24 16:12:54,437 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-24 16:12:54,449 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 16:12:54,453 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-24 16:12:54,453 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-24 16:12:54,453 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-24 16:12:54,454 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-24 16:12:54,454 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-24 16:12:54,454 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-24 16:12:54,454 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 16:12:54,454 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-24 22:36:22,870 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-24 22:36:22,879 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-24 22:36:22,881 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 22:36:22,881 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-24 22:36:22,881 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-24 22:36:22,881 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-24 22:36:22,881 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-24 22:36:22,881 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-24 22:36:22,881 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-24 22:36:22,881 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 22:36:22,882 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-24 22:36:31,208 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-24 22:36:31,209 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-24 22:36:31,214 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 22:36:31,214 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-24 22:36:31,214 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-24 22:36:31,214 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-24 22:36:31,214 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-24 22:36:31,215 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-24 22:36:31,215 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-24 22:36:31,215 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-24 22:36:31,215 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-25 05:46:34,951 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-25 05:46:34,952 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-25 05:46:34,953 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-25 05:46:34,953 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-25 05:46:34,953 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-25 05:46:34,954 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-25 05:46:34,954 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-25 05:46:34,954 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-25 05:46:34,954 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-25 05:46:34,954 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-25 05:46:34,954 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-25 05:46:40,444 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-25 05:46:40,445 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-25 05:46:40,447 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-25 05:46:40,447 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-25 05:46:40,447 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-25 05:46:40,447 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-25 05:46:40,448 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-25 05:46:40,448 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-25 05:46:40,448 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-25 05:46:40,448 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-25 05:46:40,448 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-26 01:04:58,016 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-26 01:04:58,018 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-26 01:04:58,022 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 01:04:58,023 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-26 01:04:58,023 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-26 01:04:58,023 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-26 01:04:58,024 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-26 01:04:58,024 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-26 01:04:58,024 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-26 01:04:58,024 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 01:04:58,024 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-26 01:05:06,793 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-26 01:05:06,795 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-26 01:05:06,796 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 01:05:06,796 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-26 01:05:06,797 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-26 01:05:06,797 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-26 01:05:06,797 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-26 01:05:06,797 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-26 01:05:06,797 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-26 01:05:06,797 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 01:05:06,797 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-26 08:04:43,312 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-26 08:04:43,314 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-26 08:04:43,316 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 08:04:43,316 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-26 08:04:43,316 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-26 08:04:43,316 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-26 08:04:43,316 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-26 08:04:43,316 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-26 08:04:43,316 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-26 08:04:43,316 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 08:04:43,316 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-26 08:04:49,585 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-26 08:04:49,590 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-26 08:04:49,599 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 08:04:49,599 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-26 08:04:49,599 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-26 08:04:49,599 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-26 08:04:49,599 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-26 08:04:49,599 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-26 08:04:49,599 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-26 08:04:49,599 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 08:04:49,599 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-26 18:59:43,928 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-26 18:59:43,931 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-26 18:59:43,938 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 18:59:43,938 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-26 18:59:43,938 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-26 18:59:43,938 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-26 18:59:43,938 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-26 18:59:43,938 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-26 18:59:43,939 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-26 18:59:43,939 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 18:59:43,939 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-26 18:59:50,187 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-26 18:59:50,187 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-26 18:59:50,189 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 18:59:50,190 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-26 18:59:50,190 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-26 18:59:50,190 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-26 18:59:50,190 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-26 18:59:50,190 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-26 18:59:50,190 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-26 18:59:50,190 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 18:59:50,190 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-26 21:25:20,729 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-26 21:25:20,740 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-26 21:25:20,741 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 21:25:20,741 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-26 21:25:20,741 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-26 21:25:20,741 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-26 21:25:20,741 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-26 21:25:20,741 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-26 21:25:20,741 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-26 21:25:20,741 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 21:25:20,741 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-26 21:25:27,659 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-26 21:25:27,659 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-26 21:25:27,661 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 21:25:27,661 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-26 21:25:27,661 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-26 21:25:27,661 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-26 21:25:27,661 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-26 21:25:27,661 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-26 21:25:27,662 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-26 21:25:27,662 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-26 21:25:27,662 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-28 04:05:46,717 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-28 04:05:46,755 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-28 04:05:46,814 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 04:05:46,896 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-28 04:05:46,896 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-28 04:05:46,902 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-28 04:05:46,903 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-28 04:05:46,903 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-28 04:05:46,903 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-28 04:05:46,903 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 04:05:46,903 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-28 04:06:38,295 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-28 04:06:38,299 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-28 04:06:38,300 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 04:06:38,301 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-28 04:06:38,301 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-28 04:06:38,301 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-28 04:06:38,301 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-28 04:06:38,301 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-28 04:06:38,301 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-28 04:06:38,301 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 04:06:38,301 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-28 05:26:05,167 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-28 05:26:05,168 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-28 05:26:05,170 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 05:26:05,170 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-28 05:26:05,170 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-28 05:26:05,170 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-28 05:26:05,170 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-28 05:26:05,171 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-28 05:26:05,171 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-28 05:26:05,171 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 05:26:05,171 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-28 05:26:12,175 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-28 05:26:12,176 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-28 05:26:12,181 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 05:26:12,182 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-28 05:26:12,182 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-28 05:26:12,182 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-28 05:26:12,182 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-28 05:26:12,182 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-28 05:26:12,182 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-28 05:26:12,182 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 05:26:12,182 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-28 12:00:34,832 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-28 12:00:34,836 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-28 12:00:34,838 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 12:00:34,838 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-28 12:00:34,838 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-28 12:00:34,838 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-28 12:00:34,838 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-28 12:00:34,839 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-28 12:00:34,839 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-28 12:00:34,839 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 12:00:34,839 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-28 12:00:44,995 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-28 12:00:44,995 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-28 12:00:45,016 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 12:00:45,016 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-28 12:00:45,017 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-28 12:00:45,017 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-28 12:00:45,017 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-28 12:00:45,018 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-28 12:00:45,022 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-28 12:00:45,023 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 12:00:45,024 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-28 16:45:05,342 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-28 16:45:05,344 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-28 16:45:05,350 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 16:45:05,351 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-28 16:45:05,351 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-28 16:45:05,351 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-28 16:45:05,351 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-28 16:45:05,351 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-28 16:45:05,351 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-28 16:45:05,351 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 16:45:05,351 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
+2026-08-28 16:45:18,172 [ETK-MAIL] INFO: Loaded 5 emails from inbox
+2026-08-28 16:45:18,172 [ETK-MAIL] INFO: Loaded 4 emails from sent
+2026-08-28 16:45:18,178 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 16:45:18,178 [ETK-MAIL] INFO:   ETK Mail Server v1.0
+2026-08-28 16:45:18,178 [ETK-MAIL] INFO:   Domain  : edgetech-knowledgey.fwh.is
+2026-08-28 16:45:18,178 [ETK-MAIL] INFO:   Owner   : david@edgetech-knowledgey.fwh.is · Chief Architect
+2026-08-28 16:45:18,178 [ETK-MAIL] INFO:   SMTP    : 0.0.0.0:8025
+2026-08-28 16:45:18,178 [ETK-MAIL] INFO:   API     : 0.0.0.0:8585
+2026-08-28 16:45:18,178 [ETK-MAIL] INFO:   Mailbox : ./etk_mailbox/
+2026-08-28 16:45:18,178 [ETK-MAIL] INFO: ═══════════════════════════════════════════════════
+2026-08-28 16:45:18,178 [ETK-MAIL] INFO:   ETK Sovereign Mail — running on your device
