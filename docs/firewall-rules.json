@@ -1,4 +1,0 @@
-{
-  "allow": ["dashboard", "email-service"],
-  "deny": ["external-debug", "unauthorized-api"]
-}

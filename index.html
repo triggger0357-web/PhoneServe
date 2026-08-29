@@ -1,4 +1,3 @@
-cd ~/PhoneServe
 cat << 'EOF' > index.html
 <!DOCTYPE html>
 <html lang="en">
@@ -8,12 +7,14 @@ cat << 'EOF' > index.html
     <title>PhoneServe - Decentralized Mobile Network</title>
     <style>
         body { font-family: sans-serif; background: #0b0f19; color: #f3f4f6; padding: 40px; text-align: center; margin: 0; }
-        .container { max-width: 650px; margin: 0 auto; background: #1f2937; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .container { max-width: 650px; margin: 40px auto; background: #1f2937; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         h1 { color: #00ffcc; font-size: 2.2rem; margin-bottom: 10px; }
         p { color: #9ca3af; line-height: 1.6; margin-bottom: 30px; }
         .btn { display: inline-block; background: #00ffcc; color: #0b0f19; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: background 0.2s; }
         .btn:hover { background: #00cc99; }
         .footer { margin-top: 30px; font-size: 0.85rem; color: #6b7280; }
+        .footer a { color: #6b7280; text-decoration: none; margin: 0 10px; }
+        .footer a:hover { color: #00ffcc; }
     </style>
 </head>
 <body>
@@ -24,10 +25,88 @@ cat << 'EOF' > index.html
         <a href="https://buy.stripe.com/00w8wRboD78W1TO1GQ8Vi05" class="btn" target="_blank" rel="noopener noreferrer">Register Node (Secure Checkout)</a>
         
         <div class="footer">
-            Powered by Edge Tech &bull; Secure Stripe Payment Gateway
+            Powered by Edge Tech &bull; 
+            <a href="admin.html">Admin Portal</a>
         </div>
     </div>
 </body>
 </html>
 EOF
 
+cat << 'EOF' > success.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneServe - Setup Complete</title>
+    <style>
+        body { font-family: sans-serif; background: #0b0f19; color: #f3f4f6; padding: 40px; text-align: center; margin: 0; }
+        .container { max-width: 650px; margin: 40px auto; background: #1f2937; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        h1 { color: #00ffcc; font-size: 2.2rem; margin-bottom: 10px; }
+        p { color: #9ca3af; line-height: 1.6; margin-bottom: 20px; }
+        a { color: #00ffcc; text-decoration: none; font-weight: bold; }
+        .footer { margin-top: 30px; font-size: 0.85rem; color: #6b7280; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Successful!</h1>
+        <p>Thank you for registering with PhoneServe. Your node subscription and 90/10 split configuration are now active.</p>
+        <hr style="border: 0; border-top: 1px solid #374151; margin: 25px 0;">
+        <p>You can now return to the main portal or check system status.</p>
+        <p><a href="index.html">Return to Home</a></p>
+        <div class="footer">
+            Edge Tech &bull; Secure Node Gateway
+        </div>
+    </div>
+</body>
+</html>
+EOF
+
+cat << 'EOF' > admin.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneServe - Admin Portal</title>
+    <style>
+        body { font-family: sans-serif; background: #0b0f19; color: #f3f4f6; padding: 40px; text-align: center; margin: 0; }
+        .container { max-width: 650px; margin: 40px auto; background: #1f2937; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: left; }
+        h1 { color: #00ffcc; font-size: 2rem; margin-bottom: 10px; text-align: center; }
+        p { color: #9ca3af; line-height: 1.6; }
+        .metric-card { background: #111827; padding: 15px 20px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #00ffcc; }
+        .metric-title { font-size: 0.85rem; color: #9ca3af; text-transform: uppercase; }
+        .metric-value { font-size: 1.2rem; font-weight: bold; color: #f3f4f6; margin-top: 5px; }
+        .footer { margin-top: 30px; font-size: 0.85rem; color: #6b7280; text-align: center; }
+        .footer a { color: #00ffcc; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Telemetry Portal</h1>
+        <p>Live administrative dashboard for monitoring network gateway status, node registrations, and configuration parameters.</p>
+        
+        <div class="metric-card">
+            <div class="metric-title">Gateway Status</div>
+            <div class="metric-value">Active / Static Hosting Online</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-title">Revenue Split Configuration</div>
+            <div class="metric-value">90/10 Gain-Share Model</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Payment Gateway</div>
+            <div class="metric-value">Stripe Connected (Active Checkout)</div>
+        </div>
+
+        <div class="footer">
+            <a href="index.html">&larr; Back to Node Registry</a>
+        </div>
+    </div>
+</body>
+</html>
+EOF

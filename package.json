@@ -1,9 +1,0 @@
-{
-  "name": "phoneserve-command-center",
-  "private": true,
-  "version": "1.0.0",
-  "scripts": {
-    "build": "echo no build needed",
-    "start": "node server.js"
-  }
-}

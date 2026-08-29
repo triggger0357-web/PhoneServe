@@ -1,1 +1,0 @@
-app.use('/api/ai', require('./routes-ai'));

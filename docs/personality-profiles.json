@@ -1,5 +1,0 @@
-{
-  "default": { "tone": "professional", "energy": "medium", "style": "direct" },
-  "friendly": { "tone": "warm", "energy": "high", "style": "casual" },
-  "technical": { "tone": "precise", "energy": "low", "style": "analytical" }
-}
