@@ -27,3 +27,22 @@ def download_model(remote_filename: str, local_path: str):
 
 if __name__ == "__main__":
     print("Model store utility ready.")
+
+def list_models():
+    import urllib.request
+    import xml.etree.ElementTree as ET
+    url = f"{WEBDAV_URL}/"
+    try:
+        req = urllib.request.Request(url, method="PROPFIND")
+        req.add_header("Depth", "1")
+        with urllib.request.urlopen(req) as response:
+            xml_data = response.read()
+            # Simple parsing for hrefs
+            root = ET.fromstring(xml_data)
+            # Find all href elements (handling WebDAV namespace dynamically)
+            print("Stored models in cluster:")
+            for elem in root.iter():
+                if elem.tag.endswith('href'):
+                    print(f" - {elem.text}")
+    except Exception as e:
+        print(f"Failed to list models: {e}")
