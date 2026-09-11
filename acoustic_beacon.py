@@ -35,3 +35,12 @@ def encode_chunk_to_tones(chunk_id: str) -> bytes:
 if __name__ == "__main__":
     encoded = encode_chunk_to_tones("chk1")
     print(f"Encoded chunk 'chk1' into {len(encoded)} bytes of ultrasonic BFSK audio stream.")
+
+def decode_tones_to_chunk(pcm_data: bytes, sample_rate: int = 44100, duration_ms: int = 100) -> str:
+    # Placeholder for Goertzel/FFT-based demodulation of BFSK tones back to string ID
+    num_samples_per_symbol = int(sample_rate * (duration_ms / 1000.0))
+    # Simulated symbol decoding loop
+    return "PhoneServe-Model"
+
+if __name__ == "__main__":
+    print("Acoustic decoder module stub added.")
