@@ -46,3 +46,14 @@ def list_models():
                     print(f" - {elem.text}")
     except Exception as e:
         print(f"Failed to list models: {e}")
+import os
+
+def get_or_download_model(remote_filename: str, local_dest_dir: str = "./models") -> str:
+    os.makedirs(local_dest_dir, exist_ok=True)
+    local_path = os.path.join(local_dest_dir, remote_filename)
+    if os.path.exists(local_path):
+        print(f"Model found locally in cache: {local_path}")
+        return local_path
+    print(f"Model missing from local cache. Downloading from cluster -> {remote_filename}...")
+    download_model(remote_filename, local_path)
+    return local_path
