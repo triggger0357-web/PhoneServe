@@ -23,3 +23,15 @@ def generate_tone_payload(symbol: str, sample_rate: int = 44100, duration_ms: in
 if __name__ == "__main__":
     payload = generate_tone_payload('1')
     print(f"Generated {len(payload)} bytes of audio PCM data for acoustic signaling.")
+
+def encode_chunk_to_tones(chunk_id: str) -> bytes:
+    # Convert string chunk identifier to binary stream
+    binary_data = ''.join(format(ord(c), '08b') for c in chunk_id)
+    full_payload = b""
+    for bit in binary_data:
+        full_payload += generate_tone_payload(bit)
+    return full_payload
+
+if __name__ == "__main__":
+    encoded = encode_chunk_to_tones("chk1")
+    print(f"Encoded chunk 'chk1' into {len(encoded)} bytes of ultrasonic BFSK audio stream.")
