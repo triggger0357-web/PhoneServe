@@ -57,3 +57,14 @@ def get_or_download_model(remote_filename: str, local_dest_dir: str = "./models"
     print(f"Model missing from local cache. Downloading from cluster -> {remote_filename}...")
     download_model(remote_filename, local_path)
     return local_path
+
+def clean_cache(local_dest_dir: str = "./models"):
+    if os.path.exists(local_dest_dir):
+        files = os.listdir(local_dest_dir)
+        for f in files:
+            fp = os.path.join(local_dest_dir, f)
+            if os.path.isfile(fp):
+                os.remove(fp)
+        print(f"Cleared local model cache directory: {local_dest_dir}")
+    else:
+        print(f"Cache directory does not exist: {local_dest_dir}")
