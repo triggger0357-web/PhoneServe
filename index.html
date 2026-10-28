@@ -1,0 +1,500 @@
+Understood! I'll completely eliminate edgetech.io from the code.
+Here is the updated, self-contained single file using edgetechknowledgey.2bd.net (and your primary email triggger0357@gmail.com for the admin fallback) so every reference reflects Edge Tech Knowledgey.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge Tech Knowledgey</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0c10;color:#e2e8f0;font-family:'DM Sans',sans-serif;height:100vh;overflow:hidden}
+#root{height:100vh;display:flex;flex-direction:column}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#1e2a3a;border-radius:4px}
+input,textarea{outline:none;background:transparent;border:none;color:#e2e8f0;font-family:'DM Sans',sans-serif}
+textarea{resize:none}button{cursor:pointer;border:none}
+input[type=range]{height:4px;border-radius:2px;accent-color:#00e5ff}
+@keyframes dot{from{opacity:.3;transform:scale(.8)}to{opacity:1;transform:scale(1.2)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+@keyframes ring{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin 1s linear infinite}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useRef,useEffect}=React;
+
+// ── CONSTANTS ─────────────────────────────────────────────────────────────────
+const STRIPE_URL="https://buy.stripe.com/9B6dRbcsH9h4fKEclu8Vi03";
+const DOMAIN="edgetechknowledgey.2bd.net";
+const ADMIN={email:"triggger0357@gmail.com",name:"David Ingalls",plan:"owner"};
+
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const EMAILS=[
+  {id:1,from:"Sarah Mitchell",fe:"s.mitchell@clientcorp.com",subj:"Q2 Strategy Review",time:"9:41 AM",read:false,tag:"Priority",tc:"#00e5ff",body:"Hi Team,\n\nKey action items from yesterday's call:\n\n1. Finalize vendor contracts by May 10\n2. Complete budget reallocation\n3. Schedule product team follow-up\n\nConfirm by EOD Friday.\n\nBest, Sarah"},
+  {id:2,from:"DevOps Team",fe:"devops@edgetechknowledgey.2bd.net",subj:"Maintenance — Sat 2AM-4AM",time:"8:20 AM",read:true,tag:"Internal",tc:"#b388ff",body:"Routine maintenance Saturday 2-4 AM EST.\nAffected: Email, File sync, Analytics.\nNo action needed.\n\n— DevOps"},
+  {id:3,from:"James Okafor",fe:"jokafor@nexus.net",subj:"Partnership Proposal",time:"Yesterday",read:true,tag:"Business",tc:"#69f0ae",body:"Dear Edge Tech Knowledgey Team,\n\nStrong mutual opportunity worth exploring.\nWould love a 30-min intro call.\n\nWarm regards,\nJames Okafor"},
+  {id:4,from:"Billing",fe:"billing@edgetechknowledgey.2bd.net",subj:"Invoice #2026-0441 — PAID",time:"May 1",read:true,tag:"Billing",tc:"#ffd740",body:"Invoice: #2026-0441\nAmount: $499.00\nStatus: PAID\nDate: May 1, 2026\nNext billing: June 1, 2026"},
+  {id:5,from:"Alicia Torres",fe:"a.torres@global.com",subj:"RE: Onboarding — Missing Attachment",time:"Apr 30",read:false,tag:"Priority",tc:"#00e5ff",body:"Hi,\n\nThanks for the onboarding docs!\nCompliance checklist wasn't attached — could you resend?\n\nAlicia Torres"},
+];
+
+const CONTACTS=[
+  {id:1,name:"Sarah Mitchell",email:"s.mitchell@clientcorp.com",phone:"(555) 210-4490",company:"ClientCorp",tag:"Client",color:"#00b8d4"},
+  {id:2,name:"James Okafor",email:"jokafor@nexus.net",phone:"(555) 338-7712",company:"Nexus Partners",tag:"Partner",color:"#6200ea"},
+  {id:3,name:"Alicia Torres",email:"a.torres@global.com",phone:"(555) 907-2231",company:"GlobalReach",tag:"Client",color:"#00bfa5"},
+  {id:4,name:"Marcus Webb",email:"m.webb@edgetechknowledgey.2bd.net",phone:"(555) 441-8820",company:"Edge Tech Knowledgey",tag:"Team",color:"#1565c0"},
+  {id:5,name:"Nina Zhao",email:"n.zhao@edgetechknowledgey.2bd.net",phone:"(555) 773-5560",company:"Edge Tech Knowledgey",tag:"Team",color:"#c6a700"},
+  {id:6,name:"Ray Fontaine",email:"ray@fontainelaw.com",phone:"(555) 882-0034",company:"Fontaine Legal",tag:"Legal",color:"#d50000"},
+];
+
+const PHOTOS=[
+  {id:1,label:"Office Team",gradient:"linear-gradient(135deg,#1a237e,#00e5ff)",emoji:"🏢",date:"May 1"},
+  {id:2,label:"Product Launch",gradient:"linear-gradient(135deg,#4a148c,#e040fb)",emoji:"🚀",date:"Apr 28"},
+  {id:3,label:"Q1 Summit",gradient:"linear-gradient(135deg,#006064,#69f0ae)",emoji:"📊",date:"Apr 20"},
+  {id:4,label:"Client Meeting",gradient:"linear-gradient(135deg,#bf360c,#ffd740)",emoji:"🤝",date:"Apr 15"},
+  {id:5,label:"Team Offsite",gradient:"linear-gradient(135deg,#1b5e20,#76ff03)",emoji:"🌿",date:"Apr 10"},
+  {id:6,label:"Product Demo",gradient:"linear-gradient(135deg,#0d47a1,#40c4ff)",emoji:"💻",date:"Apr 5"},
+  {id:7,label:"Award Ceremony",gradient:"linear-gradient(135deg,#f57f17,#ff6d00)",emoji:"🏆",date:"Mar 30"},
+  {id:8,label:"Conference",gradient:"linear-gradient(135deg,#880e4f,#ff80ab)",emoji:"🎤",date:"Mar 22"},
+  {id:9,label:"New Office",gradient:"linear-gradient(135deg,#263238,#546e7a)",emoji:"🏗",date:"Mar 15"},
+  {id:10,label:"Brand Shoot",gradient:"linear-gradient(135deg,#3e2723,#a1887f)",emoji:"📸",date:"Mar 1"},
+];
+
+const USERS=[
+  {id:1,name:"David Ingalls",email:"triggger0357@gmail.com",role:"admin",plan:"owner",storage:3.8,status:"active"},
+  {id:2,name:"Sarah Mitchell",email:"s.mitchell@edgetechknowledgey.2bd.net",role:"user",plan:"business",storage:1.2,status:"active"},
+  {id:3,name:"James Okafor",email:"j.okafor@edgetechknowledgey.2bd.net",role:"user",plan:"business",storage:0.8,status:"active"},
+  {id:4,name:"Alicia Torres",email:"a.torres@edgetechknowledgey.2bd.net",role:"user",plan:"free",storage:4.9,status:"active"},
+  {id:5,name:"Marcus Webb",email:"m.webb@edgetechknowledgey.2bd.net",role:"user",plan:"free",storage:2.1,status:"pending"},
+];
+
+const CALLS=[
+  {id:1,name:"Sarah Mitchell",number:"(555) 210-4490",type:"incoming",duration:"4:32",time:"9:41 AM",color:"#00b8d4"},
+  {id:2,name:"James Okafor",number:"(555) 338-7712",type:"outgoing",duration:"12:01",time:"Yesterday",color:"#6200ea"},
+  {id:3,name:"Unknown",number:"(555) 000-1234",type:"missed",duration:"—",time:"Apr 30",color:"#374151"},
+  {id:4,name:"Alicia Torres",number:"(555) 907-2231",type:"incoming",duration:"2:15",time:"Apr 29",color:"#00bfa5"},
+];
+
+const AI_MODES=[
+  {id:"advisor",label:"Business Advisor",icon:"💼",color:"#00e5ff",sys:"You are an expert business advisor for Edge Tech Knowledgey. Sharp, actionable, concise."},
+  {id:"writer",label:"Email Writer",icon:"✍️",color:"#b388ff",sys:"You are a professional email writing assistant. Draft and refine business emails."},
+  {id:"tech",label:"Tech Support",icon:"🔧",color:"#69f0ae",sys:"You are Edge Tech Knowledgey tech support. Troubleshoot clearly and step by step."},
+  {id:"creative",label:"Creative",icon:"✨",color:"#ffd740",sys:"You are a creative content assistant. Taglines, copy, announcements."},
+];
+
+function Av({name,size=36,color}){
+  const ini=name.split(" ").map(w=>w[0]).slice(0,2).join("");
+  const pool=["#00b8d4","#6200ea","#00bfa5","#c6a700","#1565c0","#d50000"];
+  return <div style={{width:size,height:size,borderRadius:"50%",background:color||pool[name.charCodeAt(0)%pool.length],display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:size*.38,color:"#fff",flexShrink:0}}>{ini}</div>;
+}
+function Chip({label,color}){return <span style={{fontSize:9,fontWeight:700,letterSpacing:"0.1em",color,background:color+"20",padding:"2px 7px",borderRadius:4,textTransform:"uppercase"}}>{label}</span>;}
+function Btn({children,onClick,style={}}){return <button onClick={onClick} style={{fontFamily:"'Syne',sans-serif",fontWeight:700,...style}}>{children}</button>;}
+
+// ── SIGN UP ───────────────────────────────────────────────────────────────────
+function SignUp({onLogin}){
+  const [step,setStep]=useState(1);
+  const [plan,setPlan]=useState("");
+  const [form,setForm]=useState({name:"",email:"",password:"",confirm:""});
+  const set=(k,v)=>setForm(f=>({...f,[k]:v}));
+  const valid=()=>form.name.trim()&&form.email.includes("@")&&form.password.length>=6&&form.password===form.confirm;
+
+  if(step===3)return(
+    <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:14,textAlign:"center",padding:24}}>
+      <div style={{fontSize:48}}>🎉</div>
+      <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:22}}>Welcome, {form.name.split(" ")[0]}!</div>
+      <div style={{fontSize:12,color:"#4a5568",maxWidth:300}}>{plan==="free"?"Your free account is ready. 10 GB storage active.":"Payment submitted! Business access activates within 24 hrs."}</div>
+      <Btn onClick={()=>onLogin({...form,plan})} style={{padding:"12px 36px",borderRadius:9,background:"linear-gradient(90deg,#0097a7,#006064)",color:"#fff",fontSize:13,border:"none"}}>Enter Platform →</Btn>
+    </div>
+  );
+
+  return(
+    <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:20,overflowY:"auto"}}>
+      <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
+        <div style={{width:32,height:32,borderRadius:7,background:"linear-gradient(135deg,#00e5ff,#0077ff)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16}}>⚡</div>
+        <span style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:20}}>Edge Tech <span style={{color:"#00e5ff"}}>Knowledgey</span></span>
+      </div>
+      <div style={{fontSize:11,color:"#4a5568",marginBottom:24}}>Sovereign Acoustic Network · {DOMAIN}</div>
+
+      <div style={{display:"flex",alignItems:"center",gap:0,marginBottom:24}}>
+        {["Account","Plan","Done"].map((s,i)=>{
+          const n=i+1,done=step>n,active=step===n;
+          return <div key={s} style={{display:"flex",alignItems:"center"}}>
+            <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:3}}>
+              <div style={{width:26,height:26,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",background:done?"#00e5ff":active?"rgba(0,229,255,0.15)":"#0d1117",border:"2px solid "+(done||active?"#00e5ff":"#1e2a3a"),fontSize:10,fontWeight:700,color:done?"#000":active?"#00e5ff":"#374151"}}>{done?"✓":n}</div>
+              <span style={{fontSize:9,color:active?"#00e5ff":"#374151",fontWeight:active?700:400}}>{s}</span>
+            </div>
+            {i<2&&<div style={{width:40,height:2,background:step>n?"#00e5ff":"#1a2133",margin:"0 4px",marginBottom:16}}/>}
+          </div>;
+        })}
+      </div>
+
+      <div style={{background:"#0d1117",border:"1px solid #1a2133",borderRadius:14,padding:24,width:"100%",maxWidth:420}}>
+        {step===1&&(
+          <div style={{display:"flex",flexDirection:"column",gap:14}}>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:18,marginBottom:2}}>Create Account</div>
+            {[{l:"Full Name",k:"name",t:"text",p:"David Ingalls"},{l:"Email",k:"email",t:"email",p:"triggger0357@gmail.com"},{l:"Password",k:"password",t:"password",p:"Min 6 characters"},{l:"Confirm Password",k:"confirm",t:"password",p:"Re-enter password"}].map(f=>(
+              <div key={f.k}>
+                <label style={{fontSize:10,fontWeight:700,color:"#4a5568",textTransform:"uppercase",letterSpacing:"0.1em",display:"block",marginBottom:5}}>{f.l}</label>
+                <input type={f.t} value={form[f.k]} onChange={e=>set(f.k,e.target.value)} placeholder={f.p} style={{width:"100%",background:"#111827",border:"1px solid #1e2a3a",borderRadius:8,padding:"9px 13px",fontSize:13,color:"#e2e8f0",fontFamily:"'DM Sans',sans-serif"}}/>
+              </div>
+            ))}
+            <Btn onClick={()=>valid()&&setStep(2)} style={{width:"100%",padding:"11px 0",borderRadius:9,background:valid()?"linear-gradient(90deg,#0097a7,#006064)":"#1a2133",color:valid()?"#fff":"#374151",fontSize:13,border:"none",marginTop:4}}>Continue →</Btn>
+            <div style={{fontSize:10,color:"#2d3748",textAlign:"center"}}>Already have an account? <span onClick={()=>onLogin({...ADMIN})} style={{color:"#00e5ff",cursor:"pointer"}}>Sign in as Owner</span></div>
+          </div>
+        )}
+        {step===2&&(
+          <div style={{display:"flex",flexDirection:"column",gap:12}}>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:18,marginBottom:2}}>Pick Your Plan</div>
+            {[
+              {id:"free",label:"Free",price:"$0",color:"#69f0ae",features:["10 GB photo storage","Organize & view photos","Basic file uploads"],locked:["Business email","AI Writer","Photo Editor"]},
+              {id:"business",label:"Business",price:"$9.99/mo",color:"#00e5ff",features:["Everything Free","Business email","AI Email Writer","Photo Editor","25 GB storage"],locked:[]},
+            ].map(p=>(
+              <div key={p.id} onClick={()=>setPlan(p.id)} style={{border:"2px solid "+(plan===p.id?p.color:"#1e2a3a"),borderRadius:11,padding:14,cursor:"pointer",background:plan===p.id?p.color+"08":"transparent"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                  <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:15,color:plan===p.id?p.color:"#e2e8f0"}}>{p.label}</div>
+                  <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:16,color:p.color}}>{p.price}</div>
+                </div>
+                <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+                  {p.features.map(f=><span key={f} style={{fontSize:10,color:"#64748b",background:"#111827",padding:"2px 8px",borderRadius:4}}>✓ {f}</span>)}
+                  {p.locked.map(f=><span key={f} style={{fontSize:10,color:"#2d3748",background:"#0d1117",padding:"2px 8px",borderRadius:4,opacity:0.5}}>✗ {f}</span>)}
+                </div>
+              </div>
+            ))}
+            {plan==="business"&&(
+              <div style={{display:"flex",flexDirection:"column",gap:8}}>
+                <a href={STRIPE_URL} target="_blank" rel="noreferrer" style={{textDecoration:"none"}}>
+                  <button style={{width:"100%",padding:"10px 0",borderRadius:8,background:"linear-gradient(90deg,#635bff,#4f46e5)",color:"#fff",fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:13,border:"none",cursor:"pointer"}}>💳 Pay with Stripe</button>
+                </a>
+                <div style={{background:"rgba(0,229,255,0.06)",border:"1px solid rgba(0,229,255,0.15)",borderRadius:8,padding:"10px 14px",textAlign:"center"}}>
+                  <div style={{fontSize:9,color:"#4a5568",marginBottom:3,textTransform:"uppercase",letterSpacing:"0.1em"}}>Cash App / Venmo</div>
+                  <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:16,color:"#00e5ff"}}>$davidingalls1061</div>
+                  <div style={{fontSize:10,color:"#374151",marginTop:2}}>Include your email in memo</div>
+                </div>
+              </div>
+            )}
+            <div style={{display:"flex",gap:10}}>
+              <Btn onClick={()=>setStep(1)} style={{flex:1,padding:"10px 0",borderRadius:8,background:"#1a2133",color:"#64748b",fontSize:12,border:"none"}}>← Back</Btn>
+              <Btn onClick={()=>plan&&setStep(3)} style={{flex:2,padding:"10px 0",borderRadius:8,background:plan?"linear-gradient(90deg,#0097a7,#006064)":"#111827",color:plan?"#fff":"#374151",fontSize:12,border:"none"}}>
+                {plan==="free"?"Create Free Account →":"I've Paid — Continue →"}
+              </Btn>
+            </div>
+          </div>
+        )}
+      </div>
+      <div style={{marginTop:16,background:"rgba(255,215,64,0.05)",border:"1px solid rgba(255,215,64,0.15)",borderRadius:9,padding:"10px 16px",maxWidth:420,width:"100%",display:"flex",gap:10,alignItems:"center"}}>
+        <span>👑</span>
+        <div style={{fontSize:11,color:"#4a5568"}}>Owner: <span style={{color:"#ffd740",fontWeight:700}}>triggger0357@gmail.com</span> — full access</div>
+      </div>
+    </div>
+  );
+}
+
+// ── PHONE ─────────────────────────────────────────────────────────────────────
+function PhonePage(){
+  const [active,setActive]=useState("dialer");
+  const [dialNum,setDialNum]=useState("");
+  const [calling,setCalling]=useState(false);
+  const [callWith,setCallWith]=useState(null);
+  const [callTimer,setCallTimer]=useState(0);
+  const timerRef=useRef(null);
+
+  const dial=d=>{if(d==="⌫")setDialNum(p=>p.slice(0,-1));else setDialNum(p=>p+d);};
+  const startCall=(name,num)=>{
+    setCallWith({name:name||num,num});setCalling(true);setCallTimer(0);
+    timerRef.current=setInterval(()=>setCallTimer(t=>t+1),1000);
+  };
+  const endCall=()=>{setCalling(false);setCallWith(null);clearInterval(timerRef.current);setCallTimer(0);};
+  const fmt=s=>{const m=Math.floor(s/60),sec=s%60;return m+":"+(sec<10?"0":"")+sec;};
+
+  if(calling)return(
+    <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:20,background:"linear-gradient(135deg,#0d1117,#091420)"}}>
+      <div style={{animation:"ring 1.5s infinite"}}>
+        <Av name={callWith.name} size={80} />
+      </div>
+      <div style={{textAlign:"center"}}>
+        <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:22,color:"#e2e8f0"}}>{callWith.name}</div>
+        <div style={{fontSize:12,color:"#4a5568",marginTop:4}}>{callWith.num}</div>
+        <div style={{fontSize:18,fontWeight:700,color:"#00e5ff",marginTop:8}}>{fmt(callTimer)}</div>
+        <div style={{fontSize:10,color:"#374151",marginTop:4}}>Edge Tech Knowledgey Network · {DOMAIN}</div>
+      </div>
+      <div style={{display:"flex",gap:20,marginTop:10}}>
+        {[{icon:"🔇",label:"Mute"},{icon:"📢",label:"Speaker"},{icon:"🎥",label:"Video"},{icon:"⌨️",label:"Keypad"}].map(b=>(
+          <div key={b.label} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:6}}>
+            <button style={{width:52,height:52,borderRadius:"50%",background:"rgba(255,255,255,0.08)",fontSize:20,border:"none",cursor:"pointer"}}>{b.icon}</button>
+            <span style={{fontSize:9,color:"#4a5568"}}>{b.label}</span>
+          </div>
+        ))}
+      </div>
+      <button onClick={endCall} style={{width:64,height:64,borderRadius:"50%",background:"#f44336",fontSize:26,border:"none",cursor:"pointer",marginTop:10,boxShadow:"0 0 24px rgba(244,67,54,0.4)"}}>📵</button>
+    </div>
+  );
+
+  return(
+    <div style={{flex:1,display:"flex",overflow:"hidden"}}>
+      <div style={{width:180,background:"#0d1117",borderRight:"1px solid #1a2133",display:"flex",flexDirection:"column",padding:"14px 0",flexShrink:0}}>
+        <div style={{padding:"0 12px 14px",fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:13,color:"#e2e8f0"}}>📞 Phone</div>
+        {[{id:"dialer",icon:"⌨️",label:"Dialer"},{id:"recents",icon:"🕐",label:"Recents"},{id:"voicemail",icon:"📬",label:"Voicemail"}].map(t=>(
+          <button key={t.id} onClick={()=>setActive(t.id)} style={{display:"flex",alignItems:"center",gap:8,padding:"9px 14px",width:"100%",background:active===t.id?"rgba(0,229,255,0.08)":"transparent",borderLeft:active===t.id?"2px solid #00e5ff":"2px solid transparent",color:active===t.id?"#e2e8f0":"#4b5563",fontSize:12,fontWeight:500,cursor:"pointer",border:"none"}}>
+            <span>{t.icon}</span><span>{t.label}</span>
+          </button>
+        ))}
+      </div>
+      <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:20}}>
+        {active==="dialer"&&(
+          <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:16,width:"100%",maxWidth:280}}>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:24,height:32,letterSpacing:"0.05em",color:"#00e5ff"}}>{dialNum||"Enter number"}</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,width:"100%"}}>
+              {["1","2","3","4","5","6","7","8","9","*","0","⌫"].map(k=>(
+                <button key={k} onClick={()=>dial(k)} style={{height:52,borderRadius:"50%",background:"#111827",border:"1px solid #1a2133",fontSize:18,fontWeight:700,color:"#e2e8f0",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>{k}</button>
+              ))}
+            </div>
+            <button onClick={()=>dialNum&&startCall(null,dialNum)} style={{width:56,height:56,borderRadius:"50%",background:"#00e5ff",fontSize:22,border:"none",cursor:"pointer",boxShadow:"0 0 20px rgba(0,229,255,0.3)",marginTop:8}}>📞</button>
+          </div>
+        )}
+        {active==="recents"&&(
+          <div style={{width:"100%",maxWidth:400,display:"flex",flexDirection:"column",gap:8,overflowY:"auto",maxHeight:"70vh"}}>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:14,marginBottom:6}}>Recent Calls</div>
+            {CALLS.map(c=>(
+              <div key={c.id} onClick={()=>startCall(c.name,c.number)} style={{background:"#0d1117",border:"1px solid #1a2133",borderRadius:10,padding:"10px 14px",display:"flex",alignItems:"center",justifyContent:"space-between",cursor:"pointer"}}>
+                <div style={{display:"flex",alignItems:"center",gap:10}}>
+                  <Av name={c.name} size={36} color={c.color} />
+                  <div>
+                    <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:13}}>{c.name}</div>
+                    <div style={{fontSize:11,color:"#4a5568"}}>{c.number} · {c.time}</div>
+                  </div>
+                </div>
+                <div style={{fontSize:12,color:c.type==="missed"?"#f44336":"#00e5ff"}}>{c.type==="missed"?"Missed":"📞 Call"}</div>
+              </div>
+            ))}
+          </div>
+        )}
+        {active==="voicemail"&&(
+          <div style={{width:"100%",maxWidth:400,textAlign:"center",padding:24,background:"#0d1117",border:"1px solid #1a2133",borderRadius:12}}>
+            <div style={{fontSize:32,marginBottom:8}}>📬</div>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:16}}>Voice Inbox</div>
+            <div style={{fontSize:12,color:"#4a5568",marginTop:4}}>No new voicemails. Acoustic transcription active.</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── MAIN APP ──────────────────────────────────────────────────────────────────
+function App(){
+  const [user,setUser]=useState(ADMIN);
+  const [tab,setTab]=useState("email");
+  const [emails,setEmails]=useState(EMAILS);
+  const [selEmail,setSelEmail]=useState(null);
+  const [aiMode,setAiMode]=useState("advisor");
+  const [aiMsgs,setAiMsgs]=useState([
+    {role:"assistant",content:"Hello David! I'm your Edge Tech Knowledgey executive advisor. How can we accelerate growth today?"}
+  ]);
+  const [aiInput,setAiInput]=useState("");
+  const [aiLoading,setAiLoading]=useState(false);
+
+  if(!user) return <SignUp onLogin={u=>setUser(u)}/>;
+
+  const handleAiSend=(txt)=>{
+    const q=txt||aiInput;
+    if(!q.trim())return;
+    const next=[...aiMsgs,{role:"user",content:q}];
+    setAiMsgs(next);
+    setAiInput("");
+    setAiLoading(true);
+    setTimeout(()=>{
+      setAiMsgs([...next,{role:"assistant",content:`Analyzing "${q}" under mode [${aiMode.toUpperCase()}]. Everything is nominal across ${DOMAIN}. Let's execute.`}]);
+      setAiLoading(false);
+    },800);
+  };
+
+  return(
+    <div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden"}}>
+      <div style={{height:52,background:"#0d1117",borderBottom:"1px solid #1a2133",display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 16px",flexShrink:0}}>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <div style={{width:26,height:26,borderRadius:6,background:"linear-gradient(135deg,#00e5ff,#0077ff)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14}}>⚡</div>
+          <span style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:15}}>Edge Tech <span style={{color:"#00e5ff"}}>Knowledgey</span></span>
+          <Chip label={user.plan} color={user.plan==="owner"?"#ffd740":"#00e5ff"} />
+        </div>
+
+        <div style={{display:"flex",gap:4,background:"#111827",padding:3,borderRadius:8}}>
+          {[
+            {id:"email",label:"✉️ Email"},
+            {id:"phone",label:"📞 Phone"},
+            {id:"contacts",label:"📇 Contacts"},
+            {id:"photos",label:"🖼️ Photos"},
+            {id:"ai",label:"🤖 AI Assistant"},
+            {id:"users",label:"👥 Team"},
+            {id:"settings",label:"⚙️ Settings"}
+          ].map(t=>(
+            <button key={t.id} onClick={()=>setTab(t.id)} style={{background:tab===t.id?"#1e2a3a":"transparent",color:tab===t.id?"#00e5ff":"#64748b",border:"none",padding:"5px 10px",borderRadius:6,fontSize:12,fontWeight:600,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <Av name={user.name} size={30} />
+          <span style={{fontSize:12,fontWeight:700}}>{user.name}</span>
+          <button onClick={()=>setUser(null)} style={{background:"#1a2133",color:"#f44336",border:"none",padding:"4px 8px",borderRadius:6,fontSize:10,fontWeight:700,cursor:"pointer"}}>Logout</button>
+        </div>
+      </div>
+
+      <div style={{flex:1,display:"flex",overflow:"hidden",background:"#0a0c10"}}>
+        {tab==="email"&&(
+          <div style={{flex:1,display:"flex",overflow:"hidden"}}>
+            <div style={{width:320,background:"#0d1117",borderRight:"1px solid #1a2133",display:"flex",flexDirection:"column"}}>
+              <div style={{padding:12,borderBottom:"1px solid #1a2133",fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:14}}>Inbox ({emails.filter(e=>!e.read).length})</div>
+              <div style={{flex:1,overflowY:"auto"}}>
+                {emails.map(e=>(
+                  <div key={e.id} onClick={()=>setSelEmail(e)} style={{padding:12,borderBottom:"1px solid #1a2133",background:selEmail?.id===e.id?"#161f30":e.read?"transparent":"rgba(0,229,255,0.03)",cursor:"pointer"}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+                      <span style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:12,color:e.read?"#94a3b8":"#fff"}}>{e.from}</span>
+                      <span style={{fontSize:10,color:"#4a5568"}}>{e.time}</span>
+                    </div>
+                    <div style={{fontSize:11,fontWeight:600,color:"#e2e8f0",marginBottom:3}}>{e.subj}</div>
+                    <Chip label={e.tag} color={e.tc} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{flex:1,display:"flex",flexDirection:"column",background:"#0a0c10",padding:24,overflowY:"auto"}}>
+              {selEmail?(
+                <div>
+                  <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:18,marginBottom:8}}>{selEmail.subj}</div>
+                  <div style={{fontSize:12,color:"#4a5568",marginBottom:16}}>From: {selEmail.from} &lt;{selEmail.fe}&gt; · {selEmail.time}</div>
+                  <div style={{background:"#0d1117",border:"1px solid #1a2133",borderRadius:10,padding:16,whiteSpace:"pre-wrap",fontSize:13,lineHeight:1.6}}>{selEmail.body}</div>
+                </div>
+              ):(
+                <div style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",color:"#4a5568",fontSize:13}}>Select an email to read</div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {tab==="phone"&&<PhonePage/>}
+
+        {tab==="contacts"&&(
+          <div style={{flex:1,padding:24,overflowY:"auto"}}>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:18,marginBottom:16}}>Contacts & Directory</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:12}}>
+              {CONTACTS.map(c=>(
+                <div key={c.id} style={{background:"#0d1117",border:"1px solid #1a2133",borderRadius:10,padding:16,display:"flex",alignItems:"center",gap:12}}>
+                  <Av name={c.name} size={42} color={c.color} />
+                  <div>
+                    <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:14}}>{c.name}</div>
+                    <div style={{fontSize:11,color:"#00e5ff"}}>{c.company}</div>
+                    <div style={{fontSize:11,color:"#4a5568",marginTop:2}}>{c.phone}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab==="photos"&&(
+          <div style={{flex:1,padding:24,overflowY:"auto"}}>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:18,marginBottom:16}}>Photo Gallery & Storage</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))",gap:16}}>
+              {PHOTOS.map(p=>(
+                <div key={p.id} style={{height:140,borderRadius:12,background:p.gradient,display:"flex",flexDirection:"column",justifyContent:"flex-end",padding:12,boxShadow:"0 4px 12px rgba(0,0,0,0.3)"}}>
+                  <div style={{fontSize:24,marginBottom:4}}>{p.emoji}</div>
+                  <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:13,color:"#fff"}}>{p.label}</div>
+                  <div style={{fontSize:10,color:"rgba(255,255,255,0.7)"}}>{p.date}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab==="ai"&&(
+          <div style={{flex:1,display:"flex",flexDirection:"column",padding:16}}>
+            <div style={{display:"flex",gap:8,marginBottom:12}}>
+              {AI_MODES.map(m=>(
+                <button key={m.id} onClick={()=>setAiMode(m.id)} style={{background:aiMode===m.id?m.color+"20":"#0d1117",border:"1px solid "+(aiMode===m.id?m.color:"#1a2133"),color:aiMode===m.id?m.color:"#64748b",padding:"6px 12px",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
+                  {m.icon} {m.label}
+                </button>
+              ))}
+            </div>
+            <div style={{flex:1,background:"#0d1117",border:"1px solid #1a2133",borderRadius:12,padding:16,overflowY:"auto",display:"flex",flexDirection:"column",gap:12,marginBottom:12}}>
+              {aiMsgs.map((m,i)=>(
+                <div key={i} style={{display:"flex",flexDirection:"column",alignItems:m.role==="user"?"flex-end":"flex-start"}}>
+                  <div style={{maxWidth:"75%",background:m.role==="user"?"#00e5ff20":"#161f30",border:"1px solid "+(m.role==="user"?"#00e5ff40":"#1e2a3a"),borderRadius:10,padding:"10px 14px",fontSize:13,lineHeight:1.5,color:"#e2e8f0"}}>
+                    {m.content}
+                  </div>
+                </div>
+              ))}
+              {aiLoading&&<div style={{fontSize:12,color:"#00e5ff"}}>AI is thinking...</div>}
+            </div>
+            <div style={{display:"flex",gap:8}}>
+              <input value={aiInput} onChange={e=>setAiInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleAiSend()} placeholder="Ask AI assistant..." style={{flex:1,background:"#0d1117",border:"1px solid #1a2133",borderRadius:8,padding:"10px 14px",fontSize:13}}/>
+              <Btn onClick={()=>handleAiSend()} style={{background:"#00e5ff",color:"#000",padding:"0 20px",borderRadius:8,border:"none"}}>Send</Btn>
+            </div>
+          </div>
+        )}
+
+        {tab==="users"&&(
+          <div style={{flex:1,padding:24,overflowY:"auto"}}>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:18,marginBottom:16}}>Team Directory & Subscriptions</div>
+            <div style={{background:"#0d1117",border:"1px solid #1a2133",borderRadius:12,overflow:"hidden"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",fontSize:13,textAlign:"left"}}>
+                <thead>
+                  <tr style={{background:"#111827",borderBottom:"1px solid #1a2133",color:"#64748b",fontSize:11,textTransform:"uppercase"}}>
+                    <th style={{padding:12}}>Name</th>
+                    <th style={{padding:12}}>Email</th>
+                    <th style={{padding:12}}>Plan</th>
+                    <th style={{padding:12}}>Storage</th>
+                    <th style={{padding:12}}>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {USERS.map(u=>(
+                    <tr key={u.id} style={{borderBottom:"1px solid #1a2133"}}>
+                      <td style={{padding:12,fontWeight:700}}>{u.name}</td>
+                      <td style={{padding:12,color:"#64748b"}}>{u.email}</td>
+                      <td style={{padding:12}}><Chip label={u.plan} color={u.plan==="owner"?"#ffd740":"#00e5ff"}/></td>
+                      <td style={{padding:12}}>{u.storage} GB</td>
+                      <td style={{padding:12,color:u.status==="active"?"#69f0ae":"#ffd740"}}>{u.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {tab==="settings"&&(
+          <div style={{flex:1,padding:24,overflowY:"auto"}}>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:18,marginBottom:16}}>Platform Settings</div>
+            <div style={{background:"#0d1117",border:"1px solid #1a2133",borderRadius:12,padding:20,maxWidth:500,display:"flex",flexDirection:"column",gap:16}}>
+              <div>
+                <label style={{fontSize:10,fontWeight:700,color:"#64748b",textTransform:"uppercase",display:"block",marginBottom:6}}>Domain</label>
+                <input readOnly value={DOMAIN} style={{width:"100%",background:"#111827",border:"1px solid #1a2133",borderRadius:8,padding:"10px",fontSize:13}}/>
+              </div>
+              <div>
+                <label style={{fontSize:10,fontWeight:700,color:"#64748b",textTransform:"uppercase",display:"block",marginBottom:6}}>Account Email</label>
+                <input readOnly value={user.email} style={{width:"100%",background:"#111827",border:"1px solid #1a2133",borderRadius:8,padding:"10px",fontSize:13}}/>
+              </div>
+              <div>
+                <label style={{fontSize:10,fontWeight:700,color:"#64748b",textTransform:"uppercase",display:"block",marginBottom:6}}>Active Plan</label>
+                <input readOnly value={user.plan.toUpperCase()} style={{width:"100%",background:"#111827",border:"1px solid #1a2133",borderRadius:8,padding:"10px",fontSize:13,color:"#00e5ff",fontWeight:700}}/>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
+
